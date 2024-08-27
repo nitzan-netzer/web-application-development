@@ -27,6 +27,9 @@
     "express": "^4.19.2",
     "i": "^0.3.7",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.5.3"
+    "mongoose": "^8.5.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
   }
 }

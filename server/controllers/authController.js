@@ -8,7 +8,7 @@ async function register (req, res) {
   try {
     const {
       username, name, email, password,
-      birthYear, address, gender, isSeller
+      birthYear, address, gender, isSeller,
     } = req.body;
     inputValidation.validate(req.body);
 
@@ -17,11 +17,13 @@ async function register (req, res) {
     if (user) {
       return res.status(400).json({ msg: 'User already exists' });
     }
+
     // Save new user in MongoDB
     user = new User({
       username, name, email, password,
       birthYear, address, gender, isSeller
     });
+
     await user.save();
     res.status(201).json({ msg: 'User registered successfully' });
   } catch (err) {
