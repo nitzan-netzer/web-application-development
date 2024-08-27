@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
-const { createProduct } = require('../controllers/productController');
-const authMiddleware = require('../middleware/auth'); // Middleware to authenticate user
+import {createProduct} from '../controllers/productController.js'
+import {authMiddleware} from '../middleware/auth.js'   // Middleware to authenticate user
 
 router.post('/create', authMiddleware, createProduct);
 // productRoutes.post('/create', authMiddleware, updateProduct);

@@ -1,8 +1,8 @@
-const Product = require('../models/product');
-const User = require('../models/user');
+import { Product } from '../models/product.js';
+import { User } from '../models/user.js';
 
 // Create Product
-async function createProduct(req, res)  {
+export async function createProduct(req, res)  {
     const { name, pictures, category, status, description, price } = req.body;
     const userId = req.user.userId;
 
@@ -27,7 +27,3 @@ async function createProduct(req, res)  {
     }
 }
 
-
-module.exports = {
-    createProduct
-};
