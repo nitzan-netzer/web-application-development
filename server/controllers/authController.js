@@ -10,8 +10,8 @@ async function register (req, res) {
       username, name, email, password,
       birthYear, address, gender, isSeller
     } = req.body;
-
     inputValidation.validate(req.body);
+
     // Check if user already exists
     let user = await User.findOne({ email });
     if (user) {
@@ -25,7 +25,7 @@ async function register (req, res) {
     await user.save();
     res.status(201).json({ msg: 'User registered successfully' });
   } catch (err) {
-    res.status(500).json({ msg: err.message });
+    res.status(500).json({ msg: err });
   }
 }
 

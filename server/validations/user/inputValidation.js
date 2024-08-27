@@ -3,7 +3,7 @@ export default class InputValidation {
     validate(userData) {
         const { username, name, password, email, birthYear,
             address, gender,} = userData;
-
+            
         this.userNameValidation(username);
         this.nameValidation(name);
         this.passwordValidation(password);

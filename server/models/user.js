@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import {connections} from '../config/db.js'
 
-const usersDB = mongoose.connection.useDb('usersDB');
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     name: { type: String, required: true },
@@ -28,4 +28,4 @@ userSchema.pre('save', async function(next) {
     }
 });
 
-export const User = usersDB.model('User', userSchema);
+export const User = connections.usersDB.model('User', userSchema);

@@ -1,6 +1,19 @@
 const RETRY_DELAY = 2000;
 import mongoose from 'mongoose';
 
+// Define connection URIs for different databases
+const dbURIs = {
+  usersDB: 'mongodb://localhost:27017/usersDB',
+  productsDB: 'mongodb://localhost:27017/productsDB'
+};
+
+// Create connections
+const connections = {};
+
+Object.keys(dbURIs).forEach(dbName => {
+  connections[dbName] = mongoose.createConnection(dbURIs[dbName]);
+})
+
 const mongoConnect = async () => {
     while(true){
         try{
@@ -17,4 +30,4 @@ const mongoConnect = async () => {
     }
 }
 
-export default mongoConnect;
+export {mongoConnect, connections} ;

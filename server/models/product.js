@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
+import {connections} from '../config/db.js'
 
-const productDB = mongoose.connection.useDb('productDB');
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     pictures: [String],
@@ -12,4 +12,4 @@ const productSchema = new mongoose.Schema({
     productId: { type: String, unique: true }
 });
 
-export const Product = productDB.model('Product', productSchema);
+export const Product = connections.productsDB.model('Product', productSchema);
