@@ -49,15 +49,38 @@
               ],
               "properties": {
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "adiri"
                 },
                 "email": {
                   "type": "string",
-                  "format": "email"
+                  "format": "email",
+                  "example": "adir@gmail.com"
                 },
                 "password": {
                   "type": "string",
-                  "format": "password"
+                  "format": "password",
+                  "example":"12345678"
+                },
+                "user":{
+                  "type": "string",
+                  "example":"adir itzhaki"
+                },
+                "birthYear":{
+                  "type": "string",
+                  "example":"1999"
+                },
+                "address":{
+                  "type":"string",
+                  "example":"Yanuv"
+                },
+                "gender":{
+                  "type":"string",
+                  "example":"Unknown"
+                },
+                "isSeller":{
+                  "type":"string",
+                  "example":"true"
                 }
               }
             }
