@@ -4,8 +4,7 @@ import {authRoutes} from './routes/authRoutes.js';
 import {productRoutes} from './routes/productRoutes.js';
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express"
-import {swaggerSpec} from "./swagger.js"
-
+import swaggerDoc from "./config/swagger.json" assert { type: "json" }
 
 const app = express();
 
@@ -19,7 +18,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Serve the Swagger documentation at /api-docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

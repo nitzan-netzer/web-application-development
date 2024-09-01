@@ -30,6 +30,7 @@
     "mongoose": "^8.5.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0"
+    "yamljs": "^0.3.0",
+    "json": "11.0.0"
   }
 }
