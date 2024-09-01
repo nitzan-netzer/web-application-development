@@ -4,7 +4,7 @@ import {authRoutes} from './routes/authRoutes.js';
 import {productRoutes} from './routes/productRoutes.js';
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express"
-import swaggerDoc from "./config/swagger.json" assert { type: "json" }
+import swaggerDoc from "./defenitions/swagger.json" assert { type: "json" }
 
 const app = express();
 
