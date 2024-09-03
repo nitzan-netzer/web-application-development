@@ -4,10 +4,18 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-
 import React from 'react'
+import { redirect } from 'next/dist/server/api-utils';
+import { useRouter } from 'next/navigation';
+
+
+
 
 function Header() {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push('/login');
+  }
   return (
     <Navbar fixed='top' expand="lg" className="bg-body-tertiary">
       <Container>
@@ -19,7 +27,7 @@ function Header() {
             className="d-inline-block align-top"
             alt="רגל 2 logo"
           />
-          <Button variant="outline-success"
+          <Button onClick={handleClick} variant="outline-success"
             style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>להתחברות/להרשמה</Button>
           <a href="/target-page" className="ms-2">
             <img
