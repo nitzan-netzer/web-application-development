@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="App">
       <main>
-        {/* <AppCarousel /> */}
+        <AppCarousel />
         {/* <ProductsLinks/> */}
 
       </main>
