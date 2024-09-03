@@ -1,17 +1,19 @@
+import mongoose from "mongoose";
 import { Product } from '../models/product.js';
 import { User } from '../models/user.js';
 import {createImage} from "../middleware/imageUpload.js";
 
 // Create Product
 export async function createProduct(req, res, next) {
-    const { name, category, status, description, price } = req.body;
-
-    // client provides userId
-    const userId = req?.user?.userId;
+    const { name, category, status, description, price, userId } = req.body;
 
     try {
-        const user = await User.findById(userId);
 
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ msg: 'Invalid userId format' });
+        }
+
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -97,3 +99,27 @@ export async function deleteProduct(req, res) {
     }
 }
 
+export async function getProduct(req, res) {
+    const { productId } = req.params;
+
+    try {
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ msg: 'Product not found' });
+        }
+
+        res.status(200).json({ product });
+    }
+    catch (error) {
+        res.status(500).json({ msg: 'Server error' });
+    }
+}
+
+export async function getAlProducts(req, res) {
+    try {
+        const products = await Product.find();
+        res.status(200).json({ products });
+    } catch (error) {
+        res.status(500).json({ msg: 'Server error' });
+    }
+}

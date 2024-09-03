@@ -49,15 +49,39 @@
               ],
               "properties": {
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "Adirana"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Adirana"
                 },
                 "email": {
                   "type": "string",
-                  "format": "email"
+                  "format": "email",
+                  "example": "adirana@gmail.com"
                 },
                 "password": {
                   "type": "string",
-                  "format": "password"
+                  "format": "password",
+                  "example": "strongPassword"
+                },
+                "birthYear": {
+                    "type": "number",
+                    "example": 1990
+                },
+                "address": {
+                    "type": "string",
+                    "example": "1234 Main St"
+                },
+                "gender": {
+                  "type": "string",
+                  "enum": ["male", "female", "unknown"],
+                  "example": "female"
+                },
+                "isSeller": {
+                    "type": "boolean",
+                    "example": false
                 }
               }
             }
@@ -254,6 +278,9 @@
                 },
                 "price": {
                   "type": "number"
+                },
+                "userId": {
+                  "type": "string"
                 }
               }
             }
