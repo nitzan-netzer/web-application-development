@@ -62,13 +62,13 @@
         <form id="registerForm">
             <label for="name">שם מלא:</label>
             <input type="text" id="name" name="name" required>
-            
+
             <label for="email">דוא"ל:</label>
             <input type="email" id="email" name="email" required>
-            
+
             <label for="password">סיסמה:</label>
             <input type="password" id="password" name="password" required>
-            
+
             <button type="submit">הירשם</button>
         </form>
     </main>
@@ -89,7 +89,7 @@
                 password: password
             };
 
-            fetch('http://localhost:3000/register', {
+            fetch('http://localhost:3000/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
