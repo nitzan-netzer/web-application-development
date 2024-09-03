@@ -4,8 +4,6 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
-
-
 import React from 'react'
 
 function ProductsLinks() {
@@ -15,7 +13,7 @@ function ProductsLinks() {
     <Row className='justify-content-center'>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -23,7 +21,7 @@ function ProductsLinks() {
         </Col>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -31,7 +29,7 @@ function ProductsLinks() {
         </Col>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -39,7 +37,7 @@ function ProductsLinks() {
         </Col>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -47,7 +45,7 @@ function ProductsLinks() {
         </Col>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -55,7 +53,7 @@ function ProductsLinks() {
         </Col>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -67,7 +65,7 @@ function ProductsLinks() {
     <Row className='justify-content-center'>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -75,7 +73,7 @@ function ProductsLinks() {
         </Col>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -83,7 +81,7 @@ function ProductsLinks() {
         </Col>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -91,7 +89,7 @@ function ProductsLinks() {
         </Col>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -99,7 +97,7 @@ function ProductsLinks() {
         </Col>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
@@ -107,7 +105,7 @@ function ProductsLinks() {
         </Col>
         <Col xs={6} md={4} lg={2}>
             <a href="https://example.com/link3" target="_blank" rel="noopener noreferrer">
-            <Image src={'../../public/cars.png'} roundedCircle />
+            <Image src={'/cars.png'} roundedCircle />
             </a>
             <div className="overlay-text">
                 מכוניות
