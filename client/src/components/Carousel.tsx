@@ -6,21 +6,21 @@ import React from 'react'
 var CarouselData = [
     {
         id: 1,
-        image: '../assets/5-top-products.png',
+        image: '../../public/5-top-products.png',
         title: 'מוצרים שאסור לפספס',
         description: 'חמשת המוצרים הכי נמכרים שלנו',
         link: 'http://localhost:3001'
     },
     {
         id: 2,
-        image: '../assets/top-sellers.png',
+        image: '../../public/top-sellers.png',
         title: 'חמשת המוכרים המדורגים ביותר באתר',
         description: 'המוכרים הכי טובים נמצאים אצלנו באתר! מוזמנים לבקר בעמודים שלהם ולדרג אותם',
         link: 'http://localhost:3001'
     },
     {
         id: 3,
-        image: '../assets/products-for-summer.png',
+        image: '../../public/products-for-summer.png',
         title: 'המוצרים החמים ביותר שלנו',
         description: 'כשנהיה חם קונים חכם! מוזמנים להסתכל על המוצרים הנמכרים ביותר שלנו הקיץ',
         link: 'http://localhost:3001'

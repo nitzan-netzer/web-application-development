@@ -9,11 +9,11 @@ import React from 'react'
 
 function Header() {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar fixed='top' expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="#home">
           <img
-            src={'../assets/logo.jpeg'}
+            src={'/logo.jpeg'}
             width="60"
             height="60"
             className="d-inline-block align-top"
@@ -23,7 +23,7 @@ function Header() {
             style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>להתחברות/להרשמה</Button>
           <a href="/target-page" className="ms-2">
             <img
-              src={'../assets/shopping-cart.png'}
+              src={'/shopping-cart.png'}
               width="30"
               height="30"
               className="d-inline-block align-top"

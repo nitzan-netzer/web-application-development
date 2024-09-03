@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
+// import "react-bootstrap";
 import Header from "@/srccomponents/Header";
 import Footer from "@/srccomponents/Footer";
+import 'bootstrap/dist/css/bootstrap.css'
 
 const inter = Inter({ subsets: ["latin"] });
 
