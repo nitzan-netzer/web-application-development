@@ -5,8 +5,16 @@ import {productRoutes} from './routes/productRoutes.js';
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express"
 import swaggerDoc from "./defenitions/swagger.json" assert { type: "json" }
+import cors from 'cors';
 
 const app = express();
+const corsOptions = {
+    origin: '*', // Allow all origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow specific HTTP methods
+    allowedHeaders: '*', // Allow any headers
+};
+
+app.use(cors(corsOptions));
 
 mongoose.connection.on('disconnected', () => {
     mongoConnect();
@@ -17,6 +25,8 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
+app.use('/api/public', express.static('uploads'));
+
 
 // Serve the Swagger documentation at /api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));

@@ -1,4 +1,3 @@
-// const jwt = require('jsonwebtoken');
 import jwt from 'jsonwebtoken';
 
 export const authMiddleware = (req, res, next) => {
@@ -8,7 +7,7 @@ export const authMiddleware = (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, 'your_jwt_secret');
+        const decoded = jwt.verify(token, 'yourJWTSecret');
         req.user = decoded.user;
         next();
     } catch (err) {

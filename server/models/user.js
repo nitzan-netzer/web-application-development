@@ -4,6 +4,7 @@ import {connections} from '../config/db.js'
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, required: true, auto: true,}, // This will automatically reference _id
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -22,6 +23,9 @@ userSchema.pre('save', async function(next) {
     try {
         const salt = await bcrypt.genSalt(10);
         this.password = await bcrypt.hash(this.password, salt);
+        if (!this.userId) {
+            this.userId = this._id;
+        }
         next();
     } catch (error) {
         next(error);

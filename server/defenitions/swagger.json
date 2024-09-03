@@ -8,7 +8,7 @@
       "email": "support@moonactive.com"
     }
   },
-  "host": "localhost",
+  "host": "localhost:3000",
   "basePath": "/api",
   "tags": [
     {
@@ -215,11 +215,111 @@
     "/product/create": {
       "post": {
         "tags": [
-          "auth"
+          "product"
         ],
         "summary": "Create a product",
         "description": "This endpoint allows a user to create a product.",
         "operationId": "createProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Product object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "email",
+                "password"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User successfully registered",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "application/json": {
+                  "message": "Invalid input data"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - User already exists",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "application/json": {
+                  "message": "User already exists"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/update": {
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Update a product",
+        "description": "This endpoint allows a user to Update a product.",
+        "operationId": "updateProduct",
         "consumes": [
           "application/json"
         ],
