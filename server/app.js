@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express"
 import swaggerDoc from "./defenitions/swagger.json" assert { type: "json" }
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const corsOptions = {
@@ -25,10 +27,11 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
-app.use('/api/public', express.static('uploads'));
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/api/public', express.static(path.join(__dirname, 'uploads')));
 
-// Serve the Swagger documentation at /api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 const PORT = process.env.PORT || 3000;

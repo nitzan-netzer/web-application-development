@@ -3,7 +3,7 @@ import {connections} from '../config/db.js'
 
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    picture: String,
+    image: String,
     category: { type: String, required: true },
     status: { type: String, required: true },
     description: { type: String, required: true },

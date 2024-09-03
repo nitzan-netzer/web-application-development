@@ -3,16 +3,11 @@ import { User } from '../models/user.js';
 import {createImage} from "../middleware/imageUpload.js";
 
 // Create Product
-export async function createProduct(req, res)  {
-    const { name, picture, category, status, description, price } = req.body;
+export async function createProduct(req, res, next) {
+    const { name, category, status, description, price } = req.body;
 
-    if (picture) {
-        createImage();
-    }
-
+    // client provides userId
     const userId = req?.user?.userId;
-
-    // Validating inputs here...
 
     try {
         const user = await User.findById(userId);
@@ -23,9 +18,12 @@ export async function createProduct(req, res)  {
 
         const product = new Product({
             name,
-            picture,
-            category, status, description, price,
-            userId, productId: `${user.username}_${Date.now()}`
+            image: req.generatedFileName,
+            category,
+            status,
+            description,
+            price,
+            userId,
         });
 
         await product.save();
@@ -37,11 +35,11 @@ export async function createProduct(req, res)  {
 
 // update Product
 export async function updateProduct(req, res) {
-    const { name, picture, category, status, description, price } = req.body;
+    const { name, image, category, status, description, price } = req.body;
     const userId = req.user.userId;
     const { productId } = req.params;
 
-    if (picture) {
+    if (image) {
         createImage();
     }
 
@@ -62,7 +60,7 @@ export async function updateProduct(req, res) {
 
         // Update the product fields
         product.name = name || product.name;
-        product.picture = picture || product.picture;
+        product.image = image || product.image;
         product.category = category || product.category;
         product.status = status || product.status;
         product.description = description || product.description;
