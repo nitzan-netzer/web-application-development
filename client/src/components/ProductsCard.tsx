@@ -73,29 +73,34 @@ var productsTest = [
 
 export default function ProductsCards() {
     return (
-        <Row className='justify-content-center'>
-            {productsTest.map(product => (
-                <Col key={product.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
-                    <Card style={{ width: '18rem', height: '24rem', display: 'flex', flexDirection: 'column' }}>
-                        <Card.Img 
-                            variant="top" 
-                            src={product.image} 
-                            style={{ height: '8rem', objectFit: 'cover' }} 
-                        />
-                        <Card.Body style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                            <Card.Title>{product.name}</Card.Title>
-                            <Card.Text style={{ flexGrow: 1 }}>
-                                {product.description}
-                            </Card.Text>
-                            <div style={{ marginBottom: 'auto' }}>
-                                <section><strong>Price:</strong> ${product.price}</section>
-                                <section><strong>Seller:</strong> {product.seller}</section>
-                            </div>
-                            <Button variant="primary" style={{ marginTop: 'auto' }}>Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            ))}
+        <Row class='justify-content-center'>
+            <Col xs={10} sm={8} md={6} lg={9}>
+
+                <Row className='justify-content-center'>
+                    {productsTest.map(product => (
+                        <Col key={product.id} xs={12} sm={8} md={6} lg={4} className="mb-4">
+                            <Card className="d-flex flex-column" style={{ height: '100%' }}>
+                                <Card.Img
+                                    variant="top"
+                                    src={product.image}
+                                    style={{ height: '200px', objectFit: 'cover' }}
+                                />
+                                <Card.Body className="d-flex flex-column">
+                                    <Card.Title>{product.name}</Card.Title>
+                                    <Card.Text className="flex-grow-1">
+                                        {product.description}
+                                    </Card.Text>
+                                    <div className="mt-auto">
+                                        <section><strong>Price:</strong> ${product.price}</section>
+                                        <section><strong>Seller:</strong> {product.seller}</section>
+                                    </div>
+                                    <Button variant="primary" style={{ marginTop: 'auto' }}>Go somewhere</Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
+            </Col>
         </Row>
     );
 }

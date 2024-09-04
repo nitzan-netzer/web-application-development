@@ -5,9 +5,9 @@ import ProductsCards from "@/srccomponents/ProductsCard";
 export default function Products() {
     return (
         <div className="App">
-          <main>
-            <ProductsCards/>
-          </main>
+            <main>
+                <ProductsCards />
+            </main>
         </div>
-      );
+    );
 }
