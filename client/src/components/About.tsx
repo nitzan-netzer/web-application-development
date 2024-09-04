@@ -17,7 +17,7 @@ function About() {
                 <br></br>
                 <Row>
                     <Col sm={6}>
-                        <Image src={'../assets/img1.jpg'} alt='About Us' />
+                        <Image src={'./img1.jpg'} alt='About Us' />
                     </Col>
                     <Col sm={6} className="text-end">
                         <p>ברוכים הבאים ל"רגל 2" – המקום שבו קניות חכמות פוגשות קיימות סביבתית</p>
