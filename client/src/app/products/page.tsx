@@ -1,12 +1,11 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
-import ProductsCards from "@/srccomponents/ProductsCard";
+import ProductsCards from "@/srccomponents/ProductsViewnSearch";
 
 export default function Products() {
     return (
         <div className="App">
             <main>
-                <ProductsCards />
+                        <ProductsCards />
             </main>
         </div>
     );
