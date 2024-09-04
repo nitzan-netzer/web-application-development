@@ -1,29 +1,30 @@
 'use client';
 
 import Carousel from 'react-bootstrap/Carousel';
-import React from 'react'
+import React from 'react';
+import '../styles/AppCarousel.css';
 
 var CarouselData = [
     {
         id: 1,
-        image: './5-top-products.png',
+        image: './top_5_products.png',
         title: 'מוצרים שאסור לפספס',
         description: 'חמשת המוצרים הכי נמכרים שלנו',
-        link: 'http://localhost:3001'
+        link: 'http://localhost:3000'
     },
     {
         id: 2,
-        image: './top-sellers.png',
+        image: './top_sellers.png',
         title: 'חמשת המוכרים המדורגים ביותר באתר',
         description: 'המוכרים הכי טובים נמצאים אצלנו באתר! מוזמנים לבקר בעמודים שלהם ולדרג אותם',
-        link: 'http://localhost:3001'
+        link: 'http://localhost:3000'
     },
     {
         id: 3,
-        image: './products-for-summer.png',
+        image: './products_summer.png',
         title: 'המוצרים החמים ביותר שלנו',
         description: 'כשנהיה חם קונים חכם! מוזמנים להסתכל על המוצרים הנמכרים ביותר שלנו הקיץ',
-        link: 'http://localhost:3001'
+        link: 'http://localhost:3000'
     }
 ]
 
@@ -34,7 +35,7 @@ function AppCarousel() {
                     CarouselData.map(item => (
                         <Carousel.Item key={item.id}>
                             <img
-                                className='img-fluid'
+                                className='carousel-image'  // Apply custom class here
                                 src={item.image}
                                 alt={"Slide " + item.id}
                             />
@@ -50,4 +51,4 @@ function AppCarousel() {
   )
 }
 
-export default AppCarousel
+export default AppCarousel;
