@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 // Define connection URIs for different databases
 const dbURIs = {
   usersDB: 'mongodb://localhost:27017/usersDB',
-  productsDB: 'mongodb://localhost:27017/productsDB'
+  productsDB: 'mongodb://localhost:27017/productsDB',
+  transactionsDB: 'mongodb://localhost:27017/transactionsDB'
 };
 
 // Create connections
