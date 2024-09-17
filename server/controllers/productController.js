@@ -115,7 +115,7 @@ export async function getProduct(req, res) {
     }
 }
 
-export async function getAlProducts(req, res) {
+export async function getAllProducts(req, res) {
     try {
         const products = await Product.find();
         res.status(200).json({ products });
