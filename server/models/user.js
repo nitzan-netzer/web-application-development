@@ -22,9 +22,8 @@ userSchema.pre('save', async function(next) {
         return next();
     }
     try {
-        const salt = await bcrypt.genSalt(10);
-        this.salt = salt;
-        this.password = await bcrypt.hash(this.password, salt);
+        this.salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, this.salt);
         if (!this.userId) {
             this.userId = this._id;
         }
