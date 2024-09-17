@@ -1,0 +1,10 @@
+.fixed-size-img {
+    width: 150px;   /* Set the fixed width */
+    height: 150px;  /* Set the fixed height */
+    object-fit: cover; /* Ensure the image fits within the dimensions */
+  }
+  
+  .overlay-text {
+    text-align: center;
+    margin-top: 10px;
+  }
