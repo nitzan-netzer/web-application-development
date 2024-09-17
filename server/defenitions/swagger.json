@@ -3,13 +3,13 @@
   "info": {
     "description": "API documentation for our application",
     "version": "1.0.0",
-    "title": "Moon Active API"
+    "title": "Second Leg API"
   },
   "host": "example.com",
   "basePath": "/",
   "schemes": ["http"],
   "paths": {
-    "/register": {
+    "api/auth/register": {
       "post": {
         "summary": "Register a new user",
         "description": "This endpoint registers a new user",
@@ -34,7 +34,7 @@
         }
       }
     },
-    "/login": {
+    "api/auth/login": {
       "post": {
         "summary": "Log in a user",
         "description": "This endpoint logs in a user",
@@ -65,7 +65,7 @@
         }
       }
     },
-    "/create": {
+    "api/product/create": {
       "post": {
         "summary": "Create a new product",
         "description": "This endpoint creates a new product",
@@ -93,7 +93,7 @@
         }
       }
     },
-    "/update": {
+    "api/product/update": {
       "post": {
         "summary": "Update an existing product",
         "description": "This endpoint updates an existing product",
@@ -129,7 +129,7 @@
         }
       }
     },
-    "/product/{productId}": {
+    "api/product/product/{productId}": {
       "delete": {
         "summary": "Delete an existing product",
         "description": "This endpoint deletes an existing product",
@@ -156,7 +156,7 @@
         }
       }
     },
-    "/products/{productId}": {
+    "api/product/products/{productId}": {
       "get": {
         "summary": "Get a product by ID",
         "description": "This endpoint fetches a product by its ID",
@@ -183,7 +183,7 @@
         }
       }
     },
-    "/allProducts": {
+    "api/product/allProducts": {
       "get": {
         "summary": "Get all products",
         "description": "This endpoint fetches all products",
@@ -197,7 +197,7 @@
         }
       }
     },
-    "/purchase": {
+    "api/purchase/makeTransaction": {
       "post": {
         "summary": "Purchase products",
         "description": "This endpoint allows users to purchase products",

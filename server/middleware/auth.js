@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { User } from '../models/user';
 import { mySecret } from '../config/secrets.js'
 
 export const authMiddleware = (req, res, next) => {
