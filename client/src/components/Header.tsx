@@ -29,7 +29,7 @@ function Header() {
           />
           <Button onClick={handleClick} variant="outline-success"
             style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>להתחברות/להרשמה</Button>
-          <a href="/target-page" className="ms-2">
+          {/* <a href="/target-page" className="ms-2">
             <img
               src={'/shopping-cart.png'}
               width="30"
@@ -43,7 +43,7 @@ function Header() {
                 cursor: 'pointer'
               }}
             />
-          </a>
+          </a> */}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="navbarScroll">

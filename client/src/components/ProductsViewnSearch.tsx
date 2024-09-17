@@ -1,9 +1,9 @@
 'use client';
 
 import React from "react";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import { Row, Col } from "react-bootstrap";
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { Row, Col, Button, Card } from "react-bootstrap";
 
 
 var productsTest = [
@@ -72,6 +72,7 @@ var productsTest = [
 ]
 
 export default function ProductsCards() {
+
     return (
         <Row className='justify-content-center'>
              <Col xs={10} sm={8} md={6} lg={9}>
