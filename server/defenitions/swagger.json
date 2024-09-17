@@ -8,7 +8,7 @@
       "email": "support@moonactive.com"
     }
   },
-  "host": "localhost",
+  "host": "localhost:3000",
   "basePath": "/api",
   "tags": [
     {
@@ -50,37 +50,38 @@
               "properties": {
                 "username": {
                   "type": "string",
-                  "example": "adiri"
+                  "example": "Adirana"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Adirana"
                 },
                 "email": {
                   "type": "string",
                   "format": "email",
-                  "example": "adir@gmail.com"
+                  "example": "adirana@gmail.com"
                 },
                 "password": {
                   "type": "string",
                   "format": "password",
-                  "example":"12345678"
+                  "example": "strongPassword"
                 },
-                "user":{
+                "birthYear": {
+                    "type": "number",
+                    "example": 1990
+                },
+                "address": {
+                    "type": "string",
+                    "example": "1234 Main St"
+                },
+                "gender": {
                   "type": "string",
-                  "example":"adir itzhaki"
+                  "enum": ["male", "female", "unknown"],
+                  "example": "female"
                 },
-                "birthYear":{
-                  "type": "string",
-                  "example":"1999"
-                },
-                "address":{
-                  "type":"string",
-                  "example":"Yanuv"
-                },
-                "gender":{
-                  "type":"string",
-                  "example":"Unknown"
-                },
-                "isSeller":{
-                  "type":"string",
-                  "example":"true"
+                "isSeller": {
+                    "type": "boolean",
+                    "example": false
                 }
               }
             }
@@ -238,7 +239,7 @@
     "/product/create": {
       "post": {
         "tags": [
-          "auth"
+          "product"
         ],
         "summary": "Create a product",
         "description": "This endpoint allows a user to create a product.",
@@ -277,9 +278,126 @@
                 },
                 "price": {
                   "type": "number"
+                },
+                "userId": {
+                  "type": "string"
                 }
               }
             }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User successfully registered",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "application/json": {
+                  "message": "Invalid input data"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - User already exists",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "application/json": {
+                  "message": "User already exists"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/update": {
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Update a product",
+        "description": "This endpoint allows a user to Update a product.",
+        "operationId": "updateProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Product object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "email",
+                "password"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "User token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {

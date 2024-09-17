@@ -3,7 +3,7 @@ export default class InputValidation {
     validate(userData) {
         const { username, name, password, email, birthYear,
             address, gender,} = userData;
-            
+
         this.userNameValidation(username);
         this.nameValidation(name);
         this.passwordValidation(password);
@@ -41,6 +41,10 @@ export default class InputValidation {
     birthYearValidation(birthYear) {
         if (!birthYear) {
             throw "Input validation error - birthYear was not provided";
+        }
+
+        if(isNaN(birthYear)) {
+            throw "Input validation error - birthYear is not a number";
         }
 
         const currentYear = new Date().getFullYear();
