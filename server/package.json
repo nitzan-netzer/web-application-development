@@ -1,0 +1,41 @@
+{
+  "name": "leg2",
+  "version": "1.0.0",
+  "description": "Web application development for POS (point of sale)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "mongo:up": "docker-compose -f ../docker-compose-dev.yml up -d",
+    "mongo:down": "docker-compose -f ../docker-compose-dev.yml down",
+    "start:dev": "npm run mongo:up; sleep 3; npm run start"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nitzan-netzer/web-application-development.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nitzan-netzer/web-application-development/issues"
+  },
+  "homepage": "https://github.com/nitzan-netzer/web-application-development#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "i": "^0.3.7",
+    "json": "11.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.3",
+    "multer": "^1.4.5-lts.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
