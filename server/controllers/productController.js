@@ -13,7 +13,7 @@ export async function createProduct(req, res, next) {
             return res.status(400).json({ msg: 'Invalid userId format' });
         }
 
-        const user = User.findById(userId);
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -49,7 +49,7 @@ export async function updateProduct(req, res) {
 
     try {
         // Fetch the user to ensure it exists
-        const user = User.findById(userId);
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -82,7 +82,7 @@ export async function deleteProduct(req, res) {
     const { productId } = req.params;
 
     try {
-        const user = User.findById(userId);
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
