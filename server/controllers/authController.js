@@ -4,7 +4,11 @@ import { User } from '../models/user.js';
 import jwt from "jsonwebtoken";
 import InputValidation from '../validations/user/inputValidation.js';
 import { mySecret } from '../config/secrets.js';
+import DbValidation from "../validations/user/dbValidation.js";
+
+
 const inputValidation = new InputValidation();
+const dbValidation = new DbValidation()
 
 async function register (req, res) {
   try {
@@ -14,13 +18,9 @@ async function register (req, res) {
     } = req.body;
 
     inputValidation.validate(req.body);
-    // Check if user already exists
-    let user = await User.findOne({ email });
-    if (user) {
-      return res.status(400).json({ msg: 'User already exists' });
-    }
-    // Save new user in MongoDB
-    user = new User({
+    await dbValidation.validate(req.body);
+
+    const user = new User({
       username, name, email, password,
       birthYear, address, gender, isSeller
     });

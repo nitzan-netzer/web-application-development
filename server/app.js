@@ -2,6 +2,7 @@ import express from 'express';
 import {mongoConnect} from './config/db.js';
 import {authRoutes} from './routes/authRoutes.js';
 import {productRoutes} from './routes/productRoutes.js';
+import {purchaseRoutes} from "./routes/purchaseRoutes.js";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express"
 import swaggerDoc from "./defenitions/swagger.json" assert { type: "json" }
@@ -27,6 +28,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
+app.use('/api/purchase', purchaseRoutes);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
