@@ -1,6 +1,5 @@
 import { User } from '../models/user.js';
 import bcrypt from "bcrypt";
-import { User } from '../models/user.js';
 import jwt from "jsonwebtoken";
 import InputValidation from '../validations/user/inputValidation.js';
 import { mySecret } from '../config/secrets.js';

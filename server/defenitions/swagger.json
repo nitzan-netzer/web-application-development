@@ -3,7 +3,7 @@
   "info": {
     "description": "API documentation for our application",
     "version": "1.0.0",
-    "title": "Moon Active API"
+    "title": "Second Leg API"
   },
   "host": "example.com",
   "basePath": "/",
