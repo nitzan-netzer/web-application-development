@@ -5,7 +5,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import React from 'react'
-import { redirect } from 'next/dist/server/api-utils';
 import { useRouter } from 'next/navigation';
 
 
@@ -29,7 +28,7 @@ function Header() {
           />
           <Button onClick={handleClick} variant="outline-success"
             style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>להתחברות/להרשמה</Button>
-          <a href="/target-page" className="ms-2">
+          {/* <a href="/target-page" className="ms-2">
             <img
               src={'/shopping-cart.png'}
               width="30"
@@ -43,7 +42,7 @@ function Header() {
                 cursor: 'pointer'
               }}
             />
-          </a>
+          </a> */}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="navbarScroll">
