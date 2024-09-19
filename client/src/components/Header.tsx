@@ -12,7 +12,10 @@ import { useRouter } from 'next/navigation';
 
 function Header() {
   const router = useRouter();
-  const handleClick = () => {
+  const handleClickRegister = () => {
+    router.push('/register');
+  }
+  const handleClickLogin = () => {
     router.push('/login');
   }
   return (
@@ -26,8 +29,10 @@ function Header() {
             className="d-inline-block align-top"
             alt="רגל 2 logo"
           />
-          <Button onClick={handleClick} variant="outline-success"
-            style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>להתחברות/להרשמה</Button>
+          <Button onClick={handleClickRegister} variant="outline-success"
+            style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>הרשמה</Button>
+           <Button onClick={handleClickLogin} variant="outline-success"
+            style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>התחברות</Button>
           {/* <a href="/target-page" className="ms-2">
             <img
               src={'/shopping-cart.png'}
@@ -51,10 +56,10 @@ function Header() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#home" className="mx-3">דף הבית</Nav.Link>
-            <Nav.Link href="#Products" className="mx-3">ההמוצרים שלנו</Nav.Link>
-            <Nav.Link href="#About" className="mx-3">אז מי אנחנו</Nav.Link>
-            <Nav.Link href="#Contacts" className="mx-3">צרו קשר</Nav.Link>
+            <Nav.Link href="/" className="mx-3">דף הבית</Nav.Link>
+            <Nav.Link href="/products" className="mx-3">ההמוצרים שלנו</Nav.Link>
+            <Nav.Link href="/about" className="mx-3">אז מי אנחנו</Nav.Link>
+            <Nav.Link href="/contact-us" className="mx-3">צרו קשר</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
