@@ -5,9 +5,7 @@ import Policy from "@/srccomponents/Policy";
 export default async function policyApp() {
     return (
         <div className="policyApp">
-            <main>
-                <Policy />
-            </main>
+            <Policy />
         </div>
     )
 }
