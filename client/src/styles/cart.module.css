@@ -1,0 +1,24 @@
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+}
+.cart-header {
+    direction: rtl;
+}
+
+.cart-product {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    padding: 4px;
+    border: 2px white solid;
+    border-radius: 2px;
+    margin: 4px;
+    background-color: bisque;
+}
+
+.product-detail {
+    direction: rtl;
+    width: 100%;
+}
