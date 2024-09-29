@@ -86,6 +86,13 @@
             "schema": {
               "$ref": "#/definitions/ProductCreation"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -114,6 +121,13 @@
             "schema": {
               "$ref": "#/definitions/ProductUpdate"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
           },
           {
             "in": "path",
@@ -149,6 +163,13 @@
             "required": true,
             "type": "string",
             "example": "603d53a7a262f90b60d8dbd0"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -176,6 +197,13 @@
             "required": true,
             "type": "string",
             "example": "603d53a7a262f90b60d8dbd0"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -195,6 +223,15 @@
       "get": {
         "summary": "Get all products",
         "description": "This endpoint fetches all products",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Products fetched successfully"
@@ -209,6 +246,15 @@
       "get": {
         "summary": "Get all products statistics on products",
         "description": "This endpoint fetches all products",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Products statistics fetched successfully"
@@ -232,6 +278,13 @@
             "schema": {
               "$ref": "#/definitions/Purchase"
             }
+          },
+          {
+              "in": "header",
+              "name": "Authorization",
+              "description": "Bearer JWT token",
+              "required": true,
+              "type": "string"
           }
         ],
         "responses": {

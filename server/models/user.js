@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    salt: { type: String, required: true},
+    salt: { type: String, required: false},
     birthYear: { type: Number, required: true },
     address: { type: String, required: true },
     gender: { type: String, required: true, enum: ['male', 'female', 'unknown']},
@@ -22,8 +22,9 @@ userSchema.pre('save', async function(next) {
         return next();
     }
     try {
-        this.salt = await bcrypt.genSalt(10);
-        this.password = await bcrypt.hash(this.password, this.salt);
+        const salt = await bcrypt.genSalt(10);
+        this.salt = salt;
+        this.password = await bcrypt.hash(this.password, salt);
         if (!this.userId) {
             this.userId = this._id;
         }
