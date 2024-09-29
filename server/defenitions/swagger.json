@@ -1,12 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is the API documentation for the user registration endpoint of our application.",
+    "description": "API documentation for our application",
     "version": "1.0.0",
-    "title": "User Registration API",
-    "contact": {
-      "email": "support@moonactive.com"
-    }
+    "title": "Second Leg API"
   },
   "host": "localhost:3001",
   "basePath": "/api",
@@ -20,433 +17,354 @@
     "http"
   ],
   "paths": {
-    "/auth/register": {
+    "api/auth/register": {
       "post": {
-        "tags": [
-          "auth"
-        ],
         "summary": "Register a new user",
-        "description": "This endpoint allows a new user to register by providing necessary details.",
-        "operationId": "registerUser",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "description": "This endpoint registers a new user",
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "description": "User object that needs to be registered",
+            "description": "User registration info",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "username",
-                "email",
-                "password"
-              ],
-              "properties": {
-                "username": {
-                  "type": "string",
-                  "example": "Adirana"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "Adirana"
-                },
-                "email": {
-                  "type": "string",
-                  "format": "email",
-                  "example": "adirana@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "format": "password",
-                  "example": "strongPassword"
-                },
-                "birthYear": {
-                    "type": "number",
-                    "example": 1990
-                },
-                "address": {
-                    "type": "string",
-                    "example": "1234 Main St"
-                },
-                "gender": {
-                  "type": "string",
-                  "enum": ["male", "female", "unknown"],
-                  "example": "female"
-                },
-                "isSeller": {
-                    "type": "boolean",
-                    "example": false
-                }
-              }
+              "$ref": "#/definitions/UserRegistration"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "User successfully registered",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "User registered successfully"
           },
-          "400": {
-            "description": "Invalid input",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "application/json": {
-                  "message": "Invalid input data"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict - User already exists",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "application/json": {
-                  "message": "User already exists"
-                }
-              }
-            }
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/auth/login": {
+    "api/auth/login": {
       "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "login an existing user",
-        "description": "This endpoint allows an existing user to login by providing necessary details.",
-        "operationId": "registerUser",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Log in a user",
+        "description": "This endpoint logs in a user",
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "description": "User object that needs to be registered",
+            "description": "User login info",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "username",
-                "email",
-                "password"
-              ],
-              "properties": {
-                "username": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string",
-                  "format": "email"
-                },
-                "password": {
-                  "type": "string",
-                  "format": "password"
-                }
-              }
+              "$ref": "#/definitions/UserLogin"
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "User successfully logged in",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                }
-              }
-            }
+          "200": {
+            "description": "Login successful"
+          },
+          "404": {
+            "description": "User not found"
           },
           "400": {
-            "description": "Invalid input",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "application/json": {
-                  "message": "Invalid input data"
-                }
-              }
-            }
+            "description": "Invalid credentials"
           },
-          "409": {
-            "description": "Conflict - User can't login",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "application/json": {
-                  "message": "User already exists"
-                }
-              }
-            }
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/product/create": {
+    "api/product/create": {
       "post": {
-        "tags": [
-          "product"
-        ],
-        "summary": "Create a product",
-        "description": "This endpoint allows a user to create a product.",
-        "operationId": "createProduct",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Create a new product",
+        "description": "This endpoint creates a new product",
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "description": "Product object",
+            "description": "Product creation info",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "username",
-                "email",
-                "password"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "category": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "price": {
-                  "type": "number"
-                },
-                "userId": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/ProductCreation"
             }
-          },
-          {
-            "in": "header",
-            "name": "x-auth-token",
-            "description": "User token",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
           "201": {
-            "description": "User successfully registered",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "Product created successfully"
           },
           "400": {
-            "description": "Invalid input",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "application/json": {
-                  "message": "Invalid input data"
-                }
-              }
-            }
+            "description": "Invalid userId format or other validation errors"
           },
-          "409": {
-            "description": "Conflict - User already exists",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "application/json": {
-                  "message": "User already exists"
-                }
-              }
-            }
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
-    "/product/update": {
+    "api/product/update": {
       "post": {
-        "tags": [
-          "product"
-        ],
-        "summary": "Update a product",
-        "description": "This endpoint allows a user to Update a product.",
-        "operationId": "updateProduct",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Update an existing product",
+        "description": "This endpoint updates an existing product",
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "description": "Product object",
+            "description": "Product update info",
             "required": true,
             "schema": {
-              "type": "object",
-              "required": [
-                "username",
-                "email",
-                "password"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "category": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "price": {
-                  "type": "number"
-                }
-              }
+              "$ref": "#/definitions/ProductUpdate"
             }
           },
           {
-            "in": "header",
-            "name": "x-auth-token",
-            "description": "User token",
+            "in": "path",
+            "name": "productId",
+            "description": "ID of the product to update",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "example": "603d53a7a262f90b60d8dbd0"
           }
         ],
         "responses": {
-          "201": {
-            "description": "User successfully registered",
+          "200": {
+            "description": "Product updated successfully"
+          },
+          "404": {
+            "description": "User or Product not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "api/product/product/{productId}": {
+      "delete": {
+        "summary": "Delete an existing product",
+        "description": "This endpoint deletes an existing product",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "description": "ID of the product to delete",
+            "required": true,
+            "type": "string",
+            "example": "603d53a7a262f90b60d8dbd0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product deleted successfully"
+          },
+          "404": {
+            "description": "User or Product not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "api/product/products/{productId}": {
+      "get": {
+        "summary": "Get a product by ID",
+        "description": "This endpoint fetches a product by its ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "description": "ID of the product to fetch",
+            "required": true,
+            "type": "string",
+            "example": "603d53a7a262f90b60d8dbd0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product fetched successfully"
+          },
+          "404": {
+            "description": "Product not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "api/product/allProducts": {
+      "get": {
+        "summary": "Get all products",
+        "description": "This endpoint fetches all products",
+        "responses": {
+          "200": {
+            "description": "Products fetched successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "api/purchase/makeTransaction": {
+      "post": {
+        "summary": "Purchase products",
+        "description": "This endpoint allows users to purchase products",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Purchase information",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/Purchase"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Purchase successful"
+          },
+          "404": {
+            "description": "User or Product not found"
           },
           "400": {
-            "description": "Invalid input",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "application/json": {
-                  "message": "Invalid input data"
-                }
-              }
-            }
+            "description": "Invalid quantity or product status/availability issues"
           },
-          "409": {
-            "description": "Conflict - User already exists",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "UserRegistration": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "Adirana"
+        },
+        "name": {
+          "type": "string",
+          "example": "Adirana Smith"
+        },
+        "email": {
+          "type": "string",
+          "example": "adirana.smith@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password123"
+        },
+        "birthYear": {
+          "type": "integer",
+          "example": 1985
+        },
+        "address": {
+          "type": "string",
+          "example": "123 Elm Street"
+        },
+        "gender": {
+          "type": "string",
+          "example": "female"
+        },
+        "isSeller": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "UserLogin": {
+      "type": "object",
+      "properties": {
+        "emailOrUsername": {
+          "type": "string",
+          "example": "john.doe@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password123"
+        }
+      }
+    },
+    "ProductCreation": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Product Name"
+        },
+        "category": {
+          "type": "string",
+          "example": "Electronics"
+        },
+        "status": {
+          "type": "string",
+          "example": "available"
+        },
+        "description": {
+          "type": "string",
+          "example": "This is a great product."
+        },
+        "price": {
+          "type": "number",
+          "example": 99.99
+        },
+        "userId": {
+          "type": "string",
+          "example": "603d53a7a262f90b60d8dbcf"
+        }
+      }
+    },
+    "ProductUpdate": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Updated Product Name"
+        },
+        "image": {
+          "type": "string",
+          "example": "image.png"
+        },
+        "category": {
+          "type": "string",
+          "example": "Updated Electronics"
+        },
+        "status": {
+          "type": "string",
+          "example": "available"
+        },
+        "description": {
+          "type": "string",
+          "example": "This is an updated great product."
+        },
+        "price": {
+          "type": "number",
+          "example": 119.99
+        }
+      }
+    },
+    "Purchase": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "603d53a7a262f90b60d8dbcf"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "productId": {
+                "type": "string",
+                "example": "603d53a7a262f90b60d8dbd0"
               },
-              "example": {
-                "application/json": {
-                  "message": "User already exists"
-                }
+              "quantity": {
+                "type": "integer",
+                "example": 2
               }
             }
           }
