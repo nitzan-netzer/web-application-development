@@ -17,7 +17,7 @@
     "http"
   ],
   "paths": {
-    "api/auth/register": {
+    "/auth/register": {
       "post": {
         "summary": "Register a new user",
         "description": "This endpoint registers a new user",
@@ -42,7 +42,7 @@
         }
       }
     },
-    "api/auth/login": {
+    "/auth/login": {
       "post": {
         "summary": "Log in a user",
         "description": "This endpoint logs in a user",
@@ -73,7 +73,7 @@
         }
       }
     },
-    "api/product/create": {
+    "/product/create": {
       "post": {
         "summary": "Create a new product",
         "description": "This endpoint creates a new product",
@@ -101,7 +101,7 @@
         }
       }
     },
-    "api/product/update": {
+    "/product/update": {
       "post": {
         "summary": "Update an existing product",
         "description": "This endpoint updates an existing product",
@@ -137,7 +137,7 @@
         }
       }
     },
-    "api/product/product/{productId}": {
+    "/product/product/{productId}": {
       "delete": {
         "summary": "Delete an existing product",
         "description": "This endpoint deletes an existing product",
@@ -164,7 +164,7 @@
         }
       }
     },
-    "api/product/products/{productId}": {
+    "/product/products/{productId}": {
       "get": {
         "summary": "Get a product by ID",
         "description": "This endpoint fetches a product by its ID",
@@ -191,7 +191,7 @@
         }
       }
     },
-    "api/product/allProducts": {
+    "/product/allProducts": {
       "get": {
         "summary": "Get all products",
         "description": "This endpoint fetches all products",
@@ -205,7 +205,7 @@
         }
       }
     },
-    "api/product/getAllStatisticsOnProducts": {
+    "/product/getAllStatisticsOnProducts": {
       "get": {
         "summary": "Get all products statistics on products",
         "description": "This endpoint fetches all products",
@@ -219,7 +219,7 @@
         }
       }
     },
-    "api/purchase/makeTransaction": {
+    "/purchase/makeTransaction": {
       "post": {
         "summary": "Purchase products",
         "description": "This endpoint allows users to purchase products",
