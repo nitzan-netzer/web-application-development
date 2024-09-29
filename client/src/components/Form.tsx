@@ -46,7 +46,6 @@ function Form({ name, title, inputs, schema, serverAction, onSubmit }: FormType)
     if (!!formState.message) {
       alert(formState.message);
     }
-
   });
   
 

@@ -3,8 +3,9 @@
 import { RegisterValidation } from "@/srcvalidations/Register.validation";
 import { LoginValidation } from "@/srcvalidations/Login.validation";
 import { ZodError } from "zod";
+import { redirect } from 'next/navigation';
 
-export async function login(prevState:any, formData: FormData) {
+export async function signIn(prevState:any, formData: FormData) {
     const email = formData.get('email');
     const password = formData.get('password');
 
@@ -43,47 +44,75 @@ export async function login(prevState:any, formData: FormData) {
     }
 }
 
-export async function register(prevState:any, formData: FormData) {
+export async function signUp(prevState:any, formData: FormData) {
+    console.log(formData);
+    const username = formData.get('username');
+    const name = formData.get('name');
     const email = formData.get('email');
+    const address = formData.get('address');
+    const gender = formData.get('gender');
     const password = formData.get('password');
-    const confirmPassword = formData.get('confirmPassword');
+    const passwordConfirmation = formData.get('passwordConfirmation');
+    const isSeller = false;
+    const birthYear = 1990;
 
-    if (password !== confirmPassword) {
+
+    console.log("before validation");
+    if (password !== passwordConfirmation) {
         prevState.errors = {
-            confirmPassword: 'Passwords do not match'
+            passwordConfirmation: 'Passwords do not match'
         }
         return prevState;
     }
 
     try {
-        RegisterValidation.parse({email, password});
+        // RegisterValidation.parse({email, password, passwordConfirmation});
 
-        prevState = {
-            message: 'Success',
-            errors: undefined,
-            fieldValues: {
-                email: '',
-                password: '',
-                confirmPassword: ''
-            }
-        }
+        // prevState = {
+        //     message: 'Success',
+        //     errors: undefined,
+        //     fieldValues: {
+        //         email: '',
+        //         password: '',
+        //         passwordConfirmation: ''
+        //     }
+        // }
 
-        return prevState;
-        
+        // const response = await fetch('http://localhost:3001/api/auth/register', {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //         username,
+        //         name,
+        //         email,
+        //         password,
+        //         birthYear,
+        //         address,
+        //         gender,
+        //         isSeller
+        //     }),
+            
+        // });
+
+        // const data = response.json();
+        // redirect('/');
     } catch (error) {
+        console.log(error);
         const zodError = error as ZodError;
+        console.log(JSON.stringify(zodError));
         const errorMap = zodError.flatten().fieldErrors;
+        // const errorMap = zodError.format();
 
         prevState = {
             message: '',
             errors: {
-                name: errorMap['name']?.[0] ?? '',
                 email: errorMap['email']?.[0] ?? '',
+                password: errorMap['password']?.[0] ?? '',
+                passwordConfirmation: errorMap['passwordConfirmation']?.[0] ?? ''
             },
             fieldValues: {
                 email,
                 password,
-                confirmPassword
+                passwordConfirmation
             }
         }
 

@@ -11,6 +11,7 @@ async function register (req, res) {
       birthYear, address, gender, isSeller
     } = req.body;
 
+
     inputValidation.validate(req.body);
     // Check if user already exists
     let user = await User.findOne({ email });

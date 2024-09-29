@@ -5,5 +5,5 @@ export const RegisterValidation = z.object({
 		name: z.string().optional(),
 		email: z.string().email(),
 		password: passwordSchema,
-		confirmPassword: z.string(),
+		passwordConfirmation: z.string(),
 });

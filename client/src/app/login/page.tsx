@@ -1,6 +1,7 @@
 import React from 'react'
-import LoginForm from './LoginForm'
+import GenericLoginForm from './GenericLoginForm'
 import { Metadata } from 'next'
+import LoginForm from './LoginForm'
 
 export const metadata: Metadata ={
     title: '2nd Leg | Login',
@@ -8,6 +9,7 @@ export const metadata: Metadata ={
 
 function LoginPage() {
   return (
+    // <GenericLoginForm/>
     <LoginForm/>
   )
 }
