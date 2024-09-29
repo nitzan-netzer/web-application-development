@@ -9,6 +9,7 @@ import swaggerDoc from "./defenitions/swagger.json" assert { type: "json" }
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {createInitialData} from "../server/utils/initialData.js";
 
 const app = express();
 const corsOptions = {
@@ -29,6 +30,8 @@ mongoose.connection.on('disconnected', () => {
     mongoConnect();
 });
 mongoConnect();
+await createInitialData();
+
 
 app.use(express.json());
 
@@ -42,9 +45,9 @@ app.use('/api/public', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`)
     console.log(`Swagger docs available at http://localhost:${PORT}/api-docs`);
-
 });
