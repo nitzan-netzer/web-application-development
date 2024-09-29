@@ -8,7 +8,7 @@
       "email": "support@moonactive.com"
     }
   },
-  "host": "localhost:3000",
+  "host": "localhost:3001",
   "basePath": "/api",
   "tags": [
     {

@@ -17,14 +17,15 @@ Object.keys(dbURIs).forEach(dbName => {
 const mongoConnect = async () => {
     while(true){
         try{
-            await mongoose.connect('mongodb://localhost:27017/',{
-                serverSelectionTimeoutMS: 3000
+            const connectionString = "mongodb://127.0.0.1:27017/"
+            await mongoose.connect(connectionString,{
+                serverSelectionTimeoutMS: 5000
             })
             console.log('Connected to MongoDB');
             break;
         }
         catch(err){
-            console.error(`MongoDB connection failed. Retrying in ${RETRY_DELAY / 1000} seconds...`);
+            console.error(`MongoDB connection failed. Retrying in ${RETRY_DELAY / 1000} seconds... - ${err}`);
             await new Promise(resolve => setTimeout(resolve, RETRY_DELAY)); // Wait before retrying
         }
     }
