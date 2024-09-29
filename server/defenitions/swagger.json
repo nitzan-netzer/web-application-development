@@ -5,9 +5,17 @@
     "version": "1.0.0",
     "title": "Second Leg API"
   },
-  "host": "example.com",
-  "basePath": "/",
-  "schemes": ["http"],
+  "host": "localhost:3001",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Authentication related endpoints"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "api/auth/register": {
       "post": {

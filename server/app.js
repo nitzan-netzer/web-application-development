@@ -19,6 +19,12 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+mongoose.connection.on('error', () => {
+    mongoConnect();
+});
+mongoose.connection.on('connected', () => {
+    console.log('Connected to MongoDB');
+});
 mongoose.connection.on('disconnected', () => {
     mongoConnect();
 });
