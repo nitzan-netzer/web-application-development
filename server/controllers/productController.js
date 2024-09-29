@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import { Product } from '../models/product.js';
 import { User } from '../models/user.js';
 import {createImage} from "../middleware/imageUpload.js";
+import { getAllStatistics } from "../statistics/statisticsQueries.js";
 
-// Create Product
 export async function createProduct(req, res, next) {
-    const { name, category, status, description, price, userId } = req.body;
+    const { name, category, status, description, price, quantity, userId } = req.body;
 
     try {
 
@@ -13,7 +13,7 @@ export async function createProduct(req, res, next) {
             return res.status(400).json({ msg: 'Invalid userId format' });
         }
 
-        const user = await User.findById(userId);
+        const user = User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -22,6 +22,7 @@ export async function createProduct(req, res, next) {
             name,
             image: req.generatedFileName,
             category,
+            quantity,
             status,
             description,
             price,
@@ -31,11 +32,10 @@ export async function createProduct(req, res, next) {
         await product.save();
         res.status(201).json({ msg: 'Product created successfully' });
     } catch (error) {
-        res.status(500).json({ msg: 'Server error' });
+        res.status(500).json({ msg: error });
     }
 }
 
-// update Product
 export async function updateProduct(req, res) {
     const { name, image, category, status, description, price } = req.body;
     const userId = req.user.userId;
@@ -49,7 +49,7 @@ export async function updateProduct(req, res) {
 
     try {
         // Fetch the user to ensure it exists
-        const user = await User.findById(userId);
+        const user = User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -76,13 +76,12 @@ export async function updateProduct(req, res) {
     }
 }
 
-// Delete Product
 export async function deleteProduct(req, res) {
     const userId = req.user.userId;
     const { productId } = req.params;
 
     try {
-        const user = await User.findById(userId);
+        const user = User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -120,6 +119,16 @@ export async function getAllProducts(req, res) {
         const products = await Product.find();
         res.status(200).json({ products });
     } catch (error) {
+        res.status(500).json({ msg: 'Server error' });
+    }
+}
+
+export async function getAllStatisticsOnProducts(req, res) {
+    try {
+        const statistics = await getAllStatistics();
+        res.status(200).json({ statistics });
+    }
+    catch (error) {
         res.status(500).json({ msg: 'Server error' });
     }
 }
