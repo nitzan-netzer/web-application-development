@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { Product } from '../models/product.js';
 import { User } from '../models/user.js';
 import {createImage} from "../middleware/imageUpload.js";
+import { getLatLong } from "../utils/utils.js";
 
 // Create Product
 export async function createProduct(req, res, next) {
@@ -18,6 +19,9 @@ export async function createProduct(req, res, next) {
             return res.status(404).json({ msg: 'User not found' });
         }
 
+        const address = user.address;
+        const { latitude, longitude } = getLatLong(address);
+
         const product = new Product({
             name,
             image: req.generatedFileName,
@@ -26,6 +30,10 @@ export async function createProduct(req, res, next) {
             description,
             price,
             userId,
+            location: {
+                type: 'Point',
+                coordinates: [longitude, latitude]
+            }
         });
 
         await product.save();

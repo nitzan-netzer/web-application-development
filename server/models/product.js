@@ -19,7 +19,18 @@ const productSchema = new mongoose.Schema({
         auto: true, // This will automatically reference _id
         required: true
     },
-    quantity: { type: Number, required: true}
+    quantity: { type: Number, required: true},
+    location: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    }
 });
 
 // The 'pre' hook ensures productId is set to _id before saving
