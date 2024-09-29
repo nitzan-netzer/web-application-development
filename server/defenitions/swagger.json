@@ -89,7 +89,7 @@
           },
           {
             "in": "header",
-            "name": "Authorization",
+            "name": "x-auth-token",
             "description": "Bearer JWT token",
             "required": true,
             "type": "string"
@@ -124,7 +124,7 @@
           },
           {
             "in": "header",
-            "name": "Authorization",
+            "name": "x-auth-token",
             "description": "Bearer JWT token",
             "required": true,
             "type": "string"
@@ -166,7 +166,7 @@
           },
           {
             "in": "header",
-            "name": "Authorization",
+            "name": "x-auth-token",
             "description": "Bearer JWT token",
             "required": true,
             "type": "string"
@@ -200,7 +200,7 @@
           },
           {
             "in": "header",
-            "name": "Authorization",
+            "name": "x-auth-token",
             "description": "Bearer JWT token",
             "required": true,
             "type": "string"
@@ -226,7 +226,7 @@
         "parameters": [
           {
             "in": "header",
-            "name": "Authorization",
+            "name": "x-auth-token",
             "description": "Bearer JWT token",
             "required": true,
             "type": "string"
@@ -249,7 +249,7 @@
         "parameters": [
           {
             "in": "header",
-            "name": "Authorization",
+            "name": "x-auth-token",
             "description": "Bearer JWT token",
             "required": true,
             "type": "string"
@@ -281,7 +281,7 @@
           },
           {
               "in": "header",
-              "name": "Authorization",
+              "name": "x-auth-token",
               "description": "Bearer JWT token",
               "required": true,
               "type": "string"

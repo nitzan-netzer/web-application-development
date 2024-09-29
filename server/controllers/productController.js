@@ -5,7 +5,7 @@ import {createImage} from "../middleware/imageUpload.js";
 import { getAllStatistics } from "../statistics/statisticsQueries.js";
 
 export async function createProduct(req, res, next) {
-    const { name, category, status, description, price, userId } = req.body;
+    const { name, category, status, description, price, quantity, userId } = req.body;
 
     try {
 
@@ -13,7 +13,7 @@ export async function createProduct(req, res, next) {
             return res.status(400).json({ msg: 'Invalid userId format' });
         }
 
-        const user = await User.findById(userId);
+        const user = User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -22,6 +22,7 @@ export async function createProduct(req, res, next) {
             name,
             image: req.generatedFileName,
             category,
+            quantity,
             status,
             description,
             price,
@@ -31,7 +32,7 @@ export async function createProduct(req, res, next) {
         await product.save();
         res.status(201).json({ msg: 'Product created successfully' });
     } catch (error) {
-        res.status(500).json({ msg: 'Server error' });
+        res.status(500).json({ msg: error });
     }
 }
 
@@ -48,7 +49,7 @@ export async function updateProduct(req, res) {
 
     try {
         // Fetch the user to ensure it exists
-        const user = await User.findById(userId);
+        const user = User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -80,7 +81,7 @@ export async function deleteProduct(req, res) {
     const { productId } = req.params;
 
     try {
-        const user = await User.findById(userId);
+        const user = User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
