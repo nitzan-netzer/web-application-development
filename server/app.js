@@ -19,6 +19,12 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+mongoose.connection.on('error', () => {
+    mongoConnect();
+});
+mongoose.connection.on('connected', () => {
+    console.log('Connected to MongoDB');
+});
 mongoose.connection.on('disconnected', () => {
     mongoConnect();
 });
@@ -36,7 +42,7 @@ app.use('/api/public', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`)
     console.log(`Swagger docs available at http://localhost:${PORT}/api-docs`);

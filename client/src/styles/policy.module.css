@@ -1,0 +1,37 @@
+.policy-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    direction: rtl;
+    color: #3e2723;
+    background-color: #e0f2f1;
+    border-radius: 10px;
+}
+
+.policy-header {
+    text-align: center;
+}
+
+.card {
+    width: 90%;
+    margin: 2px 0;
+    border-radius: 2px;
+}
+
+.card-header {
+    background-color: #2e6830;
+    color: white;
+    cursor: pointer;
+    font-size: large;
+    text-align: center;
+}
+
+.card-header:hover {
+    background-color: #577e58;
+}
+
+.card-body {
+    background-color: #a5d6a7;
+    text-align: center;
+}

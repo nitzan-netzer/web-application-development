@@ -16,6 +16,7 @@ async function register (req, res) {
       birthYear, address, gender, isSeller
     } = req.body;
 
+
     inputValidation.validate(req.body);
     await dbValidation.validate(req.body);
 
