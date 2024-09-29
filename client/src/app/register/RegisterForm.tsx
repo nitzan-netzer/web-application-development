@@ -53,7 +53,8 @@ function RegisterForm() {
 
   useEffect(() => {
     if (!!formState.message) {
-      alert(formState.message);
+      // alert(formState.message);
+      console.log("Success");
     }
   }, [formState]);
 
@@ -71,11 +72,6 @@ function RegisterForm() {
           <FaUser className={styles.icon} />
         </div>
 
-        <p>
-          {formState.errors?.["username"]}
-          {errors["username"] && errors["username"]?.message}
-        </p>
-
         <div className={styles.inputBox}>
           <input
             type="text"
@@ -84,11 +80,6 @@ function RegisterForm() {
           />
           <FaUser className={styles.icon} />
         </div>
-
-        <p>
-          {formState.errors?.["name"]}
-          {errors["name"] && errors["name"]?.message}
-        </p>
 
         <div className={styles.inputBox}>
           <input
@@ -113,11 +104,6 @@ function RegisterForm() {
           <FaHome className={styles.icon} />
         </div>
 
-        <p>
-          {formState.errors?.["address"]}
-          {errors["address"] && errors["address"]?.message}
-        </p>
-
         <div className={styles.inputBox}>
           <Form.Select aria-placeholder="Gender" {...register("gender")}>
             <option value="">Select gender</option>
@@ -125,11 +111,6 @@ function RegisterForm() {
             <option value="female">Female</option>
           </Form.Select>
         </div>
-
-        <p>
-          {formState.errors?.["gender"]}
-          {errors["gender"] && errors["gender"]?.message}
-        </p>
 
         <div className={styles.inputBox}>
           <input
@@ -163,8 +144,6 @@ function RegisterForm() {
         <div >
           <Form.Check type='checkbox' label="Are you a seller?" {...register("isSeller")}/>
         </div>
-
-        {/* //TODO: validation under each input box */}
 
         <SubmitButton text="Submit" className="btn m-3" />
 
