@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Product } from '../models/product.js';
 import { User } from '../models/user.js';
 import {createImage} from "../middleware/imageUpload.js";
-import { getAllStatisticsOnProducts } from "../statistics/statisticsQueries.js";
+import { getAllStatistics } from "../statistics/statisticsQueries.js";
 
 export async function createProduct(req, res, next) {
     const { name, category, status, description, price, userId } = req.body;
@@ -124,7 +124,7 @@ export async function getAllProducts(req, res) {
 
 export async function getAllStatisticsOnProducts(req, res) {
     try {
-        const statistics = await getAllStatisticsOnProducts();
+        const statistics = await getAllStatistics();
         res.status(200).json({ statistics });
     }
     catch (error) {

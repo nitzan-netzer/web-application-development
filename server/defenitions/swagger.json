@@ -197,6 +197,20 @@
         }
       }
     },
+    "api/product/getAllStatisticsOnProducts": {
+      "get": {
+        "summary": "Get all products statistics on products",
+        "description": "This endpoint fetches all products",
+        "responses": {
+          "200": {
+            "description": "Products statistics fetched successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "api/purchase/makeTransaction": {
       "post": {
         "summary": "Purchase products",

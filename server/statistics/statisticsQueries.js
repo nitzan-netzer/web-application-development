@@ -89,7 +89,7 @@ function getIncomePerSeller(period) {
 }
 
 
-export async function getAllStatisticsOnProducts() {
+export async function getAllStatistics() {
     try {
         const top5Categories = await getTop5Categories();
         const avgPricePerProduct = await getAveragePricePerProduct();

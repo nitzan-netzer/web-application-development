@@ -3,7 +3,7 @@ const router = express.Router();
 import {createProduct, updateProduct, deleteProduct, getProduct, getAllProducts} from '../controllers/productController.js'
 import {authMiddleware} from '../middleware/auth.js'
 import {createImage} from "../middleware/imageUpload.js";
-import {getAllStatisticsOnProducts} from "../statistics/statisticsQueries.js";
+import {getAllStatisticsOnProducts} from "../controllers/productController.js";
 
 router.post('/create', [authMiddleware, createImage, createProduct]);
 router.post('/update', [authMiddleware, updateProduct]);
