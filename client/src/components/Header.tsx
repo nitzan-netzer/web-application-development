@@ -56,10 +56,12 @@ function Header() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="/" className="mx-3">דף הבית</Nav.Link>
+            <Nav.Link href="/home" className="mx-3">דף הבית</Nav.Link>
             <Nav.Link href="/products" className="mx-3">ההמוצרים שלנו</Nav.Link>
+            <Nav.Link href="/cart" className="mx-3">סל קניות</Nav.Link>
             <Nav.Link href="/about" className="mx-3">אז מי אנחנו</Nav.Link>
             <Nav.Link href="/contact-us" className="mx-3">צרו קשר</Nav.Link>
+            <Nav.Link href="/policy" className="mx-3">תקנון</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
