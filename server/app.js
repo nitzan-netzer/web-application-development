@@ -3,13 +3,14 @@ import {mongoConnect} from './config/db.js';
 import {authRoutes} from './routes/authRoutes.js';
 import {productRoutes} from './routes/productRoutes.js';
 import {purchaseRoutes} from "./routes/purchaseRoutes.js";
+import {adminRoutes} from "./routes/adminRoutes.js";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express"
 import swaggerDoc from "./defenitions/swagger.json" assert { type: "json" }
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import {createInitialData} from "../server/utils/initialData.js";
+import {createInitialData} from "./utils/initialData.js";
 
 const app = express();
 const corsOptions = {
@@ -38,6 +39,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/purchase', purchaseRoutes);
+app.use('/api/adminRoutes', adminRoutes);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
