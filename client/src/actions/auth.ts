@@ -66,34 +66,37 @@ export async function signUp(prevState:any, formData: FormData) {
     }
 
     try {
-        // RegisterValidation.parse({email, password, passwordConfirmation});
+        RegisterValidation.parse({email, password, passwordConfirmation});
 
-        // prevState = {
-        //     message: 'Success',
-        //     errors: undefined,
-        //     fieldValues: {
-        //         email: '',
-        //         password: '',
-        //         passwordConfirmation: ''
-        //     }
-        // }
+        prevState = {
+            message: 'Success',
+            errors: undefined,
+            fieldValues: {
+                email: '',
+                password: '',
+                passwordConfirmation: ''
+            }
+        }
 
-        // const response = await fetch('http://localhost:3001/api/auth/register', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         username,
-        //         name,
-        //         email,
-        //         password,
-        //         birthYear,
-        //         address,
-        //         gender,
-        //         isSeller
-        //     }),
+        const response = await fetch('http://localhost:3001/api/auth/register', {
+            method: 'POST',
+            body: JSON.stringify({
+                username,
+                name,
+                email,
+                password,
+                birthYear,
+                address,
+                gender,
+                isSeller
+            }),
             
-        // });
+        });
+        const data = response.json();
+        console.log("Data",data);
+        console.log("after validation");
+        return prevState;
 
-        // const data = response.json();
         // redirect('/');
     } catch (error) {
         console.log(error);
