@@ -36,7 +36,7 @@ app.use('/api/public', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`)
     console.log(`Swagger docs available at http://localhost:${PORT}/api-docs`);

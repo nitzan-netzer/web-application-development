@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import { Product } from '../models/product.js';
 import { User } from '../models/user.js';
 import {createImage} from "../middleware/imageUpload.js";
+import { getAllStatisticsOnProducts } from "../statistics/statisticsQueries.js";
 
-// Create Product
 export async function createProduct(req, res, next) {
     const { name, category, status, description, price, userId } = req.body;
 
@@ -35,7 +35,6 @@ export async function createProduct(req, res, next) {
     }
 }
 
-// update Product
 export async function updateProduct(req, res) {
     const { name, image, category, status, description, price } = req.body;
     const userId = req.user.userId;
@@ -76,7 +75,6 @@ export async function updateProduct(req, res) {
     }
 }
 
-// Delete Product
 export async function deleteProduct(req, res) {
     const userId = req.user.userId;
     const { productId } = req.params;
@@ -120,6 +118,16 @@ export async function getAllProducts(req, res) {
         const products = await Product.find();
         res.status(200).json({ products });
     } catch (error) {
+        res.status(500).json({ msg: 'Server error' });
+    }
+}
+
+export async function getAllStatisticsOnProducts(req, res) {
+    try {
+        const statistics = await getAllStatisticsOnProducts();
+        res.status(200).json({ statistics });
+    }
+    catch (error) {
         res.status(500).json({ msg: 'Server error' });
     }
 }
