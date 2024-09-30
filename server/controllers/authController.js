@@ -53,6 +53,23 @@ async function login (req, res)  {
   }
 }
 
+async function requestToSell(req, res) {
+  const { userId } = req.body;
 
+  try {
 
-export {register,login}
+    const user = await User.findOne({userId});
+
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    user.isSeller = true;
+    user.save();
+  }
+  catch (e) {
+    return res.status(500).json({ msg: e})
+  }
+}
+
+export {register,login, requestToSell}

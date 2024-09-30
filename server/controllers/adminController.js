@@ -2,13 +2,13 @@ import { User } from '../models/user.js';
 import { deleteAllProductsByUser } from '../utils/userUtils.js';
 
 async function blockUser(req,res){
-    const {userId} = req.body;
+    const { userId } = req.body;
     try {
       const user = await User.findOne({ userId });
       if (!user) {
         return res.status(404).json({ msg: 'User not found' });
       }
-      user.isSeller = false;
+      user.isBlocked = true;
       deleteAllProductsByUser(userId)
       await user.save()
       res.json({ ...user });

@@ -73,6 +73,37 @@
         }
       }
     },
+    "/auth/requestToSell": {
+      "post": {
+        "summary": "user request to sell products",
+        "description": "This endpoint makes the user a seller",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User request to sell products",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserRequestToSell"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "RequestToSell successful"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "/product/create": {
       "post": {
         "summary": "Create a new product",
@@ -426,6 +457,15 @@
       }
     },
     "UserBlock": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
+        }
+      }
+    },
+    "UserRequestToSell": {
       "type": "object",
       "properties": {
         "userId": {

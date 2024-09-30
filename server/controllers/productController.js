@@ -5,6 +5,20 @@ import {createImage} from "../middleware/imageUpload.js";
 import { getAllStatistics } from "../statistics/statisticsQueries.js";
 import { getLatLong } from "../utils/utils.js";
 
+export async function isUserBlocked(req, res, next) {
+    const { userId } = req.body;
+    try {
+        const user = await User.find({userId});
+        if (user.doc?.isBlocked) {
+            return res.status(404).json({ msg: 'User is blocked' });
+        }
+    }
+    catch (e) {
+        return res.status(500).json({ msg: e});
+    }
+    next();
+}
+
 export async function createProduct(req, res, next) {
     const { name, category, status, description, price, quantity, userId } = req.body;
 
