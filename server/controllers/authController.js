@@ -16,6 +16,8 @@ async function register (req, res) {
       birthYear, address, gender, isSeller
     } = req.body;
 
+    console.log("Request body: ", req.body);
+
 
     inputValidation.validate(req.body);
     await dbValidation.validate(req.body);
@@ -25,7 +27,7 @@ async function register (req, res) {
       birthYear, address, gender, isSeller
     });
     await user.save();
-    res.status(201).json({ msg: 'User registered successfully' });
+    res.status(201).json({ msg: 'User registered successfully', userId: user._id, isAdmin: user.isAdmin });
   } catch (err) {
     res.status(500).json({ msg: err });
   }

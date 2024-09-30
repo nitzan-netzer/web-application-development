@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginValidation } from "@/srcvalidations/Login.validation";
 import { useFormState } from "react-dom";
-import { signIn } from "@/srcactions/auth";
+import { login } from "@/srcactions/auth";
 
 function LoginForm() {
   const {
@@ -31,7 +31,7 @@ function LoginForm() {
     },
   };
 
-  const [formState, formAction] = useFormState(signIn, initialState);
+  const [formState, formAction] = useFormState(login, initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -52,7 +52,8 @@ function LoginForm() {
       <form ref={formRef} action={formAction}>
         <h1>Login</h1>
         <div className={styles.inputBox}>
-          <input type="Email" placeholder="Email" required />
+          <input type="Email" placeholder="Email" required
+          {...register("email")} />
           <FaUser className={styles.icon} />
         </div>
 
@@ -62,7 +63,8 @@ function LoginForm() {
         </p>
 
         <div className={styles.inputBox}>
-          <input type="password" placeholder="Password" required />
+          <input type="password" placeholder="Password" required
+          {...register("password")} />
           <FaLock className={styles.icon} />
         </div>
 

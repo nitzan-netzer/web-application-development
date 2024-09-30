@@ -132,7 +132,7 @@ function RegisterForm() {
             placeholder="password confirmation"
             {...register("passwordConfirmation")}
           />
-          <TbPassword className={styles.icon} />
+          {/* <TbPassword className={styles.icon} /> */}
         </div>
 
         <p>
@@ -141,17 +141,19 @@ function RegisterForm() {
             errors["passwordConfirmation"]?.message}
         </p>
 
-        <div >
-          <Form.Check type='checkbox' label="Are you a seller?" {...register("isSeller")}/>
+        <div>
+          <Form.Check
+            type="checkbox"
+            label="Are you a seller?"
+            {...register("isSeller")}
+          />
         </div>
 
         <SubmitButton text="Submit" className="btn m-3" />
 
         <div className={styles.registerLink}>
-          <p>
-            Already have an account?
-            <Link href="/login">Sign in</Link>
-          </p>
+          <p>Already have an account?</p>
+          <Link href="/login">Sign in</Link>
         </div>
       </form>
     </div>

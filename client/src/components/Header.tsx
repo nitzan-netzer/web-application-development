@@ -29,9 +29,9 @@ function Header() {
             className="d-inline-block align-top"
             alt="רגל 2 logo"
           />
-          <Button href="/register" variant="outline-success"
+          <Button href="/auth/register" variant="outline-success"
             style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>הרשמה</Button>
-          <Button href="/login" variant="outline-success"
+          <Button href="/auth/login" variant="outline-success"
             style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>התחברות</Button>
           <a href="/cart" className="ms-2">
             <img
