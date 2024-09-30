@@ -309,12 +309,13 @@
         "description": "This endpoint deletes an existing user",
         "parameters": [
           {
-            "in": "path",
-            "name": "userId",
-            "description": "ID of the user to delete",
+            "in": "body",
+            "name": "body",
+            "description": "User to be blocked",
             "required": true,
-            "type": "string",
-            "example": "userId"
+            "schema": {
+              "$ref": "#/definitions/UserDelete"
+            }
           },
           {
             "in": "header",
@@ -427,9 +428,18 @@
     "UserBlock": {
       "type": "object",
       "properties": {
-        "emailOrUsername": {
+        "userId": {
           "type": "string",
-          "example": "john.doe@example.com"
+          "example": "userId"
+        }
+      }
+    },
+    "UserDelete": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
         }
       }
     },
