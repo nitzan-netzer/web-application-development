@@ -10,20 +10,14 @@ export async function createProduct(req, res, next) {
 
     try {
 
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({ msg: 'Invalid userId format' });
-        }
-
-        const user = await User.findOne({
-            "_id": userId
-        })
+        const user = await User.findOne({userId});
 
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
 
         const address = user.address;
-        const { latitude, longitude } = getLatLong(address);
+        const {lat, lng} = await getLatLong(address);
 
         const product = new Product({
             name,
@@ -36,7 +30,7 @@ export async function createProduct(req, res, next) {
             userId,
             location: {
                 type: 'Point',
-                coordinates: [longitude, latitude]
+                coordinates: [lng, lat]
             }
         });
 

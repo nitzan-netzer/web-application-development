@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import {connections} from '../config/db.js'
+import { v4 as uuid } from 'uuid';
 
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -13,12 +14,8 @@ const productSchema = new mongoose.Schema({
     },
     description: { type: String, required: true },
     price: { type: Number, required: true },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // default id key in User model (_id)
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        auto: true, // This will automatically reference _id
-        required: true
-    },
+    userId: { type: String, ref: 'User' },
+    productId: { type: String, required: false },
     quantity: { type: Number, required: true},
     location: {
         type: {
@@ -33,11 +30,8 @@ const productSchema = new mongoose.Schema({
     }
 });
 
-// The 'pre' hook ensures productId is set to _id before saving
 productSchema.pre('save', function (next) {
-    if (!this.productId) {
-        this.productId = this._id;
-    }
+    this.productId = uuid();
     next();
 });
 
