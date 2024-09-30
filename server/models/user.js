@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     address: { type: String, required: true },
     gender: { type: String, required: true, enum: ['male', 'female', 'unknown']},
     isSeller: { type: Boolean, default: false },
-    isAdmin: { type: Boolean, default: false }
+    isAdmin: { type: Boolean, default: false },
 });
 
 // Password hash middleware
@@ -25,9 +25,11 @@ userSchema.pre('save', async function(next) {
         const salt = await bcrypt.genSalt(10);
         this.salt = salt;
         this.password = await bcrypt.hash(this.password, salt);
+
         if (!this.userId) {
             this.userId = this._id;
         }
+
         next();
     } catch (error) {
         next(error);

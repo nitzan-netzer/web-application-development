@@ -14,7 +14,10 @@ export async function createProduct(req, res, next) {
             return res.status(400).json({ msg: 'Invalid userId format' });
         }
 
-        const user = User.findById(userId);
+        const user = await User.findOne({
+            "_id": userId
+        })
+
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
