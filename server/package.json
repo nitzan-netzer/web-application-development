@@ -4,8 +4,8 @@
   "description": "Web application development for POS (point of sale)",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "dev": "node app.js",
+    "debug": "nodemon app.js",
     "mongo:up": "docker-compose -f ../docker-compose-dev.yml up -d",
     "mongo:down": "docker-compose -f ../docker-compose-dev.yml down",
     "start:dev": "npm run mongo:up; sleep 3; npm run start"
