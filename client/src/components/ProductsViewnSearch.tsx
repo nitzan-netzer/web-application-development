@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState } from "react";
-import Fuse from "fuse.js";
+import React, { useState, useEffect } from 'react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { Row, Col, Button, Card } from "react-bootstrap";
@@ -27,43 +26,56 @@ export default function ProductsCards({ products }: Props) {
 
     const productsList = Object.values(products);
 
-    const [input, setInput] = useState<any>(productsList);
-    const [nameQuery, setNameQuery] = useState(""); // Search term for name
-    const [emailQuery, setEmailQuery] = useState(""); // Search term for email
-    const [ageQuery, setAgeQuery] = useState("");
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>(productsList);
+    const [categoryQuery, setCategoryQuery] = useState("");
+    const [sellerQuery, setSellerQuery] = useState("");
+    const [priceQuery, setPriceQuery] = useState("");
+    const [nameQuery, setNameQuery] = useState("");
+    const [qualityQuery, setQualityQuery] = useState("");
 
-    
 
-    const handleSearch = () => {
-        let filteredProducts = productsList; // Start with the full list of friends
+    useEffect(() => {
+        let updatedProducts = [...productsList];
 
-        // First, create a Fuse instance and search by 'name' if the nameQuery is not empty
-        if (nameQuery.length > 0) {
-            const fuseByName = new Fuse(filteredProducts, { keys: ["name"] });
-            filteredProducts = fuseByName.search(nameQuery).map((result) => result.item);
+        if (categoryQuery) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.Category.toLowerCase().includes(categoryQuery.toLowerCase())
+            );
         }
 
-        // Then, filter the results by 'email' if the emailQuery is not empty
-        if (emailQuery.length > 0) {
-            const fuseByEmail = new Fuse(filteredProducts, { keys: ["email"] });
-            filteredProducts = fuseByEmail.search(emailQuery).map((result) => result.item);
+        if (sellerQuery) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.seller.toLowerCase().includes(sellerQuery.toLowerCase())
+            );
         }
 
-        // Finally, filter the results by 'age' if the ageQuery is not empty
-        if (ageQuery.length > 0) {
-            const fuseByAge = new Fuse(filteredProducts, { keys: ["age"] });
-            filteredProducts = fuseByAge.search(ageQuery).map((result) => result.item);
+        if (priceQuery) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.price <= Number(priceQuery)
+            );
         }
 
-        setInput(filteredProducts); // Update the state with the filtered results
-    };
+        if (nameQuery) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.name.toLowerCase().includes(nameQuery.toLowerCase())
+            );
+        }
+
+        if (qualityQuery) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.quality.toLowerCase().includes(qualityQuery.toLowerCase())
+            );
+        }
+
+        setFilteredProducts(updatedProducts);
+    }, [categoryQuery, sellerQuery, priceQuery, nameQuery, qualityQuery, products]);
 
     return (
 
         <Row className='justify-content-center'>
             <Col xs={10} sm={8} md={6} lg={9}>
                 <Row className='justify-content-center'>
-                    {!!productsList && productsList .map((product) => (
+                    {!!productsList && productsList.map((product) => (
                         <Col key={product.id} xs={12} sm={8} md={6} lg={4} className="mb-4">
                             <Card className="d-flex flex-column" style={{ height: '100%' }}>
                                 <Card.Img
@@ -92,37 +104,31 @@ export default function ProductsCards({ products }: Props) {
             <Col xs={2} sm={4} md={6} lg={3}>
                 {/* fix the hydration and add search, sort and filter */}
                 <div>
-                    {/* Input for name search */}
                     <input
                         type="text"
-                        placeholder="Search by name"
-                        value={nameQuery}
-                        onChange={(e) => setNameQuery(e.target.value)}
+                        placeholder="Filter by Category"
+                        value={categoryQuery}
+                        onChange={(e) => setCategoryQuery(e.target.value)}
                     />
 
-                    {/* Input for email search */}
                     <input
                         type="text"
-                        placeholder="Search by email"
-                        value={emailQuery}
-                        onChange={(e) => setEmailQuery(e.target.value)}
+                        placeholder="Filter by Seller"
+                        value={sellerQuery}
+                        onChange={(e) => setSellerQuery(e.target.value)}
                     />
 
-                    {/* Input for age search */}
                     <input
-                        type="text"
-                        placeholder="Search by age"
-                        value={ageQuery}
-                        onChange={(e) => setAgeQuery(e.target.value)}
+                        type="number"
+                        placeholder="Max Price"
+                        value={priceQuery}
+                        onChange={(e) => setPriceQuery(e.target.value)}
                     />
 
-                    <button onClick={handleSearch}>Search</button>
-
-                    {/* Render the filtered search results */}
                     <ul>
-                        {input.map((friend: any) => (
-                            <li key={friend.id}>
-                                {friend.name} - {friend.email} - {friend.age}
+                        {filteredProducts.map(product => (
+                            <li key={product.id}>
+                                <strong>{product.name}</strong> - {product.Category} - ${product.price}
                             </li>
                         ))}
                     </ul>
