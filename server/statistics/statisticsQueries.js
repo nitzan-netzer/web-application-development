@@ -22,7 +22,7 @@ function getAveragePricePerProduct() {
 function getSellerRankingBySales() {
     return Product.aggregate([
         { $match: { status: 'soldOut' } },
-        { $group: { _id: '$userId', totalSales: { $sum: '$quantity' } } },
+        { $group: { _id: '$product.name', totalSales: { $sum: '$quantity' } } },
         { $sort: { totalSales: -1 } }
     ]).exec();
 }

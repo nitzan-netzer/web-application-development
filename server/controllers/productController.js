@@ -30,7 +30,10 @@ export async function createProduct(req, res, next) {
         }
 
         const address = user.address;
-        const {lat, lng} = await getLatLong(address);
+        const location = await getLatLong(address);
+
+        const lat = location?.lat || "0";
+        const lng = location?.lng || "0";
 
         const product = new Product({
             name,
@@ -87,8 +90,8 @@ export async function updateProduct(req, res, next) {
         product.price = price || product.price;
 
         // Save the updated product
-        await product.save();
-        res.status(200).json({ msg: 'Product updated successfully' });
+        const savedProduct = await product.save();
+        res.status(200).json({ msg: 'Product updated successfully', product: savedProduct });
     } catch (error) {
         res.status(500).json({ msg: 'Server error' });
     }
