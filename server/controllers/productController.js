@@ -68,7 +68,7 @@ export async function updateProduct(req, res) {
 
     try {
         // Fetch the user to ensure it exists
-        const user = User.findById(userId);
+        const user = await User.findOne({userId});
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -100,7 +100,7 @@ export async function deleteProduct(req, res) {
     const { productId } = req.params;
 
     try {
-        const user = User.findById(userId);
+        const user = await User.findOne({userId});
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -121,7 +121,7 @@ export async function getProduct(req, res) {
     const { productId } = req.params;
 
     try {
-        const product = Product.findById(productId);
+        const product = Product.findOne({productId});
         if (!product) {
             return res.status(404).json({ msg: 'Product not found' });
         }
