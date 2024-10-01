@@ -73,6 +73,37 @@
         }
       }
     },
+    "/auth/requestToSell": {
+      "post": {
+        "summary": "user request to sell products",
+        "description": "This endpoint makes the user a seller",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User request to sell products",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserRequestToSell"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "RequestToSell successful"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "/product/create": {
       "post": {
         "summary": "Create a new product",
@@ -302,6 +333,76 @@
           }
         }
       }
+    },
+    "/adminRoutes/deleteUser": {
+      "delete": {
+        "summary": "Delete an existing user",
+        "description": "This endpoint deletes an existing user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User to be blocked",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDelete"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/adminRoutes/blockUser": {
+      "post": {
+        "summary": "Blocks a user",
+        "description": "This endpoint blocks a user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User to be blocked",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserBlock"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Product created successfully"
+          },
+          "400": {
+            "description": "Invalid userId format or other validation errors"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -352,6 +453,33 @@
         "password": {
           "type": "string",
           "example": "password123"
+        }
+      }
+    },
+    "UserBlock": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
+        }
+      }
+    },
+    "UserRequestToSell": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
+        }
+      }
+    },
+    "UserDelete": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
         }
       }
     },

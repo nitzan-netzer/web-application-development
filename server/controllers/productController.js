@@ -3,20 +3,35 @@ import { Product } from '../models/product.js';
 import { User } from '../models/user.js';
 import {createImage} from "../middleware/imageUpload.js";
 import { getAllStatistics } from "../statistics/statisticsQueries.js";
+import { getLatLong } from "../utils/utils.js";
+
+export async function isUserBlocked(req, res, next) {
+    const { userId } = req.body;
+    try {
+        const user = await User.find({userId});
+        if (user.doc?.isBlocked) {
+            return res.status(404).json({ msg: 'User is blocked' });
+        }
+    }
+    catch (e) {
+        return res.status(500).json({ msg: e});
+    }
+    next();
+}
 
 export async function createProduct(req, res, next) {
     const { name, category, status, description, price, quantity, userId } = req.body;
 
     try {
 
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({ msg: 'Invalid userId format' });
-        }
+        const user = await User.findOne({userId});
 
-        const user = User.findById(userId);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
+
+        const address = user.address;
+        const {lat, lng} = await getLatLong(address);
 
         const product = new Product({
             name,
@@ -27,10 +42,14 @@ export async function createProduct(req, res, next) {
             description,
             price,
             userId,
+            location: {
+                type: 'Point',
+                coordinates: [lng, lat]
+            }
         });
 
-        await product.save();
-        res.status(201).json({ msg: 'Product created successfully' });
+        const savedProduct = await product.save();
+        res.status(201).json({ msg: 'Product created successfully', product: savedProduct });
     } catch (error) {
         res.status(500).json({ msg: error });
     }
@@ -49,7 +68,7 @@ export async function updateProduct(req, res) {
 
     try {
         // Fetch the user to ensure it exists
-        const user = User.findById(userId);
+        const user = await User.findOne({userId});
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -81,7 +100,7 @@ export async function deleteProduct(req, res) {
     const { productId } = req.params;
 
     try {
-        const user = User.findById(userId);
+        const user = await User.findOne({userId});
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
@@ -102,7 +121,7 @@ export async function getProduct(req, res) {
     const { productId } = req.params;
 
     try {
-        const product = Product.findById(productId);
+        const product = Product.findOne({productId});
         if (!product) {
             return res.status(404).json({ msg: 'Product not found' });
         }
