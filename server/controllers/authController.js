@@ -24,7 +24,18 @@ async function register (req, res) {
       birthYear, address, gender, isSeller
     });
     await user.save();
-    res.status(201).json({ msg: 'User registered successfully' });
+    res.status(200).json({ msg: 'User registered successfully', user: {
+        userId: user._doc.userId,
+        username: user._doc.username,
+        name: user._doc.name,
+        email: user._doc.email,
+        birthYear: user._doc.birthYear,
+        address: user._doc.address,
+        gender: user._doc.gender,
+        isSeller: user._doc.isSeller,
+        isAdmin: user._doc.isAdmin,
+        isBlocked: user._doc.isBlocked,
+      }  });
   } catch (err) {
     res.status(500).json({ msg: err });
   }
@@ -46,7 +57,19 @@ async function login (req, res)  {
     }
     const payload = { userId: user._id, isAdmin: user.isAdmin };
     const token = jwt.sign(payload, mySecret, { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ token, user: {
+        userId: user._doc.userId,
+        username: user._doc.username,
+        name: user._doc.name,
+        email: user._doc.email,
+        birthYear: user._doc.birthYear,
+        address: user._doc.address,
+        gender: user._doc.gender,
+        isSeller: user._doc.isSeller,
+        isAdmin: user._doc.isAdmin,
+        isBlocked: user._doc.isBlocked,
+      }
+    });
   } catch (error) {
     res.status(500).json({ msg: 'Server error' });
   }
