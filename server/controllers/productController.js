@@ -8,7 +8,7 @@ export async function isUserBlocked(req, res, next) {
     const { userId } = req.body;
     try {
         const user = await User.find({userId});
-        if (user.doc?.isBlocked) {
+        if (user._doc?.isBlocked) {
             return res.status(404).json({ msg: 'User is blocked' });
         }
     }
