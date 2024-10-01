@@ -150,7 +150,7 @@
             "description": "Product update info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ProductUpdate"
+              "$ref": "#/definitions/ProductCreation"
             }
           },
           {
@@ -490,13 +490,17 @@
           "type": "string",
           "example": "Product Name"
         },
+        "image": {
+          "type": "string",
+          "example": "Product image"
+        },
         "category": {
           "type": "string",
           "example": "Electronics"
         },
         "status": {
           "type": "string",
-          "example": "available"
+          "example": "available/soldOut"
         },
         "description": {
           "type": "string",
@@ -509,7 +513,8 @@
         "userId": {
           "type": "string",
           "example": "603d53a7a262f90b60d8dbcf"
-        }
+        },
+        "quantity": {"type": "number", "example": 1}
       }
     },
     "ProductUpdate": {
