@@ -5,7 +5,6 @@ import InputValidation from '../validations/user/inputValidation.js';
 import { mySecret } from '../config/secrets.js';
 import DbValidation from "../validations/user/dbValidation.js";
 
-
 const inputValidation = new InputValidation();
 const dbValidation = new DbValidation()
 

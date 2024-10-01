@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
 import { Product } from '../models/product.js';
 import { User } from '../models/user.js';
-import {createImage} from "../middleware/imageUpload.js";
+import { createImage } from "../middleware/imageUpload.js";
 import { getAllStatistics } from "../statistics/statisticsQueries.js";
 import { getLatLong } from "../utils/utils.js";
 
@@ -53,18 +52,18 @@ export async function createProduct(req, res, next) {
     } catch (error) {
         res.status(500).json({ msg: error });
     }
+    next();
 }
 
-export async function updateProduct(req, res) {
+export async function updateProduct(req, res, next) {
     const { name, image, category, status, description, price } = req.body;
     const userId = req.user.userId;
+
     const { productId } = req.params;
 
     if (image) {
         createImage();
     }
-
-    // Validate inputs here...
 
     try {
         // Fetch the user to ensure it exists
@@ -93,6 +92,8 @@ export async function updateProduct(req, res) {
     } catch (error) {
         res.status(500).json({ msg: 'Server error' });
     }
+
+    next();
 }
 
 export async function deleteProduct(req, res) {
