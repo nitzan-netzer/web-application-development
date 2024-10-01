@@ -13,6 +13,7 @@
     "ag-grid-community": "^32.1.0",
     "ag-grid-react": "^32.1.0",
     "bootstrap": "^5.3.3",
+    "fuse.js": "^7.0.0",
     "leaflet": "^1.9.4",
     "next": "^14.2.12",
     "react": "^18",
