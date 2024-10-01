@@ -1,36 +1,73 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation'; 
 import styles from '../styles/cart.module.css';
 import { Product } from '@/srctypes/products.type';
 
 export default function Cart() {
-    // TODO: should hold somewhere chosen products state and use it here. can be context or localStorage or anything else
-    const [chosenProducts, setChosenProducts] = useState<Product[]>([{name: 'אורי', price: 100}, {name: 'אור', price: 5}])
+    const [chosenProducts, setChosenProducts] = useState<Product[]>([
+        { name: 'אורי', price: 100, imageUrl: '/images/product1.png' }, 
+        { name: 'אור', price: 5, imageUrl: '/images/product2.png' }
+    ]);
+
     const sumPrice = useMemo(() => chosenProducts.reduce((acc, curr) => 
-            acc + curr.price, 0
-        ),[chosenProducts])
+        acc + curr.price, 0
+    ), [chosenProducts]);
 
- return <div className={styles['cart-container']}>
-    <div className={styles['cart-header']}>
-        סל הקניות שלי
-    </div>
-    {chosenProducts.map((product, index) => {
-        return (
-            <div className={styles['cart-product']}>
-                <div className={styles['product-detail']}>
-                    שם המוצר:{product.name}
+    const router = useRouter();
+
+    const handlePurchase = () => {
+        router.push('/postPurches');
+    };
+
+    return (
+        <div className={styles.cartContainer}>
+            <div className={styles['cart-content']}>
+                <div className={styles['cart-header']}>
+                    סל הקניות שלי
                 </div>
-                <div className={styles['product-detail']}>
-                    מחיר:{product.price}
+                {chosenProducts.length > 0 ? (
+                    chosenProducts.map((product, index) => {
+                        return (
+                            <div className={styles['cart-product']} key={index}>
+                                <img 
+                                    src={product.imageUrl} 
+                                    alt={product.name} 
+                                    className={styles['product-image']}
+                                />
+                                <div className={styles['product-detail']}>
+                                    <span>שם המוצר:</span> {product.name}
+                                </div>
+                                <div className={styles['product-detail']}>
+                                    <span>מחיר:</span> ₪{product.price}
+                                </div>
+                                <button 
+                                    className={styles['remove-button']} 
+                                    onClick={() => {
+                                        setChosenProducts(prev => prev.filter((_, i) => i !== index));
+                                    }}>
+                                    🗑  
+                                </button>
+                            </div>
+                        );
+                    })
+                ) : (
+                    <div className={styles['empty-cart']}>הסל ריק</div>
+                )}
+
+                <div className={styles['total-price']}>
+                    סה"כ: ₪{sumPrice}
                 </div>
-                <button onClick={() => setChosenProducts(prev => prev.splice(index, 1))}>פח אשפה</button>
+
+                <button 
+                    className={styles['purchase-button']} 
+                    onClick={handlePurchase} 
+                >
+                    לרכישה
+                </button>
+                
             </div>
-        )
-    })}
-    <div>
-        סה"כ: {sumPrice}
-    </div>
- </div>   
+        </div>
+    );
 }
-
