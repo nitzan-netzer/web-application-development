@@ -15,6 +15,8 @@ async function register (req, res) {
       birthYear, address, gender, isSeller
     } = req.body;
 
+    console.log("Request body: ", req.body);
+
 
     inputValidation.validate(req.body);
     await dbValidation.validate(req.body);

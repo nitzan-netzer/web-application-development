@@ -1,9 +1,10 @@
-import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { updateSession } from './app/lib/session';
  
 // This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  console.log('middleware')
+export async function middleware(request: NextRequest) {
+  // console.log('Middleware ran');
+  return await updateSession(request);
   // return NextResponse.redirect(new URL('/home', request.url))
 }
  

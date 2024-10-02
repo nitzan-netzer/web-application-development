@@ -4,11 +4,12 @@ import { RegisterValidation } from "@/srcvalidations/Register.validation";
 import { LoginValidation } from "@/srcvalidations/Login.validation";
 import { ZodError } from "zod";
 import { redirect } from 'next/navigation';
+import { createSession, deleteSession } from "@/srcapp/lib/session";
 
-export async function signIn(prevState:any, formData: FormData) {
+export async function login(prevState:any, formData: FormData) {
     const email = formData.get('email');
     const password = formData.get('password');
-
+    console.log("Form data",formData);
 
     try {
         LoginValidation.parse({email, password});
@@ -22,7 +23,18 @@ export async function signIn(prevState:any, formData: FormData) {
             }
         }
 
-        return prevState;
+        const response = await fetch('http://localhost:3001/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Specify the content type
+            },
+            body: JSON.stringify({
+                emailOrUsername: email,
+                password
+            }),
+        });
+        const data = await response.json();
+        console.log("Data",data);
         
     } catch (error) {
         const zodError = error as ZodError;
@@ -42,6 +54,7 @@ export async function signIn(prevState:any, formData: FormData) {
 
         return prevState;
     }
+    redirect('/');
 }
 
 export async function signUp(prevState:any, formData: FormData) {
@@ -57,7 +70,7 @@ export async function signUp(prevState:any, formData: FormData) {
     const birthYear = 1990;
 
 
-    console.log("before validation");
+    // console.log("before validation");
     if (password !== passwordConfirmation) {
         prevState.errors = {
             passwordConfirmation: 'Passwords do not match'
@@ -80,6 +93,9 @@ export async function signUp(prevState:any, formData: FormData) {
 
         const response = await fetch('http://localhost:3001/api/auth/register', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Specify the content type
+            },
             body: JSON.stringify({
                 username,
                 name,
@@ -90,14 +106,11 @@ export async function signUp(prevState:any, formData: FormData) {
                 gender,
                 isSeller
             }),
-            
         });
-        const data = response.json();
+        
+        const data = await response.json();
+        await createSession(data);
         console.log("Data",data);
-        console.log("after validation");
-        return prevState;
-
-        // redirect('/');
     } catch (error) {
         console.log(error);
         const zodError = error as ZodError;
@@ -121,4 +134,11 @@ export async function signUp(prevState:any, formData: FormData) {
 
         return prevState;
     }
+    redirect('/');
 }
+
+
+export async function logout() {
+    deleteSession()
+    redirect('/auth/login')
+  }
