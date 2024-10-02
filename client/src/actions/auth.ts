@@ -34,6 +34,7 @@ export async function login(prevState:any, formData: FormData) {
             }),
         });
         const data = await response.json();
+        await createSession(data);
         console.log("Data",data);
         
     } catch (error) {
@@ -134,7 +135,7 @@ export async function signUp(prevState:any, formData: FormData) {
 
         return prevState;
     }
-    redirect('/');
+    redirect('/auth/login');
 }
 
 

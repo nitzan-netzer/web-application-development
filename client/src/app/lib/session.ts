@@ -26,9 +26,9 @@ export async function decrypt(session: string | undefined = "") {
 }
 
 export async function createSession(payload: SessionPayload) {
-  const { userId, isAdmin } = payload;
+  const { user, token } = payload;
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const session = await encrypt({ userId, expiresAt, isAdmin });
+  const session = token? await encrypt({ user, expiresAt, token }): await encrypt({ user, expiresAt });
 
   cookies().set("session", session, {
     httpOnly: true,
@@ -67,8 +67,9 @@ export async function deleteSession() {
   cookies().delete("session");
 }
 
-export async function getSession(req: NextRequest) {
-  const session = req.cookies.get("session")?.value;
-  if (!session) return null;
-  return await decrypt(session);
+export async function getSession() {
+	const session = cookies().get('session')?.value;
+	if (!session) return null;
+	return await decrypt(session);
 }
+

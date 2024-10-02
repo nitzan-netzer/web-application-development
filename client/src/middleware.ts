@@ -1,11 +1,25 @@
-import type { NextRequest } from 'next/server'
-import { updateSession } from './app/lib/session';
+import { NextResponse, type NextRequest } from 'next/server'
+import { getSession, updateSession } from './app/lib/session';
  
-// This function can be marked `async` if using `await` inside
+
+const publicRoutes = ['/auth/login', '/auth/register'];
+const privateRoutes = [];
+
 export async function middleware(request: NextRequest) {
-  // console.log('Middleware ran');
+
+  const path = request.nextUrl.pathname;
+  const isPublicUrl = !!publicRoutes.find((route) => path.toLowerCase().includes(route.toLowerCase()));
+  const session = await getSession();
+  const user: any = session?.user;
+  // console.log("Session",session);
+  // console.log("Token",session?.token);
+
+  if (!isPublicUrl && !user?.userId) {
+    console.log("Redirecting to login");
+    return NextResponse.redirect(new URL('/auth/login', request.nextUrl));
+  }
+
   return await updateSession(request);
-  // return NextResponse.redirect(new URL('/home', request.url))
 }
  
 export const config = {
