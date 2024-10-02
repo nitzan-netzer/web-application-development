@@ -1,83 +1,81 @@
 'use client';
 
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { Row, Col, Button, Card } from "react-bootstrap";
 
 
-var productsTest = [
-    {
-        id: 1,
-        name: "Cool summer shirt",
-        Category: "clothes",
-        price: 50,
-        quality: "Good quality",
-        image: "./ShirtImg.jpeg",
-        description: "Linen shorts sets are dominating this summer.",
-        seller: "Rozallita"
-    },
+type Product = {
+    id: number,
+    name: string,
+    Category: string,
+    price: number,
+    quality: string,
+    image: string,
+    description: string,
+    seller: string,
+}
 
-    {
-        id: 2,
-        name: "Phone printer",
-        Category: "electrical",
-        price: 150,
-        quality: "Has been repaired twice",
-        image: "./PrinterImg.jpeg",
-        description: "Photo printer that connects to youre phone via bluetooth",
-        seller: "Einav"
-    },
-    {
-        id: 3,
-        name: "Gold rings",
-        Category: "jewelry",
-        price: 200,
-        quality: "Good quality",
-        image: "./EarringsImg.jpeg",
-        description: "Minimalist 18K Gold Hoop Earrings, Stainless Steel Hoops.",
-        seller: "Or"
-    },
-    {
-        id: 4,
-        name: "Gitar",
-        Category: "musical",
-        price: 1000,
-        quality: "Good quality",
-        image: "./GitarImg.jpeg",
-        description: "Electric Guitar, Ibanez Jem 105, Schecter",
-        seller: "Nitzan"
-    },
-    {
-        id: 5,
-        name: "Tennis racket",
-        Category: "sport",
-        price: 500,
-        quality: "Good quality",
-        image: "./TenisRacketImg.jpeg",
-        description: "Tennis racket for beginners, Federer, Nadal, Djok",
-        seller: "Adir"
-    },
-    {
-        id: 6,
-        name: "Elephent puppet",
-        Category: "toys",
-        price: 20,
-        quality: "Good quality",
-        image: "./ElephentImg.jpeg",
-        description: "Elephant puppet, Baby Elephant, Savanna, African",
-        seller: "Dana"
-    }
+type Props = {
+    products: Product[]
+}
 
-]
 
-export default function ProductsCards() {
+export default function ProductsCards({ products }: Props) {
+
+    const productsList = Object.values(products);
+
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>(productsList);
+    const [categoryQuery, setCategoryQuery] = useState("");
+    const [sellerQuery, setSellerQuery] = useState("");
+    const [priceQuery, setPriceQuery] = useState("");
+    const [nameQuery, setNameQuery] = useState("");
+    const [qualityQuery, setQualityQuery] = useState("");
+
+
+    useEffect(() => {
+        let updatedProducts = [...productsList];
+
+        if (categoryQuery) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.Category.toLowerCase().includes(categoryQuery.toLowerCase())
+            );
+        }
+
+        if (sellerQuery) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.seller.toLowerCase().includes(sellerQuery.toLowerCase())
+            );
+        }
+
+        if (priceQuery) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.price <= Number(priceQuery)
+            );
+        }
+
+        if (nameQuery) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.name.toLowerCase().includes(nameQuery.toLowerCase())
+            );
+        }
+
+        if (qualityQuery) {
+            updatedProducts = updatedProducts.filter(product =>
+                product.quality.toLowerCase().includes(qualityQuery.toLowerCase())
+            );
+        }
+
+        setFilteredProducts(updatedProducts);
+    }, [categoryQuery, sellerQuery, priceQuery, nameQuery, qualityQuery, products]);
 
     return (
+
         <Row className='justify-content-center'>
-             <Col xs={10} sm={8} md={6} lg={9}>
+            <Col xs={10} sm={8} md={6} lg={9}>
                 <Row className='justify-content-center'>
-                    {productsTest.map(product => (
+                    {!!productsList && productsList.map((product) => (
                         <Col key={product.id} xs={12} sm={8} md={6} lg={4} className="mb-4">
                             <Card className="d-flex flex-column" style={{ height: '100%' }}>
                                 <Card.Img
@@ -104,8 +102,39 @@ export default function ProductsCards() {
             </Col>
 
             <Col xs={2} sm={4} md={6} lg={3}>
-                    {/* fix the hydration and add search, sort and filter */}
+                {/* fix the hydration and add search, sort and filter */}
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Filter by Category"
+                        value={categoryQuery}
+                        onChange={(e) => setCategoryQuery(e.target.value)}
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="Filter by Seller"
+                        value={sellerQuery}
+                        onChange={(e) => setSellerQuery(e.target.value)}
+                    />
+
+                    <input
+                        type="number"
+                        placeholder="Max Price"
+                        value={priceQuery}
+                        onChange={(e) => setPriceQuery(e.target.value)}
+                    />
+
+                    <ul>
+                        {filteredProducts.map(product => (
+                            <li key={product.id}>
+                                <strong>{product.name}</strong> - {product.Category} - ${product.price}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </Col>
         </Row>
+
     );
 }

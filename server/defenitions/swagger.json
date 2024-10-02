@@ -17,7 +17,7 @@
     "http"
   ],
   "paths": {
-    "api/auth/register": {
+    "/auth/register": {
       "post": {
         "summary": "Register a new user",
         "description": "This endpoint registers a new user",
@@ -42,7 +42,7 @@
         }
       }
     },
-    "api/auth/login": {
+    "/auth/login": {
       "post": {
         "summary": "Log in a user",
         "description": "This endpoint logs in a user",
@@ -73,7 +73,38 @@
         }
       }
     },
-    "api/product/create": {
+    "/auth/requestToSell": {
+      "post": {
+        "summary": "user request to sell products",
+        "description": "This endpoint makes the user a seller",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User request to sell products",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserRequestToSell"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "RequestToSell successful"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/product/create": {
       "post": {
         "summary": "Create a new product",
         "description": "This endpoint creates a new product",
@@ -86,6 +117,13 @@
             "schema": {
               "$ref": "#/definitions/ProductCreation"
             }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -101,7 +139,7 @@
         }
       }
     },
-    "api/product/update": {
+    "/product/update": {
       "post": {
         "summary": "Update an existing product",
         "description": "This endpoint updates an existing product",
@@ -112,8 +150,15 @@
             "description": "Product update info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ProductUpdate"
+              "$ref": "#/definitions/ProductCreation"
             }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
           },
           {
             "in": "path",
@@ -137,7 +182,7 @@
         }
       }
     },
-    "api/product/product/{productId}": {
+    "/product/product/{productId}": {
       "delete": {
         "summary": "Delete an existing product",
         "description": "This endpoint deletes an existing product",
@@ -149,6 +194,13 @@
             "required": true,
             "type": "string",
             "example": "603d53a7a262f90b60d8dbd0"
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -164,7 +216,7 @@
         }
       }
     },
-    "api/product/products/{productId}": {
+    "/product/products/{productId}": {
       "get": {
         "summary": "Get a product by ID",
         "description": "This endpoint fetches a product by its ID",
@@ -176,6 +228,13 @@
             "required": true,
             "type": "string",
             "example": "603d53a7a262f90b60d8dbd0"
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -191,10 +250,19 @@
         }
       }
     },
-    "api/product/allProducts": {
+    "/product/allProducts": {
       "get": {
         "summary": "Get all products",
         "description": "This endpoint fetches all products",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Products fetched successfully"
@@ -205,7 +273,30 @@
         }
       }
     },
-    "api/purchase/makeTransaction": {
+    "/product/getAllStatisticsOnProducts": {
+      "get": {
+        "summary": "Get all products statistics on products",
+        "description": "This endpoint fetches all products",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products statistics fetched successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/purchase/makeTransaction": {
       "post": {
         "summary": "Purchase products",
         "description": "This endpoint allows users to purchase products",
@@ -218,6 +309,13 @@
             "schema": {
               "$ref": "#/definitions/Purchase"
             }
+          },
+          {
+              "in": "header",
+              "name": "x-auth-token",
+              "description": "Bearer JWT token",
+              "required": true,
+              "type": "string"
           }
         ],
         "responses": {
@@ -229,6 +327,76 @@
           },
           "400": {
             "description": "Invalid quantity or product status/availability issues"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/adminRoutes/deleteUser": {
+      "delete": {
+        "summary": "Delete an existing user",
+        "description": "This endpoint deletes an existing user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User to be blocked",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDelete"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/adminRoutes/blockUser": {
+      "post": {
+        "summary": "Blocks a user",
+        "description": "This endpoint blocks a user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User to be blocked",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserBlock"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Product created successfully"
+          },
+          "400": {
+            "description": "Invalid userId format or other validation errors"
           },
           "500": {
             "description": "Server error"
@@ -288,6 +456,33 @@
         }
       }
     },
+    "UserBlock": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
+        }
+      }
+    },
+    "UserRequestToSell": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
+        }
+      }
+    },
+    "UserDelete": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
+        }
+      }
+    },
     "ProductCreation": {
       "type": "object",
       "properties": {
@@ -295,13 +490,17 @@
           "type": "string",
           "example": "Product Name"
         },
+        "image": {
+          "type": "string",
+          "example": "Product image"
+        },
         "category": {
           "type": "string",
           "example": "Electronics"
         },
         "status": {
           "type": "string",
-          "example": "available"
+          "example": "available/soldOut"
         },
         "description": {
           "type": "string",
@@ -314,7 +513,8 @@
         "userId": {
           "type": "string",
           "example": "603d53a7a262f90b60d8dbcf"
-        }
+        },
+        "quantity": {"type": "number", "example": 1}
       }
     },
     "ProductUpdate": {

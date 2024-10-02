@@ -5,7 +5,6 @@ import InputValidation from '../validations/user/inputValidation.js';
 import { mySecret } from '../config/secrets.js';
 import DbValidation from "../validations/user/dbValidation.js";
 
-
 const inputValidation = new InputValidation();
 const dbValidation = new DbValidation()
 
@@ -27,7 +26,18 @@ async function register (req, res) {
       birthYear, address, gender, isSeller
     });
     await user.save();
-    res.status(201).json({ msg: 'User registered successfully', userId: user._id, isAdmin: user.isAdmin });
+    res.status(200).json({ msg: 'User registered successfully', user: {
+        userId: user._doc.userId,
+        username: user._doc.username,
+        name: user._doc.name,
+        email: user._doc.email,
+        birthYear: user._doc.birthYear,
+        address: user._doc.address,
+        gender: user._doc.gender,
+        isSeller: user._doc.isSeller,
+        isAdmin: user._doc.isAdmin,
+        isBlocked: user._doc.isBlocked,
+      }  });
   } catch (err) {
     res.status(500).json({ msg: err });
   }
@@ -49,12 +59,41 @@ async function login (req, res)  {
     }
     const payload = { userId: user._id, isAdmin: user.isAdmin };
     const token = jwt.sign(payload, mySecret, { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ token, user: {
+        userId: user._doc.userId,
+        username: user._doc.username,
+        name: user._doc.name,
+        email: user._doc.email,
+        birthYear: user._doc.birthYear,
+        address: user._doc.address,
+        gender: user._doc.gender,
+        isSeller: user._doc.isSeller,
+        isAdmin: user._doc.isAdmin,
+        isBlocked: user._doc.isBlocked,
+      }
+    });
   } catch (error) {
     res.status(500).json({ msg: 'Server error' });
   }
 }
 
+async function requestToSell(req, res) {
+  const { userId } = req.body;
 
+  try {
 
-export {register,login}
+    const user = await User.findOne({userId});
+
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    user.isSeller = true;
+    user.save();
+  }
+  catch (e) {
+    return res.status(500).json({ msg: e})
+  }
+}
+
+export {register,login, requestToSell}

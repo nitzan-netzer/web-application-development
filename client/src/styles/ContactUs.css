@@ -1,53 +1,62 @@
 /* Flexbox container for map and table */
-.container {
+.contact-us-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 20px;
-  gap: 20px; /* Add space between the map and the table */
+  gap: 20px; /* Space between the map and the table */
+  direction: rtl; /* Make the layout RTL to change the order */
 }
 
 /* Map styling */
-.map {
-  flex: 1; /* Make the map take up 50% of the space */
-  margin-right: 20px; /* Add some space between map and table */
+.map-container {
+  flex: 1; /* Make the map take up a portion of the space */
+  margin-left: 20px; /* Add some space between the map and the table */
 }
 
 /* Table styling */
-.table {
+.team-container {
   flex: 1; /* Make the table take up the remaining space */
   max-width: 400px; /* Limit table width */
   text-align: right; /* Align text to the right for Hebrew */
 }
 
 /* Center the 'Our Team' heading */
-.table h3 {
+.team-title {
   text-align: center;
   margin-bottom: 10px;
-  font-size: 24px; /* Optional: Adjust the font size */
-  color: #333; /* Optional: Set color for the heading */
+  font-size: 24px;
+  color: #333;
 }
 
 /* Table element styling */
-table {
+.team-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-th, td {
+.team-table th, .team-table td {
   padding: 8px;
   border: 1px solid #ddd;
   text-align: left; /* Align table text to the left */
 }
 
 /* Green and yellow table header */
-th {
+.team-table th {
   background-color: green;
   color: yellow;
   font-weight: bold;
 }
 
 /* Table data cells */
-td {
+.team-table td {
   background-color: #fff; /* Optional: Add a background color for the table cells */
+}
+
+/* Optional map address styling */
+.map-address {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 18px;
+  color: #333;
 }
