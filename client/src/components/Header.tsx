@@ -6,9 +6,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { getCookie, hasCookie, setCookie } from 'cookies-next';
+import { logout } from '@/srcactions/auth';
 
 function Header() {
+
   const router = useRouter();
+  const session = hasCookie('session');
+  console.log('session', session);
 
   const handleClickRegister = () => {
     router.push('/register'); // Use router.push instead of window.location.href

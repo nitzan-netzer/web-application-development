@@ -41,11 +41,11 @@ function LoginForm() {
     }
   }, [formState]);
 
-  useEffect(() => {
-    if (!!formState.message) {
-      alert(formState.message);
-    }
-  });
+  // useEffect(() => {
+  //   if (!!formState.message) {
+  //     alert(formState.message);
+  //   }
+  // });
 
   return (
     <div className={styles.wrapper}>

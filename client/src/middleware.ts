@@ -11,12 +11,10 @@ export async function middleware(request: NextRequest) {
   const isPublicUrl = !!publicRoutes.find((route) => path.toLowerCase().includes(route.toLowerCase()));
   const session = await getSession();
   const user: any = session?.user;
-  // console.log("Session",session);
-  // console.log("Token",session?.token);
 
   if (!isPublicUrl && !user?.userId) {
-    console.log("Redirecting to login");
-    return NextResponse.redirect(new URL('/auth/login', request.nextUrl));
+    console.log("Redirecting to register");
+    return NextResponse.redirect(new URL('/auth/register', request.nextUrl));
   }
 
   return await updateSession(request);

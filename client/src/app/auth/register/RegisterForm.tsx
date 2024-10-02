@@ -153,7 +153,7 @@ function RegisterForm() {
 
         <div className={styles.registerLink}>
           <p>Already have an account?</p>
-          <Link href="/login">Sign in</Link>
+          <Link href="/auth/login">Sign in</Link>
         </div>
       </form>
     </div>
