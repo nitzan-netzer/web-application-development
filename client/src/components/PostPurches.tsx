@@ -1,8 +1,12 @@
 'use client';
 
 import React, { useMemo } from 'react';
+import dynamic from 'next/dynamic';
+
 import styles from '../styles/postPurches.module.css';
 import { Product } from '@/srctypes/products.type';
+
+const Map = dynamic(() => import('../components/Map'), { ssr: false });
 
 export default function PostPurches() {
     const purchasedProducts: Product[] = [
@@ -10,23 +14,22 @@ export default function PostPurches() {
         { name: 'נעליים', price: 250, imageUrl: '/images/shoes.png' }
     ];
 
+    const locations = [
+        {
+            address: 'מרכז תל אביב',
+            latitude: 32.0853,
+            longitude: 34.7818,
+        },
+        {
+            address: 'חיפה',
+            latitude: 32.7940,
+            longitude: 34.9896,
+        }
+    ];
+
     const sumPrice = useMemo(() => purchasedProducts.reduce((acc, curr) => 
         acc + curr.price, 0
     ), [purchasedProducts]);
-
-    const initMap = () => {
-        const mapOptions = {
-            zoom: 10,
-            center: { lat: 32.0853, lng: 34.7818 }, 
-        };
-        const map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    };
-
-    React.useEffect(() => {
-        if (window.google) {
-            initMap();
-        }
-    }, []);
 
     return (
         <div className={styles.orderSummaryContainer}>
@@ -51,8 +54,10 @@ export default function PostPurches() {
             </div>
 
             <div className={styles.mapContainer}>
-                <h2>כתובת המשלוח:</h2>
-                <div id="map" className={styles.map}></div>
+                <h2>כתובת לאיסוף:  </h2>
+                <div id="map" className={styles.map}>
+                    <Map locations={locations} />
+                </div>
             </div>
         </div>
     );
