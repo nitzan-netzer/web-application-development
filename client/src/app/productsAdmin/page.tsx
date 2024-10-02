@@ -1,7 +1,7 @@
 'use server';
 
 import React from "react";
-import PeresentProducts from "@/srccomponents/productsPage";
+import PeresentProducts from "@/srccomponents/productsPageAdmin";
 
 export default async function Products() {
 
