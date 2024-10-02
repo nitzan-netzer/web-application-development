@@ -44,6 +44,7 @@ export async function createProduct(req, res, next) {
             description,
             price,
             userId,
+            userName: user._doc.username,
             location: {
                 type: 'Point',
                 coordinates: [lng, lat]

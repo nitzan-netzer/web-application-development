@@ -7,19 +7,19 @@ export async function purchase(req, res, next) {
         const { userId, products } = req.body;
 
         // Validate user
-        const user = await User.findById(userId);
+        const user = await User.findOne({userId});
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
 
         // Validate products and calculate total amount
         let totalAmount = 0;
-        const productDetails = [];
+        const transactions = [];
 
         for (const item of products) {
             const { productId, quantity } = item;
 
-            const product = await Product.findById(productId);
+            const product = await Product.findOne({productId});
             if (!product) {
                 return res.status(404).json({ error: `Product with ID ${productId} not found` });
             }
@@ -33,7 +33,7 @@ export async function purchase(req, res, next) {
             }
 
             if (quantity > product.quantity) {
-                return res.status(400).json({error: `This product has only ${quantity} quantity`})
+                return res.status(400).json({error: `This product has only ${product.quantity} quantity`})
             }
 
             totalAmount += product.price * quantity;
@@ -43,24 +43,26 @@ export async function purchase(req, res, next) {
                 product.status = 'soldOut';
             }
 
-            productDetails.push({
-                productId: product._id,
-                quantity,
-                price: product.price
+            product.save();
+
+            // Create new transaction
+            const transaction = new Transaction({
+                userId: product._doc.userId,
+                sellerUserName: product._doc.username,
+                productId: product._doc.productId,
+                quantity: quantity,
+                priceForOne: product._doc.price,
+                priceForMany: product._doc.price * quantity,
             });
+            await transaction.save();
+
+            transactions.push(transaction);
         }
 
-        // Create new transaction
-        const transaction = new Transaction({
-            userId: user._id,
-            products: productDetails,
-            totalAmount,
+        res.status(200).json({
+            transactions,
+            totalAmount
         });
-
-        // Save the transaction
-        await transaction.save();
-
-        res.status(200).json(transaction);
     } catch (err) {
         next(err);  // Pass errors to the error handler middleware
     }

@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
 import { Product } from "../models/product.js";
+import {Transaction} from "../models/transactions.js";
 
 // Top 5 Best-Selling Categories
 function getTop5Categories() {
@@ -22,7 +22,7 @@ function getAveragePricePerProduct() {
 function getSellerRankingBySales() {
     return Product.aggregate([
         { $match: { status: 'soldOut' } },
-        { $group: { _id: '$product.name', totalSales: { $sum: '$quantity' } } },
+        { $group: { _id: '$product.username', totalSales: { $sum: '$quantity' } } },
         { $sort: { totalSales: -1 } }
     ]).exec();
 }
@@ -34,11 +34,30 @@ function getAveragePricePerCategory() {
     ]).exec();
 }
 
+const getSoldOutProductsCountPerSellerByUsername = async () => {
+    try {
+        const result = await Product.aggregate([
+            { $match: { status: 'soldOut' } }, // Match documents with status 'soldOut'
+            {
+                $group: {
+                    _id: "$username", // Group by username
+                    soldOutProductsCount: { $sum: 1 } // Sum up the number of documents per group
+                }
+            },
+            { $project: { _id: 0, username: "$_id", soldOutProductsCount: 1 } } // Project to format the output
+        ]);
+
+        console.log(result);
+        return result;
+    } catch (error) {
+        console.error('Error getting sold out products count per seller by username:', error);
+        throw error;
+    }
+};
 // Average Sales Per Seller
 function getAverageSalesPerSeller() {
-    return Product.aggregate([
-        { $match: { status: 'soldOut' } },
-        { $group: { _id: '$userId', avgSales: { $avg: '$quantity' } } }
+    return Transaction.aggregate([
+        { $group: { _id: '$username', avgSales: { $avg: '$quantity' } } }
     ]).exec();
 }
 
@@ -96,6 +115,7 @@ export async function getAllStatistics() {
         const sellerRanking = await getSellerRankingBySales();
         const avgPricePerCategory = await getAveragePricePerCategory();
         const avgSalesPerSeller = await getAverageSalesPerSeller();
+        const avgProductsPerSeller = await getSoldOutProductsCountPerSellerByUsername();
         const recentSales = await getRecentlySoldProducts();
         const salesToday = await getSalesQuantityPerSeller('today');
         const salesThisWeek = await getSalesQuantityPerSeller('thisWeek');
@@ -105,6 +125,7 @@ export async function getAllStatistics() {
 
         return {
             top5Categories,
+            avgProductsPerSeller,
             avgPricePerProduct,
             sellerRanking,
             avgPricePerCategory,
