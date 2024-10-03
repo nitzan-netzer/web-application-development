@@ -21,10 +21,8 @@ export async function createInitialData() {
     await createProductInitialData();
 }
 
-
 async function createProductInitialData() {
     const products = [];
-
 
     for (let i = 1; i <= 50; i++) {
         const locationIndex = i % 2 === 0 ? 0 : 1;
@@ -33,11 +31,12 @@ async function createProductInitialData() {
         products.push({
             name: `Product ${i}`,
             image: `https://via.placeholder.com/150?text=Product+${i}`,
-            category: `Category ${Math.floor((i - 1) / 4) + 1}`,
+            category: `Toys`,
             status: 'available',
             description: `Description for product ${i}`,
             price: Math.floor(Math.random() * 1000) + 1,
             userId: uuid(),
+            username: "Dana",
             productId: uuid(),
             quantity: Math.floor(Math.random() * 100) + 1,
             location: {
@@ -52,12 +51,12 @@ async function createProductInitialData() {
 
         products.push({
             name: `Product ${i}`,
-            image: `https://via.placeholder.com/150?text=Product+${i}`,
+            image: `jewelry`,
             category: `Category ${Math.floor((i - 1) / 4) + 1}`,
             status: 'soldOut',
             description: `Description for product ${i}`,
             price: Math.floor(Math.random() * 1000) + 1, // Random price between 1 and 1000
-            username: "dana",
+            username: "Or",
             userId: uuid(),
             productId: uuid(),
             quantity: Math.floor(Math.random() * 100) + 1,
@@ -69,11 +68,11 @@ async function createProductInitialData() {
         products.push({
             name: `Product ${i}`,
             image: `https://via.placeholder.com/150?text=Product+${i}`,
-            category: `Category ${Math.floor((i - 1) / 4) + 1}`,
+            category: `electrical`,
             status: 'soldOut',
             description: `Description for product ${i}`,
             price: Math.floor(Math.random() * 1000) + 1, // Random price between 1 and 1000
-            username: "nitzan",
+            username: "Einav",
             userId: uuid(),
             productId: uuid(),
             quantity: Math.floor(Math.random() * 100) + 1, // Random quantity between 1 and 100
@@ -82,15 +81,14 @@ async function createProductInitialData() {
                 coordinates: [lng, lat]
             }
         });
-
         products.push({
             name: `Product ${i}`,
             image: `https://via.placeholder.com/150?text=Product+${i}`,
-            category: `Category ${Math.floor((i - 1) / 4) + 1}`,
+            category: `clothes`,
             status: 'soldOut',
             description: `Description for product ${i}`,
             price: Math.floor(Math.random() * 1000) + 1, // Random price between 1 and 1000
-            username: "einav",
+            username: "Rotem",
             userId: uuid(),
             productId: uuid(),
             quantity: Math.floor(Math.random() * 100) + 1 // Random quantity between 1 and 100
@@ -105,6 +103,3 @@ async function createProductInitialData() {
     }
 }
 
-async function createUsersInitialData() {
-
-}
