@@ -2,21 +2,24 @@
 
 import React from "react";
 import PeresentProducts from "@/srccomponents/productsPage";
+import  {getSession}  from '@/srcapp/lib/session'
 
 export default async function Products() {
-
+  const session = await getSession();
+  const token = session?.token; 
+  console.log(token)
   let data = await fetch('http://localhost:3001/api/product/allProducts',{
     headers: {
-      'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY5N2IyMTMwYWM3NjAxMjk2ZTRjZTQiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzI3NjI2MjQ4LCJleHAiOjE3Mjc2Mjk4NDh9.s0R9gS45mfFgGXOQNAXl63MvnOg65nISImbIpBTAy8Q'
+      'Content-Type': 'application/json',
+      'x-auth-token': token
     }
   });
   let allProducts = await data.json(); 
-  console.log("allProducts", allProducts);
 
   return (
     <div className="App">
       <main>
-        <PeresentProducts/>
+        <PeresentProducts data={allProducts}/>
       </main>
     </div>
   );

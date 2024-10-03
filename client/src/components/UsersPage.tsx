@@ -2,7 +2,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Badge, Navbar } from 'react-bootstrap';
+import { Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import Filters, { FiltersState } from './UsersFilters';
 import UserCard from './UsersCard';
 import App from 'next/app';
@@ -31,6 +31,9 @@ const UsersPage: React.FC = () => {
 
     const [users, setUsers] = useState<User[]>(UsersTest);
     const [filteredUsers, setFilteredUsers] = useState<User[]>(UsersTest);
+    const [showEditModal, setShowEditModal] = useState<boolean>(false);
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [updatedUser, setUpdatedUser] = useState<User | null>(null);
 
     const deleteUsers = async (user: User) => {
         if (window.confirm(`Are you sure you want to delete ${user.username}?`)) {
@@ -40,8 +43,10 @@ const UsersPage: React.FC = () => {
         }
     };
 
-    const editUser = (user: User) => {
-        console.log('Edit user', user);
+    const handleEditUserClick = (user: User) => {
+        setCurrentUser(user);
+        setUpdatedUser(user);
+        setShowEditModal(true);
     };
 
     const applyFilters = (filters: FiltersState) => {
