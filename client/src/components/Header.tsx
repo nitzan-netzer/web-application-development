@@ -61,6 +61,8 @@ function Header() {
             <Nav.Link href="/about" className="mx-3">אז מי אנחנו</Nav.Link>
             <Nav.Link href="/contact-us" className="mx-3">צרו קשר</Nav.Link>
             <Nav.Link href="/policy" className="mx-3">תקנון</Nav.Link>
+            <Nav.Link href="/toolkit" className="mx-3">ארגז כלים</Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
       </Container>

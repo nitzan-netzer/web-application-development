@@ -1,0 +1,129 @@
+/* Toolkit.css */
+
+/* General container styling */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa; /* Light background for contrast */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles */
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: right; /* Align section headers to the right */
+  
+}
+
+/* Card styles */
+.card {
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  direction: rtl; /* Ensure RTL layout */
+
+}
+
+.card-header {
+  padding: 10px 15px;
+  text-align: right; /* Align card headers to the right */
+  direction: rtl; /* Ensure RTL layout */
+
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.list-group {
+  padding-right: 0; /* Adjust padding for RTL */
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  padding: 12px 15px;
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  text-align: right; /* Align list items to the right */
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+/* Adding hover effect on list items */
+.list-group-item:hover {
+  background-color: #f1f1f1;
+  transition: background-color 0.2s ease;
+}
+
+/* Numbered list styles */
+.list-group-numbered .list-group-item {
+  padding-right: 35px; /* Adjust padding for RTL */
+  padding-left: 0; /* Remove left padding */
+}
+
+.list-group-numbered .list-group-item::before {
+  font-weight: bold;
+  color: #6c757d;
+}
+
+/* Card color customization */
+.card-header.bg-primary {
+  background-color: #007bff !important;
+}
+
+.card-header.bg-success {
+  background-color: #28a745 !important;
+}
+
+.card-header.bg-info {
+  background-color: #17a2b8 !important;
+}
+
+.card-header.bg-warning {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+/* Ensure elements adapt correctly for RTL */
+ul, ol {
+  padding-right: 20px; /* Adjust padding for RTL */
+  padding-left: 0; /* Remove left padding */
+}
+
+li {
+  text-align: right; /* Align list items to the right */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  .list-group-item {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
