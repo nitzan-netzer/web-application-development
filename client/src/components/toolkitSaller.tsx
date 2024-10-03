@@ -63,7 +63,6 @@ const ToolkitSaller = () => {
                 <select 
                     value={category} 
                     onChange={(e) => setCategory(e.target.value)}
-                >
                     <option value="">Select Category</option>
                     <option value="clothes">clothes</option>
                     <option value="electrical">electrical</option>
