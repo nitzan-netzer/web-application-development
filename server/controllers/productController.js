@@ -19,7 +19,7 @@ export async function isUserBlocked(req, res, next) {
 }
 
 export async function createProduct(req, res, next) {
-    const { name, category, status, description, price, quantity, userId } = req.body;
+    const { name, category, status, description, price, quantity, userId, image } = req.body;
 
     try {
 
@@ -37,7 +37,7 @@ export async function createProduct(req, res, next) {
 
         const product = new Product({
             name,
-            image: req.generatedFileName,
+            image: req.generatedFileName || image,
             category,
             quantity,
             status,
@@ -101,7 +101,7 @@ export async function updateProduct(req, res, next) {
 }
 
 export async function deleteProduct(req, res) {
-    const userId = req.user.userId;
+    const userId = req.body;
     const { productId } = req.params;
 
     try {

@@ -18,15 +18,15 @@ async function register (req, res) {
 
     console.log("Request body: ", req.body);
 
-
     inputValidation.validate(req.body);
     await dbValidation.validate(req.body);
 
-    const user = new User({
+    let user = new User({
       username, name, email, password,
       birthYear, address, gender, isSeller, isAdmin
     });
-    await user.save();
+    user = await user.save();
+
     res.status(200).json({ msg: 'User registered successfully', user: {
         userId: user._doc.userId,
         username: user._doc.username,
@@ -58,13 +58,14 @@ async function login (req, res)  {
     if (!isMatch) {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
-    const payload = { userId: user._id, isAdmin: user.isAdmin };
+    const payload = { userId: user._doc.userId, isAdmin: user._doc.isAdmin };
 
     let token = jwt.sign(payload, mySecret, { expiresIn: '1h' });
 
     if (user._doc.isAdmin) {
         token = jwt.sign(payload, adminSecret, { expiresIn: '1h' });
     }
+
     res.json({ token, user: {
         userId: user._doc.userId,
         username: user._doc.username,
@@ -87,7 +88,6 @@ async function requestToSell(req, res) {
   const { userId } = req.body;
 
   try {
-
     const user = await User.findOne({userId});
 
     if (!user) {

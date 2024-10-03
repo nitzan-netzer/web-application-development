@@ -5,11 +5,11 @@ export default class DbValidation {
         const { username, email} = userData;
 
         await this.isUserAlreadyExistValidation(username);
-        await this.isUserAlreadyExistValidation(email);
+        await this.isEmailAlreadyExistValidation(email);
     }
 
     async isUserAlreadyExistValidation(username) {
-        const user = await User.findOne({ username: username });
+        const user = await User.findOne({ username });
         if (user) {
             throw "DB validation error - username already exists";
         }
