@@ -2,7 +2,7 @@ import { User } from '../models/user.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import InputValidation from '../validations/user/inputValidation.js';
-import { mySecret } from '../config/secrets.js';
+import {adminSecret, mySecret} from '../config/secrets.js';
 import DbValidation from "../validations/user/dbValidation.js";
 
 const inputValidation = new InputValidation();
@@ -12,7 +12,8 @@ async function register (req, res) {
   try {
     const {
       username, name, email, password,
-      birthYear, address, gender, isSeller
+      birthYear, address, gender, isSeller,
+        isAdmin,
     } = req.body;
 
 
@@ -21,7 +22,7 @@ async function register (req, res) {
 
     const user = new User({
       username, name, email, password,
-      birthYear, address, gender, isSeller
+      birthYear, address, gender, isSeller, isAdmin
     });
     await user.save();
     res.status(200).json({ msg: 'User registered successfully', user: {
@@ -56,7 +57,12 @@ async function login (req, res)  {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
     const payload = { userId: user._id, isAdmin: user.isAdmin };
-    const token = jwt.sign(payload, mySecret, { expiresIn: '1h' });
+
+    let token = jwt.sign(payload, mySecret, { expiresIn: '1h' });
+
+    if (user._doc.isAdmin) {
+        token = jwt.sign(payload, adminSecret, { expiresIn: '1h' });
+    }
     res.json({ token, user: {
         userId: user._doc.userId,
         username: user._doc.username,
