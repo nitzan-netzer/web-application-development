@@ -13,7 +13,6 @@ import { signUp } from "@/src/actions/auth";
 import { useFormState } from "react-dom";
 import { FaHome, FaUser } from "react-icons/fa";
 import Form from "react-bootstrap/Form";
-import { BsGenderAmbiguous } from "react-icons/bs";
 
 function RegisterForm() {
   const {
@@ -153,7 +152,7 @@ function RegisterForm() {
 
         <div className={styles.registerLink}>
           <p>Already have an account?</p>
-          <Link href="/login">Sign in</Link>
+          <Link href="/auth/login">Sign in</Link>
         </div>
       </form>
     </div>

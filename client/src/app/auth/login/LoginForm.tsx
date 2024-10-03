@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "@/srcstyles/loginRegister.module.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import SubmitButton from "@/srccomponents/SubmitButton";
@@ -36,8 +36,8 @@ function LoginForm() {
 
   const [formState, formAction] = useFormState(login, initialState);
   const formRef = useRef<HTMLFormElement>(null);
-  const [showToast, setShowToast] = React.useState(false);
-  const [succeeded, setSucceeded] = React.useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [succeeded, setSucceeded] = useState(false);
 
   useEffect(() => {
     if (!!formState.message) {
@@ -101,7 +101,7 @@ function LoginForm() {
           <div className={styles.registerLink}>
             <p>
               Don't have an account?
-              <Link href="/register">Sign up</Link>
+              <Link href="/auth/register">Sign up</Link>
             </p>
           </div>
         </form>

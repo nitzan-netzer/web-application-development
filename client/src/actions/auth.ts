@@ -72,7 +72,7 @@ export async function signUp(prevState:any, formData: FormData) {
     const gender = formData.get('gender');
     const password = formData.get('password');
     const passwordConfirmation = formData.get('passwordConfirmation');
-    const isSeller = false;
+    const isSeller = true;
     const birthYear = 1990;
 
 
@@ -145,6 +145,7 @@ export async function signUp(prevState:any, formData: FormData) {
 
 
 export async function logout() {
-    deleteSession()
-    redirect('/auth/login')
+    console.log("Logging out"); 
+    deleteSession();
+    // redirect('/auth/login')
   }
