@@ -9,18 +9,19 @@ import { useRouter } from 'next/navigation';
 import { getCookie, hasCookie, setCookie } from 'cookies-next';
 import { logout } from '@/srcactions/auth';
 
-function Header() {
+type headerProps = {
+  user?: any;
+};
+
+function Header({ user }: headerProps) {
 
   const router = useRouter();
-  const session = hasCookie('session');
-  console.log('session', session);
 
-  const handleClickRegister = () => {
-    router.push('/register'); // Use router.push instead of window.location.href
-  };
-
-  const handleClickLogin = () => {
-    router.push('/login');
+  const logout = async () => {
+    console.log('Logging out');
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+    });
   };
 
   return (
@@ -34,10 +35,19 @@ function Header() {
             className="d-inline-block align-top"
             alt="רגל 2 logo"
           />
-          <Button href="/auth/register" variant="outline-success"
-            style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>הרשמה</Button>
-          <Button href="/auth/login" variant="outline-success"
-            style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>התחברות</Button>
+
+          {user ? (<>
+            <Button variant="outline-success"
+              style={{ marginLeft: '20px', position: 'relative', top: '10px' }} onClick={logout}>התנתקות</Button>
+            {/* <Button href="/profile" variant="outline-success"
+              style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>פרופיל</Button> */}
+          </>):(<>
+            <Button href="/auth/register" variant="outline-success"
+              style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>הרשמה</Button>
+            <Button href="/auth/login" variant="outline-success"
+              style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>התחברות</Button>
+          </>)}
+
           <a href="/cart" className="ms-2">
             <img
               src={'/shopping-cart.png'}

@@ -42,7 +42,7 @@ export async function login(prevState:any, formData: FormData) {
         const errorMap = zodError.flatten().fieldErrors;
 
         prevState = {
-            message: '',
+            message: 'Something went wrong',
             errors: {
                 name: errorMap['name']?.[0] ?? '',
                 email: errorMap['email']?.[0] ?? '',
@@ -140,6 +140,7 @@ export async function signUp(prevState:any, formData: FormData) {
 
 
 export async function logout() {
-    deleteSession()
-    redirect('/auth/login')
+    console.log("Logging out");
+    deleteSession();
+    redirect('/auth/login');
   }

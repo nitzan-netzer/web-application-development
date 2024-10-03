@@ -67,6 +67,7 @@ export async function deleteSession() {
   cookies().delete("session");
 }
 
+
 export async function getSession() {
 	const session = cookies().get('session')?.value;
 	if (!session) return null;
