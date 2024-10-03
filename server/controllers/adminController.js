@@ -27,7 +27,8 @@ async function blockUser(req,res){
       res.status(500).json({ msg: 'Server error' });
     }
   }
-  async function deleteUser(req,res){
+
+async function deleteUser(req,res){
     const { userId } = req.body;
     try {
       const user = await User.findOne({ userId });
@@ -43,4 +44,13 @@ async function blockUser(req,res){
     }
   }
 
-  export {blockUser, deleteUser}
+async function getAllUsers(req, res) {
+    try {
+        const users = await User.find();
+        res.status(200).json({ users });
+    } catch (error) {
+        res.status(500).json({ msg: 'Server error' });
+    }
+}
+
+export {blockUser, deleteUser, getAllUsers}

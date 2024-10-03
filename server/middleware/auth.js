@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { mySecret } from '../config/secrets.js'
+import {adminSecret, mySecret} from '../config/secrets.js'
 
 export const authMiddleware = (req, res, next) => {
     const token = req.header('x-auth-token');
@@ -21,7 +21,7 @@ export const adminMiddleware = (req,res,next) => {
         return res.status(401).json({ msg: 'No token, authorization denied' });
     }
     try{
-        const decoded = jwt.verify(token, mySecret);
+        const decoded = jwt.verify(token, adminSecret);
         req.user = decoded.user;
         if(!req.user.isAdmin){
             return res.status(401).json({msg: 'Permission denied'});

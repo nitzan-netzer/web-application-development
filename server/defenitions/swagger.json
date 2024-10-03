@@ -403,6 +403,29 @@
           }
         }
       }
+    },
+    "/adminRoutes/allUsers": {
+      "get": {
+        "summary": "Get all users",
+        "description": "This endpoint fetches all users",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "users fetched successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
     }
   },
   "definitions": {

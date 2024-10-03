@@ -115,7 +115,7 @@ export async function getAllStatistics() {
         const sellerRanking = await getSellerRankingBySales();
         const avgPricePerCategory = await getAveragePricePerCategory();
         const avgSalesPerSeller = await getAverageSalesPerSeller();
-        const avgProductsPerSeller = await getSoldOutProductsCountPerSellerByUsername();
+        const soldOutProductsPerSeller = await getSoldOutProductsCountPerSellerByUsername();
         const recentSales = await getRecentlySoldProducts();
         const salesToday = await getSalesQuantityPerSeller('today');
         const salesThisWeek = await getSalesQuantityPerSeller('thisWeek');
@@ -125,7 +125,7 @@ export async function getAllStatistics() {
 
         return {
             top5Categories,
-            avgProductsPerSeller,
+            soldOutProductsPerSeller,
             avgPricePerProduct,
             sellerRanking,
             avgPricePerCategory,
