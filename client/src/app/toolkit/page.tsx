@@ -1,13 +1,20 @@
 import React from 'react'
 import ToolKitAdmin from '@/srccomponents/toolkitAdmin'
 import ToolKitSaller from '@/srccomponents/toolkitSaller'
-import {getAllStatistics } from '@/srcactions/getAllStatistics'
-import  {getSession}  from '@/srcapp/lib/session'
+import { getAllStatistics } from '@/srcapi/nitApi'
+import { getSession}  from '@/srcapp/lib/session'
+import { Session } from '@/srctypes/session.type'
+import { tree } from 'next/dist/build/templates/app-page'
 
 export default async function ToolKitApp() {
-    const session = await getSession(); 
-    const isAdmin = session?.user['isAdmin']
-    if (isAdmin) 
+    const session = await getSession();
+    if (!session) {
+        throw new Error('Session is missing.');
+    }
+    const user = session.user as Session['user'];
+    const isAdmin = user.isAdmin;
+    const isSaller = user.isSaller;
+    if (false) 
         {
 
             const data = await getAllStatistics();
@@ -19,11 +26,19 @@ export default async function ToolKitApp() {
                 </div> 
             )
         }
-    else
+    else if (true)
     {
         return (
             <div className="toolkitSaller">
                 <ToolKitSaller />
+            </div>
+        );
+    }
+    else
+    {
+        return (
+            <div className="toolkitUser">
+                <h1> You are not authorized to access this page</h1>
             </div>
         );
     }
