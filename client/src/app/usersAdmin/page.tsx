@@ -1,6 +1,7 @@
 'use server';
 
 import React from "react";
+import UsersPage from "@/srccomponents/UsersPage";
 
 export default async function Products() {
     // Fetch data from the server
@@ -15,7 +16,7 @@ export default async function Products() {
     return (
       <div className="App">
         <main>
-          <PeresentProducts/>
+          <UsersPage/>
         </main>
       </div>
     );

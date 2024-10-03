@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, {useState} from 'react';
 import { Accordion, Button } from 'react-bootstrap';
 
 interface User {
-    name: string;
-    position: string;
+    username: string;
+    rule: string;
     id: string;
 }
 
@@ -17,14 +17,15 @@ interface UsersCardProps {
 }
 
 const UserCard: React.FC<UsersCardProps> = ({ user, deleteUser, editUser }) => {
+
     return (
 
         <div className="UsersCard" dir="rtl">
             <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
-                    <Accordion.Header>{user.name}</Accordion.Header>
+                    <Accordion.Header>{user.username}</Accordion.Header>
                     <Accordion.Body>
-                        <p><b>Position:</b> {user.position}</p>
+                        <p><b>Rule:</b> {user.rule}</p>
                         <p><b>id:</b> {user.id}</p>
                         <Button variant="primary" onClick={() => editUser(user)}>Edit</Button>
                         <Button variant="danger" onClick={() => deleteUser(user)}>Delete</Button>
