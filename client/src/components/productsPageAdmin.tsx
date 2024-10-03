@@ -2,7 +2,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col} from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Filters, { FiltersState } from './Filters';
 import ProductCardAdmin from './ProductCardAdmin';
 
@@ -15,6 +15,7 @@ interface Product {
     userId: string;
     seller: string;
     image?: string;
+    id: string;
 }
 
 const ProductsPage: React.FC = () => {
@@ -29,6 +30,7 @@ const ProductsPage: React.FC = () => {
             userId: '603d53a7a262f90b60d8dbcf',
             image: 'https://via.placeholder.com/150',
             seller: 'Dana',
+            id: '603d53a7a262f90b60d8dbc3',
         },
         {
             name: 'iphone 13',
@@ -39,6 +41,7 @@ const ProductsPage: React.FC = () => {
             userId: '603d53a7a262f90b60d8dbc5',
             image: 'https://via.placeholder.com/150',
             seller: 'Dana',
+            id: '603d53a7a262f90b60d8dbc7',
         },
         {
             name: 'piano',
@@ -49,6 +52,7 @@ const ProductsPage: React.FC = () => {
             userId: '603d53a7a262f90b668dbcf',
             image: 'https://via.placeholder.com/150',
             seller: 'Dana',
+            id: '603d53a7a262f90b60d8dbc9',
         },
         {
             name: 'bull',
@@ -59,6 +63,7 @@ const ProductsPage: React.FC = () => {
             userId: '603153a7a262f90b60d8dbcf',
             image: 'https://via.placeholder.com/150',
             seller: 'Dana',
+            id: '603d53a7a262f90b60d8dbc1',
         },
         {
             name: 'costume',
@@ -69,6 +74,7 @@ const ProductsPage: React.FC = () => {
             userId: '603d53a7a262f90b60d8dbcf',
             image: 'https://via.placeholder.com/150',
             seller: 'Dana',
+            id: '603d53a7a262f90b60d8dbc2',
         },
         {
             name: 'pencil',
@@ -79,6 +85,7 @@ const ProductsPage: React.FC = () => {
             userId: '603d53a7sd262f90b60d8dbcf',
             image: 'https://via.placeholder.com/150',
             seller: 'Dana',
+            id: '603d53a7a262f90b60d8dbc3',
         },
     ];
 
@@ -99,6 +106,26 @@ const ProductsPage: React.FC = () => {
         setProducts(ProductsTest);
         setFilteredProducts(ProductsTest);
     }, []);
+
+    const handleDelete = async (product: Product) => {
+        if (window.confirm(`Are you sure you want to delete ${product.name}?`)) {
+            try {
+                const response = await fetch(`http://localhost:3001/api/products/${product.id}`, {
+                    method: 'DELETE',
+                });
+                if (response.ok) {
+                    setProducts(products.filter((p) => p.userId === product.userId));
+                    alert(`${product.name} deleted successfully`)
+                }
+                else {
+                    alert(`Failed to delete ${product.name}.`);
+                }
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                alert('Failed to delete product. Please try again later.');
+            }
+        }
+    }
 
     const applyFilters = (filters: FiltersState) => {
         console.log('Applying Filters:', filters);
@@ -151,13 +178,6 @@ const ProductsPage: React.FC = () => {
         setFilteredProducts(filtered);
     };
 
-
-    const addToCart = (product: Product) => {
-        const updatedCart = [...cart, product];
-        setCart(updatedCart);
-        localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
-    };
-
     return (
         <Container>
             <Filters applyFilters={applyFilters} />
@@ -165,7 +185,7 @@ const ProductsPage: React.FC = () => {
             <Row>
                 {filteredProducts.map((product) => (
                     <Col key={product.name} sm={12} md={6} lg={4}>
-                        <ProductCardAdmin product={product} addToCart={addToCart} />
+                        <ProductCardAdmin product={product} handleDelete={handleDelete} />
                     </Col>
                 ))}
             </Row>
