@@ -29,6 +29,7 @@ const ProductsPage: React.FC<Props> = ({ allProducts }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [cart, setCart] = useState<Product[]>([]);
+    
 
     useEffect(() => {
         const savedCart = localStorage.getItem('shopping cart');
@@ -112,11 +113,13 @@ const ProductsPage: React.FC<Props> = ({ allProducts }) => {
         const updatedCart = [...cart, product];
         setCart(updatedCart);
         localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
-
-        console.log("--------------------------------");
-        console.log("filtered products", filteredProducts);
-
+        console.log("updatedCart", updatedCart);
+        const data = localStorage.getItem('shopping cart');
+        console.log("shopping cart", data);
     };
+    
+
+
     return (
         <Container>
             <Navbar bg="light" className="mb-4" dir="rtl">
