@@ -10,7 +10,7 @@ import swaggerDoc from "./defenitions/swagger.json" assert { type: "json" };
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import {createInitialData} from "./utils/initialData.js";
+import {createInitialData} from "./initData/initialData.js";
 
 const app = express();
 const corsOptions = {
