@@ -70,10 +70,11 @@ const Filters: React.FC<FiltersProps> = ({ applyFilters }) => {
             >
               <option value="">All Categories</option>
               <option value="clothes">Clothes</option>
-              <option value="Electronics">Electronics</option>
-              <option value="music">Music</option>
-              <option value="animals">Animals</option>
-              <option value="school">School</option>
+              <option value="Electronics">Electrical</option>
+              <option value="jewelry">Jewelry</option>
+              <option value="musical">Musical</option>
+              <option value="sport">Sport</option>
+              <option value="toys">Toys</option>
             </Form.Control>
           </Form.Group>
         </Col>

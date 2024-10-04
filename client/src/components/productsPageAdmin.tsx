@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import Filters, { FiltersState } from './Filters';
+import Filters, { FiltersState } from './ProductsFilters';
 import ProductCardAdmin from './ProductCardAdmin';
 
 interface Product {

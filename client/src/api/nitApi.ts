@@ -141,14 +141,24 @@ export async function getProductById(productId: string): Promise<any> {
 
 // Fetch all products
 export async function getAllProducts(): Promise<any> {
+  try {
     const url = `${API_ORIGIN}${API_ALL_PRODUCTS}`;
     const headers = await getAuthHeaders();
-  
-    return callApi<any>(url, {
+
+    const data = await callApi<any>(url, {
       method: 'GET',
-      headers
+      headers,
     });
+
+    // Extract the products array from the data
+    const products = data.products;
+
+    return products; // Return the array of products directly
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    throw error;
   }
+}
 
 // Fetch all statistics
 export async function getAllStatistics(): Promise<any> {
