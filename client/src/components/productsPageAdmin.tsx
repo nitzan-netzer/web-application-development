@@ -7,6 +7,7 @@ import Filters, { FiltersState } from './ProductsFilters';
 import ProductCardAdmin from './ProductCardAdmin';
 import { deleteProduct } from '@/srcapi/nitApi';
 
+
 interface Product {
     location: object;
     name: string;
@@ -47,7 +48,7 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
         if (window.confirm(`Are you sure you want to delete ${product.name}?`)) {
 
             const productId = product.productId;
-
+            console.log("product ID : ",productId);
             try {
                 deleteProduct(productId);
 
