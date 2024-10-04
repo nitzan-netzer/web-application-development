@@ -36,7 +36,7 @@ export async function login(prevState:any, formData: FormData) {
         const data = await response.json();
         await createSession(data);
         console.log("Data",data);
-        
+
     } catch (error) {
         const zodError = error as ZodError;
         const errorMap = zodError.flatten().fieldErrors;
@@ -67,8 +67,8 @@ export async function signUp(prevState:any, formData: FormData) {
     const gender = formData.get('gender');
     const password = formData.get('password');
     const passwordConfirmation = formData.get('passwordConfirmation');
-    const isSeller = false;
-    const birthYear = 1990;
+    const isSeller = formData.get('isSeller') || true;
+    const birthYear = formData.get('birthYear') || 1990;
 
 
     // console.log("before validation");
@@ -108,7 +108,7 @@ export async function signUp(prevState:any, formData: FormData) {
                 isSeller
             }),
         });
-        
+
         const data = await response.json();
         await createSession(data);
         console.log("Data",data);
