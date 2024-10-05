@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import styles from '../styles/cart.module.css';
 import React, { useMemo, useState, useEffect } from 'react';
 import { makeTransaction } from "@/srcapi/nitApi";
+import { nis2usd } from "@/srcapi/nitApi";
 
 type Props = {
     products: Product[];
@@ -24,6 +25,8 @@ interface Product {
 
 const Cart: React.FC<Props> = () => {    
     const [chosenProducts, setChosenProducts] = useState<Product[]>([]);
+    const [usdPrice, setUsdPrice] = useState<number | null>(null); 
+    const [isConverting, setIsConverting] = useState<boolean>(false); 
 
     useEffect(() => {
         const storedCart = localStorage.getItem('shopping cart');
@@ -41,8 +44,8 @@ const Cart: React.FC<Props> = () => {
     const handlePurchase = async () => {
         try {
             for (const product of chosenProducts) {
-                await makeTransaction(product.productId, product.quantity);
-            }
+                await makeTransaction(product.productId, product.quantity, chosenProducts);
+              }              
     
             localStorage.setItem('purchasedProducts', JSON.stringify(chosenProducts));
     
@@ -57,6 +60,19 @@ const Cart: React.FC<Props> = () => {
         const updatedProducts = chosenProducts.filter((_, i) => i !== index);
         setChosenProducts(updatedProducts);
         localStorage.setItem('shopping cart', JSON.stringify(updatedProducts));
+    };
+
+    const handleConvertToUSD = async () => {
+        setIsConverting(true); 
+        try {
+            const convertedPrice = await nis2usd(sumPrice); 
+            setUsdPrice(convertedPrice);
+        } catch (error) {
+            console.error('Error converting NIS to USD:', error);
+            alert('שגיאה בהמרת הסכום לדולרים.');
+        } finally {
+            setIsConverting(false); 
+        }
     };
 
     return (
@@ -95,6 +111,21 @@ const Cart: React.FC<Props> = () => {
                 <div className={styles['total-price']}>
                     סה"כ: ₪{sumPrice}
                 </div>
+
+
+                <button 
+                    className={styles['convert-button']} 
+                    onClick={handleConvertToUSD}
+                    disabled={isConverting} 
+                > 
+                    {isConverting ? 'ממיר לדולרים...' : 'המרה לדולרים'}
+                </button>
+
+                {usdPrice !== null && (
+                    <div className={styles['usd-price']}>
+                        סה"כ בדולרים: ${usdPrice.toFixed(2)}
+                    </div>
+                )}
 
                 <button 
                     className={styles['purchase-button']} 

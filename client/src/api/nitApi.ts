@@ -183,7 +183,7 @@ export async function getAllStatistics(): Promise<any> {
 }
 
 // Make a transaction with a list of products
-export async function makeTransaction(products: { productId: string, quantity: number }[]): Promise<any> {
+export async function makeTransaction(productId: string, quantity: number, products: { productId: string; quantity: number; }[]): Promise<any> {
   const url = `${API_ORIGIN}${API_MAKE_TRANS}`;
   const headers = await getAuthHeaders();
   const session = await getSession() as Session | null;
