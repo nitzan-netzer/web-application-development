@@ -115,13 +115,22 @@ export async function deleteProduct(productId: string): Promise<any> {
     if (!productId) {
       throw new Error('Product ID is required for deletion.');
     }
-  
+
+    const session = await getSession() as Session | null;
+    if (!session || !session.user.userId) {
+        throw new Error('User ID is missing.');
+    }
+    const userId = session.user.userId;
+    const body = JSON.stringify({ userId });
+    
     const url = `${API_ORIGIN}${API_PRODUCT_DELETE}/${productId}`;
     const headers = await getAuthHeaders();
-  
+
+
     return callApi<any>(url, {
       method: 'DELETE',
       headers,
+      body
     });
   }
 // Fetch a product by ID
