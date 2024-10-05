@@ -21,6 +21,7 @@ const API_ALL_USERS = '/api/adminRoutes/allUsers';
 // Utility function to get headers with authentication
 async function getAuthHeaders(): Promise<HeadersInit> {
   const session = await getSession() as Session | null;
+  console.log(session?.token);
   if (!session) {
     throw new Error('Session is missing.');
   }
@@ -126,7 +127,8 @@ export async function deleteProduct(productId: string): Promise<any> {
     const url = `${API_ORIGIN}${API_PRODUCT_DELETE}/${productId}`;
     const headers = await getAuthHeaders();
 
-
+    console.log("product id : ", productId);
+    console.log("user id : ", userId);
     return callApi<any>(url, {
       method: 'DELETE',
       headers,

@@ -24,7 +24,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
   return (
     <Card className="mb-4" dir="rtl">
-      {product.image && <Card.Img variant="top" src={product.image} />}
+      {product.image && <Card.Img variant="top" src={product.image} style={{ width: '295px', height: '200px' }}/>}
       <Card.Body>
         <Card.Title>{product.name}</Card.Title>
         <Card.Text>{product.description}</Card.Text>
