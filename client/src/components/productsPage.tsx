@@ -4,122 +4,63 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Badge, Navbar } from 'react-bootstrap';
 import ProductCard from './ProductCard';
-import Filters, { FiltersState } from './Filters';
+import Filters, { FiltersState } from './ProductsFilters';
 
 
 interface Product {
+    location: object;
     name: string;
+    image: string;
     category: string;
     status: string;
     description: string;
     price: number;
     userId: string;
-    seller: string;
-    image?: string;
+    productId: string;
+    quantity: number;
 }
 
 type Props = {
-    products: Product[]
+    allProducts: Product[]
 }
 
-// type Product = {
-//     id: number,
-//     name: string,
-//     Category: string,
-//     price: number,
-//     quality: string,
-//     image: string,
-//     description: string,
-//     seller: string,
-// }
-
-const ProductsPage: React.FC = () => {
-    // Test data
-    const ProductsTest: Product[] = [
-        {
-            name: 'shirt',
-            category: 'clothes',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 99.99,
-            userId: '603d53a7a262f90b60d8dbcf',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-        },
-        {
-            name: 'iphone 13',
-            category: 'Electronics',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 9999.99,
-            userId: '603d53a7a262f90b60d8dbc5',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-        },
-        {
-            name: 'piano',
-            category: 'music',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 9.99,
-            userId: '603d53a7a262f90b668dbcf',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-        },
-        {
-            name: 'bull',
-            category: 'animals',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 959.99,
-            userId: '603153a7a262f90b60d8dbcf',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-        },
-        {
-            name: 'costume',
-            category: 'clothes',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 99.99,
-            userId: '603d53a7a262f90b60d8dbcf',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-        },
-        {
-            name: 'pencil',
-            category: 'school',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 349.99,
-            userId: '603d53a7sd262f90b60d8dbcf',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-        },
-    ];
+const ProductsPage: React.FC<Props> = ({ allProducts }) => {
 
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-    const [cart, setCart] = useState<Product[]>(() => {
-        const savedCart = localStorage.getItem('shopping cart');
-        return savedCart ? JSON.parse(savedCart) : [];
-    }
-    );
+    const [cart, setCart] = useState<Product[]>([]);
+    
 
     useEffect(() => {
-        localStorage.setItem('shopping cart', JSON.stringify(cart));
+        const savedCart = localStorage.getItem('shopping cart');
+        if (savedCart) {
+            setCart(JSON.parse(savedCart));
+        }
+    }, []);
+
+    useEffect(() => {
+        if (cart.length > 0 && typeof window !== 'undefined') {
+            localStorage.setItem('shopping cart', JSON.stringify(cart));
+        }
     }, [cart]);
 
     useEffect(() => {
-        // Fetch products from API
-        setProducts(ProductsTest);
-        setFilteredProducts(ProductsTest);
-    }, []);
+        if (Array.isArray(allProducts) && allProducts.length > 0) {
+          // Filter out products with status 'soldOut'
+          const availableProducts = allProducts.filter(
+            (product) => product.status !== 'soldOut'
+          );
+          setProducts(availableProducts);
+          setFilteredProducts(availableProducts);
+        } else {
+          setProducts([]);
+          setFilteredProducts([]);
+        }
+      }, [allProducts]);
 
     const applyFilters = (filters: FiltersState) => {
-        console.log('Applying Filters:', filters);
         const { category, queryType, name, minPrice, maxPrice } = filters;
-        let filtered = products;
+        let filtered = [...products];
 
         const minPriceNum = minPrice ? parseFloat(minPrice) : null;
         const maxPriceNum = maxPrice ? parseFloat(maxPrice) : null;
@@ -172,7 +113,12 @@ const ProductsPage: React.FC = () => {
         const updatedCart = [...cart, product];
         setCart(updatedCart);
         localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
+        console.log("updatedCart", updatedCart);
+        const data = localStorage.getItem('shopping cart');
+        console.log("shopping cart", data);
     };
+    
+
 
     return (
         <Container>
@@ -187,6 +133,11 @@ const ProductsPage: React.FC = () => {
             </Navbar>
 
             <Filters applyFilters={applyFilters} />
+
+            <div className="product-count" dir="rtl" style={{ marginBottom: '1rem'}}>
+                <span>מספר מוצרים מוצגים: </span>
+                <Badge bg="info">{filteredProducts.length}</Badge>
+            </div>
 
             <Row>
                 {filteredProducts.map((product) => (

@@ -115,13 +115,22 @@ export async function deleteProduct(productId: string): Promise<any> {
     if (!productId) {
       throw new Error('Product ID is required for deletion.');
     }
-  
+
+    const session = await getSession() as Session | null;
+    if (!session || !session.user.userId) {
+        throw new Error('User ID is missing.');
+    }
+    const userId = session.user.userId;
+    const body = JSON.stringify({ userId });
+    
     const url = `${API_ORIGIN}${API_PRODUCT_DELETE}/${productId}`;
     const headers = await getAuthHeaders();
-  
+
+
     return callApi<any>(url, {
       method: 'DELETE',
       headers,
+      body
     });
   }
 // Fetch a product by ID
@@ -141,14 +150,24 @@ export async function getProductById(productId: string): Promise<any> {
 
 // Fetch all products
 export async function getAllProducts(): Promise<any> {
+  try {
     const url = `${API_ORIGIN}${API_ALL_PRODUCTS}`;
     const headers = await getAuthHeaders();
-  
-    return callApi<any>(url, {
+
+    const data = await callApi<any>(url, {
       method: 'GET',
-      headers
+      headers,
     });
+
+    // Extract the products array from the data
+    const products = data.products;
+
+    return products; // Return the array of products directly
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    throw error;
   }
+}
 
 // Fetch all statistics
 export async function getAllStatistics(): Promise<any> {

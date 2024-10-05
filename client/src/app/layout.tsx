@@ -27,7 +27,7 @@ export default async function RootLayout({
         <body className={inter.className}>
         <Header user={user}/>
           {/* <Header /> */}
-          <main>{children}</main>
+          <main style={{ paddingTop: '70px' }}>{children}</main>
           {/* <Footer /> */}
         </body>
     </html>

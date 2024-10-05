@@ -4,15 +4,17 @@ import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 
 interface Product {
-    name: string;
-    category: string;
-    status: string;
-    description: string;
-    price: number;
-    userId: string;
-    seller: string;
-    image?: string;
-  }
+  location : object;
+  name: string;
+  image: string;
+  category: string;
+  status: string;
+  description: string;
+  price: number;
+  userId: string;
+  productId: string;
+  quantity: number;
+}
 
 interface ProductCardProps {
   product: Product;
@@ -28,6 +30,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
         <Card.Text>{product.description}</Card.Text>
         <Card.Text>
           <strong>מחיר:</strong> {product.price}
+        </Card.Text>
+        <Card.Text>
+          <strong>כמות במלאי: </strong> {product.quantity}
         </Card.Text>
         <Button variant="primary" onClick={() => addToCart(product)}>
           הוספה לסל
