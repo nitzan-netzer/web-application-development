@@ -39,8 +39,10 @@ async function callApi<T>(url: string, options: RequestInit): Promise<T> {
     const response = await fetch(url, options);
 
     if (!response.ok) {
+      //console.log(response);
       const errorData = await response.json();
       throw new Error(errorData.message || 'API request failed');
+
     }
 
     const data: T = await response.json();
@@ -161,21 +163,26 @@ export async function getAllStatistics(): Promise<any> {
   });
 }
 
-// Make a transaction
-export async function makeTransaction(productId: string, quantity: number): Promise<any> {
-    const url = `${API_ORIGIN}${API_MAKE_TRANS}`;
-    const headers = await getAuthHeaders();
-    const session = await getSession() as Session | null;
-    if (!session || !session.user.userId) {
-        throw new Error('User ID is missing.');
-    }
-    const userId = session.user.userId;
-    const body = JSON.stringify({ userId, productId, quantity });
-    return callApi<any>(url, {
-        method: 'POST',
-        headers,
-        body
-    });
+// Make a transaction with a list of products
+export async function makeTransaction(products: { productId: string, quantity: number }[]): Promise<any> {
+  const url = `${API_ORIGIN}${API_MAKE_TRANS}`;
+  const headers = await getAuthHeaders();
+  const session = await getSession() as Session | null;
+  if (!session || !session.user.userId) {
+      throw new Error('User ID is missing.');
+  }
+  const userId = session.user.userId;
+
+  // Adjust the request body to include the list of products
+  const body = JSON.stringify({
+      userId,
+      products // Pass the products array directly
+  });
+  return callApi<any>(url, {
+      method: 'POST',
+      headers,
+      body
+  });
 }
 
 // Delete a user by ID
