@@ -96,6 +96,7 @@ async function requestToSell(req, res) {
 
     user.isSeller = true;
     user.save();
+    return res.status(200).json({isSeller: true});
   }
   catch (e) {
     return res.status(500).json({ msg: e})

@@ -22,8 +22,7 @@ export async function createProduct(req, res, next) {
     const { name, category, status, description, price, quantity, userId, image } = req.body;
 
     try {
-
-        const user = await User.findOne({userId});
+        const user = await User.findOne({userId: userId.toString()});
 
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
@@ -101,7 +100,7 @@ export async function updateProduct(req, res, next) {
 }
 
 export async function deleteProduct(req, res) {
-    const userId = req.body;
+    const { userId } = req.body;
     const { productId } = req.params;
 
     try {
@@ -115,7 +114,8 @@ export async function deleteProduct(req, res) {
             return res.status(404).json({ msg: 'Product not found' });
         }
 
-        await product.delete();
+        // await product.delete();
+        await Product.deleteOne({ productId });
         res.status(200).json({ msg: 'Product deleted successfully' });
     } catch (error) {
         res.status(500).json({ msg: 'Server error' });

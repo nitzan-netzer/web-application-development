@@ -86,6 +86,13 @@
             "schema": {
               "$ref": "#/definitions/UserRequestToSell"
             }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
