@@ -1,16 +1,17 @@
 import { User } from '../models/user.js';
 import { deleteAllProductsByUser } from '../utils/userUtils.js';
+import {Product} from "../models/product.js";
 
 async function blockUser(req,res){
     const { userToBlock } = req.body;
     try {
-      const user = await User.findOne({ userToBlock });
+      const user = await User.findOne({ userId: userToBlock });
       if (!user) {
         return res.status(404).json({ msg: 'User not found' });
       }
       user.isBlocked = true;
       deleteAllProductsByUser(userToBlock)
-      await user.save()
+      await user.save();
       res.status(200).json({ user: {
           userId: user._doc.userId,
           username: user._doc.username,
@@ -31,12 +32,12 @@ async function blockUser(req,res){
 async function removeBlock(req, res) {
     const { userToRemoveBlock } = req.body;
     try {
-        const user = await User.findOne({ userToRemoveBlock });
+        const user = await User.findOne({ userId: userToRemoveBlock });
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }
         user.isBlocked = false;
-        await user.save()
+        await user.save();
         res.status(200).json({ user: {
                 userId: user._doc.userId,
                 username: user._doc.username,
@@ -57,13 +58,13 @@ async function removeBlock(req, res) {
 async function deleteUser(req,res){
     const { userToDelete } = req.body;
     try {
-      const user = await User.findOne({ userToDelete });
+      const user = await User.findOne({ userId: userToDelete });
       if (!user) {
         return res.status(404).json({ msg: 'User not found' });
       }
       const {username} = user
-      deleteAllProductsByUser(userToDelete)
-      user.delete()
+      deleteAllProductsByUser(userToDelete);
+      await User.deleteOne({ userId: userToDelete });
       res.json({ msg: `Deleted user ${username}`, username, userToDelete });
     } catch (error) {
       res.status(500).json({ msg: 'Server error' });
