@@ -39,8 +39,10 @@ async function callApi<T>(url: string, options: RequestInit): Promise<T> {
     const response = await fetch(url, options);
 
     if (!response.ok) {
+      //console.log(response);
       const errorData = await response.json();
       throw new Error(errorData.message || 'API request failed');
+
     }
 
     const data: T = await response.json();
@@ -115,13 +117,22 @@ export async function deleteProduct(productId: string): Promise<any> {
     if (!productId) {
       throw new Error('Product ID is required for deletion.');
     }
-  
+
+    const session = await getSession() as Session | null;
+    if (!session || !session.user.userId) {
+        throw new Error('User ID is missing.');
+    }
+    const userId = session.user.userId;
+    const body = JSON.stringify({ userId });
+    
     const url = `${API_ORIGIN}${API_PRODUCT_DELETE}/${productId}`;
     const headers = await getAuthHeaders();
-  
+
+
     return callApi<any>(url, {
       method: 'DELETE',
       headers,
+      body
     });
   }
 // Fetch a product by ID
@@ -141,14 +152,24 @@ export async function getProductById(productId: string): Promise<any> {
 
 // Fetch all products
 export async function getAllProducts(): Promise<any> {
+  try {
     const url = `${API_ORIGIN}${API_ALL_PRODUCTS}`;
     const headers = await getAuthHeaders();
-  
-    return callApi<any>(url, {
+
+    const data = await callApi<any>(url, {
       method: 'GET',
-      headers
+      headers,
     });
+
+    // Extract the products array from the data
+    const products = data.products;
+
+    return products; // Return the array of products directly
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    throw error;
   }
+}
 
 // Fetch all statistics
 export async function getAllStatistics(): Promise<any> {
@@ -161,21 +182,26 @@ export async function getAllStatistics(): Promise<any> {
   });
 }
 
-// Make a transaction
-export async function makeTransaction(productId: string, quantity: number): Promise<any> {
-    const url = `${API_ORIGIN}${API_MAKE_TRANS}`;
-    const headers = await getAuthHeaders();
-    const session = await getSession() as Session | null;
-    if (!session || !session.user.userId) {
-        throw new Error('User ID is missing.');
-    }
-    const userId = session.user.userId;
-    const body = JSON.stringify({ userId, productId, quantity });
-    return callApi<any>(url, {
-        method: 'POST',
-        headers,
-        body
-    });
+// Make a transaction with a list of products
+export async function makeTransaction(products: { productId: string, quantity: number }[]): Promise<any> {
+  const url = `${API_ORIGIN}${API_MAKE_TRANS}`;
+  const headers = await getAuthHeaders();
+  const session = await getSession() as Session | null;
+  if (!session || !session.user.userId) {
+      throw new Error('User ID is missing.');
+  }
+  const userId = session.user.userId;
+
+  // Adjust the request body to include the list of products
+  const body = JSON.stringify({
+      userId,
+      products // Pass the products array directly
+  });
+  return callApi<any>(url, {
+      method: 'POST',
+      headers,
+      body
+  });
 }
 
 // Delete a user by ID
@@ -254,4 +280,29 @@ export async function getAllUsers(): Promise<any> {
       method: 'GET',
       headers
     });
+
+}
+export async function nis2usd(nis: number): Promise<number> {
+  const url = 'https://boi.org.il/PublicApi/GetExchangeRate?key=USD';
+  try {
+    const response = await fetch(url);
+    
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error(`Error fetching exchange rate: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    // Ensure the exchange rate exists in the response
+    if (!data.currentExchangeRate) {
+      throw new Error("Invalid exchange rate data received.");
+    }
+
+    const usd = nis / data.currentExchangeRate;
+    return usd;
+  } catch (error) {
+    console.error("Error fetching exchange rate:", error);
+    throw new Error("Failed to fetch exchange rate");
   }
+}

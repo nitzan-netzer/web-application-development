@@ -7,7 +7,6 @@ import Button from "react-bootstrap/Button";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { logout } from "@/srcactions/auth";
-
 type HeaderProps = {
   user: any;
 };
@@ -15,18 +14,15 @@ type HeaderProps = {
 function Header({ user }: HeaderProps) {
   const router = useRouter();
 
-  const handleClickRegister = () => {
-    router.push("/register"); // Use router.push instead of window.location.href
-  };
-
-  const handleClickLogin = () => {
-    router.push("/login");
-  };
-
   const handleLogout = async () => {
-    await fetch('/api/auth/logout');
+    await logout();
     router.push('/auth/login');
-  }
+  };
+
+  const username = user?.name || "אורח"; // Default to "אורח" if user is undefined
+  const isAdmin = user?.isAdmin; // Check if user is admin
+  const isSeller = user?.isSeller; // Check if user is seller
+  const isBuyer = (!isAdmin && !isSeller); // A user that is not admin or seller
 
   return (
     <Navbar fixed="top" expand="lg" className="bg-body-tertiary">
@@ -39,67 +35,79 @@ function Header({ user }: HeaderProps) {
             className="d-inline-block align-top"
             alt="רגל 2 logo"
           />
+        </Navbar.Brand>
 
-          {user ? (
-            <>
-              <Button
-                variant="outline-success"
-                style={{
-                  marginLeft: "20px",
-                  position: "relative",
-                  top: "10px",
-                }}
-                onClick={handleLogout}
-              >
-                התנתקות
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                href="/auth/register"
-                variant="outline-success"
-                style={{
-                  marginLeft: "20px",
-                  position: "relative",
-                  top: "10px",
-                }}
-              >
-                הרשמה
-              </Button>
-              <Button
-                href="/auth/login"
-                variant="outline-success"
-                style={{
-                  marginLeft: "20px",
-                  position: "relative",
-                  top: "10px",
-                }}
-              >
-                התחברות
-              </Button>
-            </>
-          )}
-          {/* <Button href="/auth/register" variant="outline-success"
-            style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>הרשמה</Button>
-          <Button href="/auth/login" variant="outline-success"
-            style={{ marginLeft: '20px', position: 'relative', top: '10px' }}>התחברות</Button> */}
-          <a href="/cart" className="ms-2">
-            <img
-              src={"/shopping-cart.png"}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-              alt="Icon"
+
+        {/* Greeting user */}
+        <span style={{ marginLeft: "20px", fontSize: "18px" }}>
+          שלום, {username}
+        </span>
+        {username !== "אורח" && (
+              <Nav.Link href="/profile" className="mx-3">
+                האזור אישי
+              </Nav.Link>
+            )}
+              
+        {user ? (
+          <Button
+            variant="outline-success"
+            style={{
+              marginLeft: "20px",
+              position: "relative",
+              top: "10px",
+            }}
+            onClick={handleLogout}
+          >
+            התנתקות
+          </Button>
+
+        ) : (
+          <>
+            <Button
+              href="/auth/register"
+              variant="outline-success"
               style={{
+                marginLeft: "20px",
                 position: "relative",
                 top: "10px",
-                left: "10px",
-                cursor: "pointer",
               }}
-            />
-          </a>
-        </Navbar.Brand>
+            >
+              הרשמה
+            </Button>
+            <Button
+              href="/auth/login"
+              variant="outline-success"
+              style={{
+                marginLeft: "20px",
+                position: "relative",
+                top: "10px",
+              }}
+            >
+              התחברות
+            </Button>
+          </>
+        )}
+          {/* Conditionally render Buyer-specific links */}
+              {isBuyer && username !== "אורח"  && (
+              <>
+                <a href="/cart" className="ms-2">
+                  <img
+                    src={"/shopping-cart.png"}
+                    width="30"
+                    height="30"
+                    className="d-inline-block align-top"
+                    alt="Icon"
+                    style={{
+                      position: "relative",
+                      top: "10px",
+                      left: "10px",
+                      cursor: "pointer",
+                    }}
+                  />
+                </a>
+              </>
+            )}
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -110,9 +118,6 @@ function Header({ user }: HeaderProps) {
             <Nav.Link href="/" className="mx-3">
               דף הבית
             </Nav.Link>
-            <Nav.Link href="/products" className="mx-3">
-              ההמוצרים שלנו
-            </Nav.Link>
             <Nav.Link href="/about" className="mx-3">
               אז מי אנחנו
             </Nav.Link>
@@ -122,9 +127,36 @@ function Header({ user }: HeaderProps) {
             <Nav.Link href="/policy" className="mx-3">
               תקנון
             </Nav.Link>
-            <Nav.Link href="/toolkit" className="mx-3">
-              ארגז כלים
-            </Nav.Link>
+
+
+            {/* Conditionally render Admin links */}
+            {isAdmin && (
+              <>
+                <Nav.Link href="/toolkit" className="mx-3">
+                  ארגז כלים
+                </Nav.Link>
+                <Nav.Link href="/usersAdmin" className="mx-3">
+                  ניהול משתמשים
+                </Nav.Link>
+                <Nav.Link href="/productsAdmin" className="mx-3">
+                  ניהול מוצרים
+                </Nav.Link>
+              </>
+            )}
+
+            {/* Conditionally render Seller link */}
+            {isSeller && (
+              <Nav.Link href="/toolkit" className="mx-3">
+                ארגז כלים
+              </Nav.Link>
+            )}
+              {isBuyer && username !== "אורח"  && (
+              <>
+                <Nav.Link href="/products" className="mx-3">
+                  מוצרים שלנו
+                </Nav.Link>
+                </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

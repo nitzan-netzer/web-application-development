@@ -2,128 +2,63 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import Filters, { FiltersState } from './Filters';
+import { Container, Row, Col, Badge } from 'react-bootstrap';
+import Filters, { FiltersState } from './ProductsFilters';
 import ProductCardAdmin from './ProductCardAdmin';
+import { deleteProduct } from '@/srcapi/nitApi';
+
 
 interface Product {
+    location: object;
     name: string;
+    image: string;
     category: string;
     status: string;
     description: string;
     price: number;
     userId: string;
-    seller: string;
-    image?: string;
-    id: string;
+    productId: string;
+    quantity: number;
 }
 
-const ProductsPage: React.FC = () => {
-    // Test data
-    const ProductsTest: Product[] = [
-        {
-            name: 'shirt',
-            category: 'clothes',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 99.99,
-            userId: '603d53a7a262f90b60d8dbcf',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-            id: '603d53a7a262f90b60d8dbc3',
-        },
-        {
-            name: 'iphone 13',
-            category: 'Electronics',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 9999.99,
-            userId: '603d53a7a262f90b60d8dbc5',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-            id: '603d53a7a262f90b60d8dbc7',
-        },
-        {
-            name: 'piano',
-            category: 'music',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 9.99,
-            userId: '603d53a7a262f90b668dbcf',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-            id: '603d53a7a262f90b60d8dbc9',
-        },
-        {
-            name: 'bull',
-            category: 'animals',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 959.99,
-            userId: '603153a7a262f90b60d8dbcf',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-            id: '603d53a7a262f90b60d8dbc1',
-        },
-        {
-            name: 'costume',
-            category: 'clothes',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 99.99,
-            userId: '603d53a7a262f90b60d8dbcf',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-            id: '603d53a7a262f90b60d8dbc2',
-        },
-        {
-            name: 'pencil',
-            category: 'school',
-            status: 'available',
-            description: 'This is a great product.',
-            price: 349.99,
-            userId: '603d53a7sd262f90b60d8dbcf',
-            image: 'https://via.placeholder.com/150',
-            seller: 'Dana',
-            id: '603d53a7a262f90b60d8dbc3',
-        },
-    ];
+type Props = {
+    allProducts: Product[]
+}
+
+const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
 
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-    const [cart, setCart] = useState<Product[]>(() => {
-        const savedCart = localStorage.getItem('shopping cart');
-        return savedCart ? JSON.parse(savedCart) : [];
-    }
-    );
 
     useEffect(() => {
-        localStorage.setItem('shopping cart', JSON.stringify(cart));
-    }, [cart]);
-
-    useEffect(() => {
-        // Fetch products from API
-        setProducts(ProductsTest);
-        setFilteredProducts(ProductsTest);
-    }, []);
+        if (Array.isArray(allProducts) && allProducts.length > 0) {
+          // Filter out products with status 'soldOut'
+          const availableProducts = allProducts.filter(
+            (product) => product.status !== 'soldOut'
+          );
+          setProducts(availableProducts);
+          setFilteredProducts(availableProducts);
+        } else {
+          setProducts([]);
+          setFilteredProducts([]);
+        }
+      }, [allProducts]);
 
     const handleDelete = async (product: Product) => {
         if (window.confirm(`Are you sure you want to delete ${product.name}?`)) {
+
+            const productId = product.productId;
+            console.log("product ID : ",productId);
             try {
-                const response = await fetch(`http://localhost:3001/api/products/${product.id}`, {
-                    method: 'DELETE',
-                });
-                if (response.ok) {
-                    setProducts(products.filter((p) => p.userId === product.userId));
-                    alert(`${product.name} deleted successfully`)
-                }
-                else {
-                    alert(`Failed to delete ${product.name}.`);
-                }
+                deleteProduct(productId);
+
+                setProducts(products.filter((p) => p.userId === product.userId));
+                alert(`${product.name} deleted successfully`)
             } catch (error) {
                 console.error('Error deleting product:', error);
                 alert('Failed to delete product. Please try again later.');
             }
+
         }
     }
 
@@ -182,6 +117,11 @@ const ProductsPage: React.FC = () => {
         <Container>
             <Filters applyFilters={applyFilters} />
 
+            <div className="product-count" dir="rtl" style={{ marginBottom: '1rem'}}>
+                <span>מספר מוצרים מוצגים: </span>
+                <Badge bg="info">{filteredProducts.length}</Badge>
+            </div>
+
             <Row>
                 {filteredProducts.map((product) => (
                     <Col key={product.name} sm={12} md={6} lg={4}>
@@ -193,4 +133,4 @@ const ProductsPage: React.FC = () => {
     );
 };
 
-export default ProductsPage;
+export default ProductsPageAdmin;

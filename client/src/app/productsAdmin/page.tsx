@@ -1,22 +1,25 @@
 'use server';
 
 import React from "react";
-import PeresentProducts from "@/srccomponents/productsPageAdmin";
+import ProductsPageAdmin from "@/srccomponents/productsPageAdmin";
+import {getAllProducts} from "@/srcapi/nitApi";
+import { getSession}  from '@/srcapp/lib/session' 
+import { Session } from '@/srctypes/session.type'
 
 export default async function Products() {
-
-  let data = await fetch('http://localhost:3001/api/product/allProducts',{
-    headers: {
-      'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY5N2IyMTMwYWM3NjAxMjk2ZTRjZTQiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzI3NjI2MjQ4LCJleHAiOjE3Mjc2Mjk4NDh9.s0R9gS45mfFgGXOQNAXl63MvnOg65nISImbIpBTAy8Q'
+  const session = await getSession();
+    if (!session) {
+        throw new Error('Session is missing.');
     }
-  });
-  let allProducts = await data.json(); // products is typed as any
-  console.log("allProducts", allProducts);
+  
+    const user = session.user as Session['user'];
+    console.log("user ID: ", user);
+  const data = await getAllProducts();
 
   return (
     <div className="App">
       <main>
-        <PeresentProducts/>
+        <ProductsPageAdmin allProducts={data}/>
       </main>
     </div>
   );
