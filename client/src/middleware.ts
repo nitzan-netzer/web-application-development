@@ -1,9 +1,9 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { getSession, updateSession } from './app/lib/session';
-import { SlEnergy } from 'react-icons/sl';
- 
+import { getSession, updateSession } from './app/lib/session'; 
 
-const publicRoutes = ['/auth/login', '/auth/register'];
+const publicRoutes = ['/auth/login', '/auth/register','/about','/contact-us','/policy'];
+const staticAssets = ['/img','/favicon.ico', '/_next', '/sitemap.xml', '/robots.txt', '/logo.jpeg'];
+
 const privateRoutes = [];
 
 export async function middleware(request: NextRequest) {
@@ -11,10 +11,12 @@ export async function middleware(request: NextRequest) {
   const isPublicUrl = publicRoutes.some((route) =>
     path.toLowerCase().includes(route.toLowerCase())
   );
+  const isStaticAsset = staticAssets.some(asset => path.startsWith(asset));
+
   const session = await getSession(request);
   const user: any = session?.user;
 
-  if (!isPublicUrl && !user?.userId) {
+  if (!isPublicUrl && !user?.userId && !isStaticAsset) {
     console.log('Redirecting to Register');
     return NextResponse.redirect(new URL('/auth/register', request.url));
   }

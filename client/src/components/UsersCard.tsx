@@ -16,7 +16,7 @@ interface UsersCardProps {
     editUser: (user: User) => void;
 }
 
-const UserCard: React.FC<UsersCardProps> = ({ user, deleteUser, editUser }) => {
+const UserCard: React.FC<UsersCardProps> = ({ user, deleteUser}) => {
 
     return (
 
@@ -27,7 +27,6 @@ const UserCard: React.FC<UsersCardProps> = ({ user, deleteUser, editUser }) => {
                     <Accordion.Body>
                         <p><b>Rule:</b> {user.rule}</p>
                         <p><b>id:</b> {user.id}</p>
-                        <Button variant="primary" onClick={() => editUser(user)}>Edit</Button>
                         <Button variant="danger" onClick={() => deleteUser(user)}>Delete</Button>
                     </Accordion.Body>
                 </Accordion.Item>

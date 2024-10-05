@@ -79,7 +79,7 @@ const UsersPage: React.FC = () => {
             <Row>
                 {filteredUsers.map((user) => (
                     <Col sm={6} md={4} key={user.id}>
-                        <UserCard user={user} deleteUser={deleteUsers} editUser={editUser} />
+                        <UserCard user={user} deleteUser={deleteUsers} />
                     </Col>
                 ))}
             </Row>
