@@ -4,7 +4,6 @@ import React, { useMemo, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 import styles from '../styles/postPurches.module.css';
-//import { Product } from '@/srctypes/products.type';
 
 type Props = {
     products: Product[];
