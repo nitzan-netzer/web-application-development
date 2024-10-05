@@ -23,7 +23,7 @@ export default async function ToolKitApp() {
             const data = await getAllStatistics();
             return (
                 <div className="toolkitAdmin">
-                    <main>
+                    <main>  
                         <ToolKitAdmin data={data} /> {}
                     </main>
                 </div> 

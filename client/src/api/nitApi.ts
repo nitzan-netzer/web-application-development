@@ -29,19 +29,15 @@ async function getAuthHeaders(): Promise<HeadersInit> {
   }
   return {
     'Content-Type': 'application/json',
-    //'x-auth-token': session.token,
+    'x-auth-token': session.token,
   };
 }
 
 // Generic function to handle API requests
 async function callApi<T>(url: string, options: RequestInit): Promise<T> {
   try {
-    console.log(options);
-    console.log(url);
-    console.log('api call');
     const response = await fetch(url, options);
-    console.log('api call response');
-    console.log(response);
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'API request failed');

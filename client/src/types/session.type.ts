@@ -3,7 +3,7 @@ export type Session = {
     user: {
       userId: string;
       isAdmin: boolean;
-      isSaller: boolean;
+      isSeller: boolean;
     };
   }
   

@@ -15,9 +15,7 @@ const ToolKitUser = () => {
 
         try {
             // Call the PostRequestToSell function
-            console.log('Calling PostRequestToSell...');
             const response = await PostRequestToSell(); // Assuming it returns something
-            console.log('API call succeeded:', response); // Log success response
             setSuccess(true); // Show success message on completion
         } catch (error) {
             console.error('API call failed:', error);
