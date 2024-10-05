@@ -38,38 +38,97 @@ export async function createSession(payload: SessionPayload) {
     path: "/",
   });
 }
-export async function updateSession(req: NextRequest) {
-  const session = req.cookies.get("session")?.value;
 
-  if (!session) {
-    return null;
+// export async function updateSession(req: NextRequest) {
+//   const session = req.cookies.get("session")?.value;
+
+//   if (!session) {
+//     return null;
+//   }
+//   const payload = await decrypt(session);
+//   if (!payload) {
+//     console.log("Invalid session");
+//     return null;
+//   }
+//   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+//   const newSession = await encrypt({ ...payload, expiresAt } as any);
+//   const res = NextResponse.next();
+//   res.cookies.set("session", newSession, {
+//     httpOnly: true,
+//     secure: true,
+//     expires: expiresAt,
+//     sameSite: "lax",
+//     path: "/",
+//   });
+//   return res;
+// }
+
+
+export async function updateSession(request?: NextRequest) {
+  let sessionCookie;
+  let response;
+
+  if (request) {
+    // Middleware context
+    sessionCookie = request.cookies.get('session')?.value;
+    response = NextResponse.next();
+  } else {
+    // Server action or component context
+    sessionCookie = cookies().get('session')?.value;
+    response = undefined; // No need to return a response
   }
-  const payload = await decrypt(session);
+
+  if (!sessionCookie) {
+    return response;
+  }
+
+  const payload = await decrypt(sessionCookie);
   if (!payload) {
-    console.log("Invalid session");
-    return null;
+    console.log('Invalid session');
+    return response;
   }
+
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-
   const newSession = await encrypt({ ...payload, expiresAt } as any);
-  const res = NextResponse.next();
-  res.cookies.set("session", newSession, {
-    httpOnly: true,
-    secure: true,
-    expires: expiresAt,
-    sameSite: "lax",
-    path: "/",
-  });
-  return res;
-}
 
+  if (request) {
+    // Middleware context
+    response?.cookies.set('session', newSession, {
+      httpOnly: true,
+      secure: true,
+      expires: expiresAt,
+      sameSite: 'lax',
+      path: '/',
+    });
+    return response;
+  } else {
+    // Server action or component context
+    cookies().set('session', newSession, {
+      httpOnly: true,
+      secure: true,
+      expires: expiresAt,
+      sameSite: 'lax',
+      path: '/',
+    });
+  }
+}
 export async function deleteSession() {
   cookies().delete("session");
 }
 
-export async function getSession() {
-	const session = cookies().get('session')?.value;
-	if (!session) return null;
-	return await decrypt(session);
+export async function getSession(request?: NextRequest) {
+  let sessionCookie;
+
+  if (request) {
+    // We're in middleware or have a request object
+    sessionCookie = request.cookies.get('session')?.value;
+  } else {
+    // We're in a server component or server action
+    sessionCookie = cookies().get('session')?.value;
+  }
+
+  if (!sessionCookie) return null;
+  return await decrypt(sessionCookie);
 }
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import GenericLoginForm from './GenericLoginForm'
 import { Metadata } from 'next'
 import LoginForm from './LoginForm'
 
