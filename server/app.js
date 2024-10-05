@@ -6,11 +6,11 @@ import {purchaseRoutes} from "./routes/purchaseRoutes.js";
 import {adminRoutes} from "./routes/adminRoutes.js";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express"
-import swaggerDoc from "./defenitions/swagger.json" assert { type: "json" }
+import swaggerDoc from "./defenitions/swagger.json" assert { type: "json" };
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import {createInitialData} from "./utils/initialData.js";
+import {createInitialData} from "./initData/initialData.js";
 
 const app = express();
 const corsOptions = {

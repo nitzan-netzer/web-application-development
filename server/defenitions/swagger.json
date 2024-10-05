@@ -188,6 +188,15 @@
         "description": "This endpoint deletes an existing product",
         "parameters": [
           {
+            "in": "body",
+            "name": "body",
+            "description": "user id info",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteProduct"
+            }
+          },
+          {
             "in": "path",
             "name": "productId",
             "description": "ID of the product to delete",
@@ -403,6 +412,64 @@
           }
         }
       }
+    },
+    "/adminRoutes/removeBlock": {
+      "post": {
+        "summary": "removes block from a user",
+        "description": "This endpoint remove blocks a user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User to be blocked",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserRemoveBlock"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Product created successfully"
+          },
+          "400": {
+            "description": "Invalid userId format or other validation errors"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/adminRoutes/allUsers": {
+      "get": {
+        "summary": "Get all users",
+        "description": "This endpoint fetches all users",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "users fetched successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -456,10 +523,36 @@
         }
       }
     },
+    "DeleteProduct": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
+        }
+      }
+    },
     "UserBlock": {
       "type": "object",
       "properties": {
         "userId": {
+          "type": "string",
+          "example": "userId"
+        },
+        "userToBlock": {
+          "type": "string",
+          "example": "userId"
+        }
+      }
+    },
+    "UserRemoveBlock": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
+        },
+        "userToRemoveBlock": {
           "type": "string",
           "example": "userId"
         }
@@ -478,6 +571,10 @@
       "type": "object",
       "properties": {
         "userId": {
+          "type": "string",
+          "example": "userId"
+        },
+        "userToDelete": {
           "type": "string",
           "example": "userId"
         }

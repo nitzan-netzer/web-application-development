@@ -72,8 +72,8 @@ export async function signUp(prevState:any, formData: FormData) {
     const gender = formData.get('gender');
     const password = formData.get('password');
     const passwordConfirmation = formData.get('passwordConfirmation');
-    const isSeller = true;
-    const birthYear = 1990;
+    const isSeller = formData.get('isSeller') || true;
+    const birthYear = formData.get('birthYear') || 1990;
 
 
     // console.log("before validation");
@@ -113,7 +113,7 @@ export async function signUp(prevState:any, formData: FormData) {
                 isSeller
             }),
         });
-        
+
         const data = await response.json();
         await createSession(data);
         console.log("Data",data);
@@ -147,5 +147,6 @@ export async function signUp(prevState:any, formData: FormData) {
 export async function logout() {
     console.log("Logging out"); 
     deleteSession();
-    // redirect('/auth/login')
+    redirect('/auth/login')
   }
+

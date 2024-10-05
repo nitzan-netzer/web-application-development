@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { createProduct } from '@/srcactions/createProduct';
+import { createProduct } from '@/srcapi/nitApi';
 
 import '../styles/ToolkitSaller.css'; 
 
@@ -23,7 +23,9 @@ const ToolkitSaller = () => {
 
         try {
             // Call the createProduct function with the input values
-            await createProduct(name, image, category, description, price, quantity);
+
+            const product = { name, image, category, description, price, quantity,status: 'available' };
+            await createProduct(product);
             setSuccess(true);
         } catch (error) {
             setError('Error creating product: ' + error.message);

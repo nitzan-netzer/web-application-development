@@ -1,29 +1,47 @@
 import React from 'react'
 import ToolKitAdmin from '@/srccomponents/toolkitAdmin'
 import ToolKitSaller from '@/srccomponents/toolkitSaller'
-import {getAllStatistics } from '@/srcactions/getAllStatistics'
-import  {getSession}  from '@/srcapp/lib/session'
+import ToolKitUser from '@/srccomponents/ToolKitUser'
+import { getAllStatistics } from '@/srcapi/nitApi'
+import { getSession}  from '@/srcapp/lib/session'
+import { Session } from '@/srctypes/session.type'
 
 export default async function ToolKitApp() {
-    const session = await getSession(); 
-    const isAdmin = session?.user['isAdmin']
+    const session = await getSession();
+    if (!session) {
+        throw new Error('Session is missing.');
+    }
+    const user = session.user as Session['user'];
+    const isAdmin = user.isAdmin;
+    const isSeller = user.isSeller;
+    console.log(user)
+    console.log(isAdmin)
+    console.log(isSeller)
     if (isAdmin) 
         {
 
             const data = await getAllStatistics();
             return (
                 <div className="toolkitAdmin">
-                    <main>
+                    <main>  
                         <ToolKitAdmin data={data} /> {}
                     </main>
                 </div> 
             )
         }
-    else
+    else if (isSeller)
     {
         return (
             <div className="toolkitSaller">
                 <ToolKitSaller />
+            </div>
+        );
+    }
+    else
+    {
+        return (
+            <div className="toolkitUser">
+               <ToolKitUser />
             </div>
         );
     }
