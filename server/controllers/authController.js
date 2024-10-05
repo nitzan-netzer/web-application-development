@@ -60,10 +60,10 @@ async function login (req, res)  {
     }
     const payload = { userId: user._doc.userId, isAdmin: user._doc.isAdmin };
 
-    let token = jwt.sign(payload, mySecret, { expiresIn: '1h' });
+    let token = jwt.sign(payload, mySecret, { expiresIn: '7d' });
 
     if (user._doc.isAdmin) {
-        token = jwt.sign(payload, adminSecret, { expiresIn: '1h' });
+        token = jwt.sign(payload, adminSecret, { expiresIn: '7d' });
     }
 
     res.json({ token, user: {
