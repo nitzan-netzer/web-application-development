@@ -1,15 +1,36 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation'; 
 import styles from '../styles/cart.module.css';
-import { Product } from '@/srctypes/products.type';
+import React, { useMemo, useState, useEffect } from 'react';
+import { makeTransaction } from "@/srcapi/nitApi";
 
-export default function Cart() {
-    const [chosenProducts, setChosenProducts] = useState<Product[]>([
-        { name: 'אורי', price: 100, imageUrl: '/images/product1.png' }, 
-        { name: 'אור', price: 5, imageUrl: '/images/product2.png' }
-    ]);
+type Props = {
+    products: Product[];
+};
+
+interface Product {
+    location: object;
+    name: string;
+    image: string;
+    category: string;
+    status: string;
+    description: string;
+    price: number;
+    userId: string;
+    productId: string;
+    quantity: number;
+}
+
+const Cart: React.FC<Props> = () => {    
+    const [chosenProducts, setChosenProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const storedCart = localStorage.getItem('shopping cart');
+        if (storedCart) {
+            setChosenProducts(JSON.parse(storedCart));
+        }
+    }, []);
 
     const sumPrice = useMemo(() => chosenProducts.reduce((acc, curr) => 
         acc + curr.price, 0
@@ -17,8 +38,25 @@ export default function Cart() {
 
     const router = useRouter();
 
-    const handlePurchase = () => {
-        router.push('/postPurches');
+    const handlePurchase = async () => {
+        try {
+            for (const product of chosenProducts) {
+                await makeTransaction(product.productId, product.quantity);
+            }
+    
+            localStorage.setItem('purchasedProducts', JSON.stringify(chosenProducts));
+    
+            router.push('/postPurches');
+        } catch (error) {
+            console.error('Error during purchase:', error);
+            alert('התרחשה שגיאה בזמן הרכישה. נסה שוב מאוחר יותר.');
+        }
+    };
+
+    const removeProduct = (index: number) => {
+        const updatedProducts = chosenProducts.filter((_, i) => i !== index);
+        setChosenProducts(updatedProducts);
+        localStorage.setItem('shopping cart', JSON.stringify(updatedProducts));
     };
 
     return (
@@ -32,7 +70,7 @@ export default function Cart() {
                         return (
                             <div className={styles['cart-product']} key={index}>
                                 <img 
-                                    src={product.imageUrl} 
+                                    src={product.image} 
                                     alt={product.name} 
                                     className={styles['product-image']}
                                 />
@@ -44,9 +82,7 @@ export default function Cart() {
                                 </div>
                                 <button 
                                     className={styles['remove-button']} 
-                                    onClick={() => {
-                                        setChosenProducts(prev => prev.filter((_, i) => i !== index));
-                                    }}>
+                                    onClick={() => removeProduct(index)}>
                                     🗑  
                                 </button>
                             </div>
@@ -63,11 +99,13 @@ export default function Cart() {
                 <button 
                     className={styles['purchase-button']} 
                     onClick={handlePurchase} 
-                >
+                > 
                     לרכישה
                 </button>
                 
             </div>
         </div>
     );
-}
+};
+
+export default Cart;

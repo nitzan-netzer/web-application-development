@@ -1,18 +1,43 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 import styles from '../styles/postPurches.module.css';
-import { Product } from '@/srctypes/products.type';
+//import { Product } from '@/srctypes/products.type';
+
+type Props = {
+    products: Product[];
+};
+
+interface Product {
+    location: object;
+    name: string;
+    image: string;
+    category: string;
+    status: string;
+    description: string;
+    price: number;
+    userId: string;
+    productId: string;
+    quantity: number;
+}
 
 const Map = dynamic(() => import('../components/Map'), { ssr: false });
 
 export default function PostPurches() {
-    const purchasedProducts: Product[] = [
-        { name: 'חולצה', price: 100, imageUrl: '/images/shirt.png' }, 
-        { name: 'נעליים', price: 250, imageUrl: '/images/shoes.png' }
-    ];
+    const [purchasedProducts, setPurchasedProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const storedProducts = localStorage.getItem('purchasedProducts');
+        if (storedProducts) {
+            setPurchasedProducts(JSON.parse(storedProducts));
+        }
+    }, []);
+
+    const sumPrice = useMemo(() => purchasedProducts.reduce((acc, curr) => 
+        acc + curr.price, 0
+    ), [purchasedProducts]);
 
     const locations = [
         {
@@ -27,10 +52,6 @@ export default function PostPurches() {
         }
     ];
 
-    const sumPrice = useMemo(() => purchasedProducts.reduce((acc, curr) => 
-        acc + curr.price, 0
-    ), [purchasedProducts]);
-
     return (
         <div className={styles.orderSummaryContainer}>
             <h1>סיכום ההזמנה</h1>
@@ -39,7 +60,7 @@ export default function PostPurches() {
                 <h2>הפריטים שנרכשו:</h2>
                 {purchasedProducts.map((product, index) => (
                     <div key={index} className={styles.productItem}>
-                        <img src={product.imageUrl} alt={product.name} className={styles.productImage} />
+                        <img src={product.image} alt={product.name} className={styles.productImage} />
                         <div className={styles.productDetails}>
                             <span>שם המוצר: {product.name}</span>
                             <span>מחיר: ₪{product.price}</span>
@@ -62,3 +83,5 @@ export default function PostPurches() {
         </div>
     );
 }
+
+
