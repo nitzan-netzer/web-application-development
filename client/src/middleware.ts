@@ -1,25 +1,29 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { getSession, updateSession } from './app/lib/session';
+import { SlEnergy } from 'react-icons/sl';
  
 
 const publicRoutes = ['/auth/login', '/auth/register'];
 const privateRoutes = [];
 
 export async function middleware(request: NextRequest) {
-
   const path = request.nextUrl.pathname;
-  const isPublicUrl = !!publicRoutes.find((route) => path.toLowerCase().includes(route.toLowerCase()));
-  const session = await getSession();
+  const isPublicUrl = publicRoutes.some((route) =>
+    path.toLowerCase().includes(route.toLowerCase())
+  );
+  const session = await getSession(request);
   const user: any = session?.user;
-  // console.log("Session",session);
-  // console.log("Token",session?.token);
 
   if (!isPublicUrl && !user?.userId) {
-    console.log("Redirecting to login");
-    return NextResponse.redirect(new URL('/auth/login', request.nextUrl));
+    console.log('Redirecting to Register');
+    return NextResponse.redirect(new URL('/auth/register', request.url));
   }
 
-  return await updateSession(request);
+  if (session && user?.userId) {
+    return await updateSession(request);
+  }
+
+  return NextResponse.next();
 }
  
 export const config = {

@@ -15,7 +15,8 @@ const API_STATISTICS = '/api/product/getAllStatisticsOnProducts';
 const API_MAKE_TRANS = '/api/purchase/makeTransaction';
 const API_DELETE_USER = '/api/adminRoutes/deleteUser';
 const API_BLOCK_USER = '/api/adminRoutes/blockeUser';
-
+const API_REMOVE_BLOCK_USER = '/api/adminRoutes/removeBlock';
+const API_ALL_USERS = '/api/adminRoutes/allUsers';
 
 // Utility function to get headers with authentication
 async function getAuthHeaders(): Promise<HeadersInit> {
@@ -26,7 +27,6 @@ async function getAuthHeaders(): Promise<HeadersInit> {
   if (!session || !session.token) {
     throw new Error('Authentication token is missing.');
   }
-  console.log(session.token);
   return {
     'Content-Type': 'application/json',
     'x-auth-token': session.token,
@@ -37,8 +37,7 @@ async function getAuthHeaders(): Promise<HeadersInit> {
 async function callApi<T>(url: string, options: RequestInit): Promise<T> {
   try {
     const response = await fetch(url, options);
-    console.log(url);
-    console.log(response);
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'API request failed');
@@ -62,6 +61,7 @@ export async function PostRequestToSell(): Promise<any> {
     }
     const userId = session.user.userId;
     const body = JSON.stringify({ userId });
+
     return callApi<any>(url, {
         method: 'POST',
         headers,
@@ -189,31 +189,79 @@ export async function makeTransaction(productId: string, quantity: number): Prom
 }
 
 // Delete a user by ID
-export async function deleteUser(userId: string): Promise<any> {
-    if (!userId) {
-      throw new Error('User ID is required for deletion.');
+export async function deleteUser(userToDelete: string): Promise<any> {
+  const session = await getSession() as Session | null;
+  if (!session || !session.user.userId) {
+      throw new Error('User ID is missing.');
+  }  
+  const userId = session.user.userId;
+
+  if (!userToDelete) {
+      throw new Error('User ID is required for blocking.');
     }
-  
     const url = `${API_ORIGIN}${API_DELETE_USER}/${userId}`;
     const headers = await getAuthHeaders();
-  
+    const body = JSON.stringify({ userId, userToDelete });
+
     return callApi<any>(url, {
       method: 'DELETE',
       headers,
+      body
     });
   }
 
 // Block a user by ID
-export async function blockUser(userId: string): Promise<any> {
-    if (!userId) {
-      throw new Error('User ID is required for blocking.');
-    }
+export async function blockUser(userToBlock: string): Promise<any> {
+  const session = await getSession() as Session | null;
+  if (!session || !session.user.userId) {
+      throw new Error('User ID is missing.');
+  }  
+  const userId = session.user.userId;
+
+  if (!userToBlock) {
+    throw new Error('User ID is required for blocking.');
+  }
+
   
-    const url = `${API_ORIGIN}${API_BLOCK_USER}/${userId}`;
+    const url = `${API_ORIGIN}${API_BLOCK_USER}`;
     const headers = await getAuthHeaders();
-  
+    const body = JSON.stringify({ userId, userToBlock });
+
     return callApi<any>(url, {
       method: 'POST',
       headers,
+      body
+    });
+  }
+
+// Unblock a user by ID
+export async function unblockUser(userToUnBlock: string): Promise<any> {
+  const session = await getSession() as Session | null;
+  if (!session || !session.user.userId) {
+      throw new Error('User ID is missing.');
+  }
+  const userId = session.user.userId;
+  if (!userToUnBlock) {
+    throw new Error('User ID is required for blocking.');
+  }
+    const url = `${API_ORIGIN}${API_REMOVE_BLOCK_USER}`;
+    const headers = await getAuthHeaders();
+    const body = JSON.stringify({ userId, userToUnBlock });
+
+    return callApi<any>(url, {
+      method: 'POST',
+      headers,
+      body
+    });
+  }
+
+// Fetch all users
+export async function getAllUsers(): Promise<any> {
+    const url = `${API_ORIGIN}${API_ALL_USERS}`;
+    const headers = await getAuthHeaders();
+  
+    return callApi<any>(url, {
+      method: 'GET',
+      headers
     });
   }

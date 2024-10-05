@@ -34,9 +34,14 @@ export async function login(prevState:any, formData: FormData) {
             }),
         });
         const data = await response.json();
-        await createSession(data);
-        console.log("Data",data);
-
+        if (response.ok) {
+            await createSession(data);
+            prevState.message = 'Successfully logged in';
+        } else {
+            prevState.message = data.msg || 'Login failed';
+        }
+        return prevState;
+        
     } catch (error) {
         const zodError = error as ZodError;
         const errorMap = zodError.flatten().fieldErrors;
@@ -55,7 +60,7 @@ export async function login(prevState:any, formData: FormData) {
 
         return prevState;
     }
-    redirect('/');
+    // redirect('/');
 }
 
 export async function signUp(prevState:any, formData: FormData) {
@@ -140,6 +145,8 @@ export async function signUp(prevState:any, formData: FormData) {
 
 
 export async function logout() {
-    deleteSession()
+    console.log("Logging out"); 
+    deleteSession();
     redirect('/auth/login')
   }
+
