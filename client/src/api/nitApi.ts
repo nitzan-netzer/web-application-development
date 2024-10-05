@@ -280,4 +280,29 @@ export async function getAllUsers(): Promise<any> {
       method: 'GET',
       headers
     });
+
+}
+export async function nis2usd(nis: number): Promise<number> {
+  const url = 'https://boi.org.il/PublicApi/GetExchangeRate?key=USD';
+  try {
+    const response = await fetch(url);
+    
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error(`Error fetching exchange rate: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    // Ensure the exchange rate exists in the response
+    if (!data.currentExchangeRate) {
+      throw new Error("Invalid exchange rate data received.");
+    }
+
+    const usd = nis / data.currentExchangeRate;
+    return usd;
+  } catch (error) {
+    console.error("Error fetching exchange rate:", error);
+    throw new Error("Failed to fetch exchange rate");
   }
+}
