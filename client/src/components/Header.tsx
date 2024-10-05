@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import React from "react";
 import { useRouter } from "next/navigation";
-
+import { logout } from "@/srcactions/auth";
 type HeaderProps = {
   user: any;
 };
@@ -15,7 +15,7 @@ function Header({ user }: HeaderProps) {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout');
+    await logout();
     router.push('/auth/login');
   };
 
@@ -27,24 +27,27 @@ function Header({ user }: HeaderProps) {
   return (
     <Navbar fixed="top" expand="lg" className="bg-body-tertiary">
       <Container>
-        {/* Only show logo if the user is not an "אורח" */}
-        {username !== "אורח" && (
-          <Navbar.Brand href="/">
-            <img
-              src={"/logo.jpeg"}
-              width="60"
-              height="60"
-              className="d-inline-block align-top"
-              alt="רגל 2 logo"
-            />
-          </Navbar.Brand>
-        )}
+        <Navbar.Brand href="/">
+          <img
+            src={"/logo.jpeg"}
+            width="60"
+            height="60"
+            className="d-inline-block align-top"
+            alt="רגל 2 logo"
+          />
+        </Navbar.Brand>
+
 
         {/* Greeting user */}
         <span style={{ marginLeft: "20px", fontSize: "18px" }}>
           שלום, {username}
         </span>
-
+        {username !== "אורח" && (
+              <Nav.Link href="/profile" className="mx-3">
+                האזור אישי
+              </Nav.Link>
+            )}
+              
         {user ? (
           <Button
             variant="outline-success"
@@ -57,6 +60,7 @@ function Header({ user }: HeaderProps) {
           >
             התנתקות
           </Button>
+
         ) : (
           <>
             <Button
@@ -83,6 +87,26 @@ function Header({ user }: HeaderProps) {
             </Button>
           </>
         )}
+          {/* Conditionally render Buyer-specific links */}
+              {isBuyer && username !== "אורח"  && (
+              <>
+                <a href="/cart" className="ms-2">
+                  <img
+                    src={"/shopping-cart.png"}
+                    width="30"
+                    height="30"
+                    className="d-inline-block align-top"
+                    alt="Icon"
+                    style={{
+                      position: "relative",
+                      top: "10px",
+                      left: "10px",
+                      cursor: "pointer",
+                    }}
+                  />
+                </a>
+              </>
+            )}
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="navbarScroll">
@@ -104,12 +128,6 @@ function Header({ user }: HeaderProps) {
               תקנון
             </Nav.Link>
 
-            {/* Conditionally render "האזור אישי" if the user is not "אורח" */}
-            {username !== "אורח" && (
-              <Nav.Link href="/profile" className="mx-3">
-                האזור אישי
-              </Nav.Link>
-            )}
 
             {/* Conditionally render Admin links */}
             {isAdmin && (
@@ -132,29 +150,12 @@ function Header({ user }: HeaderProps) {
                 ארגז כלים
               </Nav.Link>
             )}
-
-            {/* Conditionally render Buyer-specific links */}
-            {isBuyer && username !== "אורח"  && (
+              {isBuyer && username !== "אורח"  && (
               <>
                 <Nav.Link href="/products" className="mx-3">
                   מוצרים שלנו
                 </Nav.Link>
-                <a href="/cart" className="ms-2">
-                  <img
-                    src={"/shopping-cart.png"}
-                    width="30"
-                    height="30"
-                    className="d-inline-block align-top"
-                    alt="Icon"
-                    style={{
-                      position: "relative",
-                      top: "10px",
-                      left: "10px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </a>
-              </>
+                </>
             )}
           </Nav>
         </Navbar.Collapse>
