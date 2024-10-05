@@ -456,10 +456,19 @@
       }
     },
     "/adminRoutes/allUsers": {
-      "get": {
+      "post": {
         "summary": "Get all users",
         "description": "This endpoint fetches all users",
         "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User to be blocked",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetAllUsers"
+            }
+          },
           {
             "in": "header",
             "name": "x-auth-token",
@@ -566,6 +575,15 @@
       }
     },
     "UserRequestToSell": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "userId"
+        }
+      }
+    },
+    "GetAllUsers": {
       "type": "object",
       "properties": {
         "userId": {

@@ -1,8 +1,8 @@
 import { Product } from "../models/product.js"
 
-export const deleteAllProductsByUser = (userId) => {
+export async function deleteAllProductsByUser(userId){
     try{
-        const productsByUser = Product.find({userId})
+        const productsByUser = await Product.find({userId})
         if(!productsByUser){
             return
         }

@@ -109,9 +109,13 @@ export async function deleteProduct(req, res) {
             return res.status(404).json({ msg: 'User not found' });
         }
 
-        const product = await Product.findOne({ productId, userId });
-        if (!product) {
-            return res.status(404).json({ msg: 'Product not found' });
+        let product = await Product.findOne({ productId, userId });
+        if (!product && user._doc.isAdmin) {
+            product = await Product.findOne({ productId })
+
+            if (!product) {
+                return res.status(404).json({ msg: 'Product not found' });
+            }
         }
 
         // await product.delete();
