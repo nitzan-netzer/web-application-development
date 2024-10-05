@@ -6,6 +6,6 @@ import {adminMiddleware} from '../middleware/auth.js'
 router.delete('/deleteUser', [adminMiddleware,deleteUser])
 router.post('/blockUser', [adminMiddleware, blockUser]);
 router.post('/removeBlock', [adminMiddleware, removeBlock]);
-router.get('/allUsers', [adminMiddleware, getAllUsers]);
+router.post('/allUsers', [adminMiddleware, getAllUsers]);
 
 export const adminRoutes = router;

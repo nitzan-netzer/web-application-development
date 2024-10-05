@@ -10,7 +10,7 @@ async function blockUser(req,res){
         return res.status(404).json({ msg: 'User not found' });
       }
       user.isBlocked = true;
-      deleteAllProductsByUser(userToBlock)
+      await deleteAllProductsByUser(userToBlock)
       await user.save();
       res.status(200).json({ user: {
           userId: user._doc.userId,
@@ -62,8 +62,10 @@ async function deleteUser(req,res){
       if (!user) {
         return res.status(404).json({ msg: 'User not found' });
       }
-      const {username} = user
-      deleteAllProductsByUser(userToDelete);
+
+      const { username } = user;
+
+      await deleteAllProductsByUser(userToDelete);
       await User.deleteOne({ userId: userToDelete });
       res.json({ msg: `Deleted user ${username}`, username, userToDelete });
     } catch (error) {
