@@ -34,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addToCart }) => {
         <Card.Text>
           <strong>כמות במלאי: </strong> {product.quantity}
         </Card.Text>
-        <Button variant="primary" onClick={() => addToCart(product)}>
+        <Button variant="success" onClick={() => addToCart(product)}>
           הוספה לסל
         </Button>
       </Card.Body>

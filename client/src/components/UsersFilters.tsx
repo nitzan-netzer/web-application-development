@@ -11,25 +11,42 @@ interface FiltersProps {
 
   export interface FiltersState {
     username: string;
-    rule: string;
+    name: string;
+    gender: string;
+    minbirthyaer: number;
+    maxbirthyaer: number;
+    isSeller: boolean;
+    isAdmin: boolean;
     queryType: 'and' | 'or';
   }
 
   const Filters: React.FC<FiltersProps> = ({ applyFilters }) => {
     const [filters, setFilters] = useState<FiltersState>({
       username: '',
-      rule: '',
+      name: '',
+      gender: '',
+      minbirthyaer: 0,
+      maxbirthyaer: 0,
+      isSeller: false,
+      isAdmin: false,
       queryType: 'and',
-    }
-    );
+    });
 
     const handleInputChange = (e: React.ChangeEvent<FormControlElement>) => {
-        const target = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+        const target = e.target;
         const { name, value } = target;
-        setFilters((prev) => {
-            const updatedFilters = { ...prev, [name]: value };
-            return updatedFilters;
-          });
+        if (target instanceof HTMLInputElement && target.type === 'checkbox') {
+          const { checked } = target;
+          setFilters((prev) => ({
+            ...prev,
+            [name]: checked,
+          }));
+        } else {
+          setFilters((prev) => ({
+            ...prev,
+            [name]: value,
+          }));
+        }
       };
 
       const handleSubmit = (e: React.FormEvent) => {
@@ -40,13 +57,13 @@ interface FiltersProps {
       return (
         <Form onSubmit={handleSubmit} className="mb-4" dir="rtl">
           <Row>
-            {/* Name Filter */}
-            <Col md={4}>
-              <Form.Group controlId="nameFilter">
-                <Form.Label>שם המשתמש</Form.Label>
+            {/* Username Filter */}
+            <Col md={4} className="mb-3">
+              <Form.Group controlId="usernameFilter">
+                <Form.Label>שם משתמש</Form.Label>
                 <Form.Control
                   type="text"
-                  name="name"
+                  name="username"
                   value={filters.username}
                   onChange={handleInputChange}
                   placeholder="חפש לפי שם משתמש"
@@ -54,22 +71,93 @@ interface FiltersProps {
               </Form.Group>
             </Col>
 
-            {/* Rule Filter */}
-            <Col md={3}>
-              <Form.Group controlId="ruleFilter">
-                <Form.Label>מוכר/קונה</Form.Label>
+            {/* Name Filter */}
+            <Col md={4} className="mb-3">
+              <Form.Group controlId="nameFilter">
+                <Form.Label>שם</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={filters.name}
+                  onChange={handleInputChange}
+                  placeholder="חפש לפי שם"
+                />
+              </Form.Group>
+            </Col>
+
+            {/* Gender Filter */}
+            <Col md={4} className="mb-3">
+              <Form.Group controlId="genderFilter">
+                <Form.Label>מין</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="gender"
+                  value={filters.gender}
+                  onChange={handleInputChange}
+                >
+                  <option value="">בחר מין</option>
+                  <option value="male">זכר</option>
+                  <option value="female">נקבה</option>
+                </Form.Control>
+              </Form.Group>
+            </Col>
+
+            {/* Min Birth Year Filter */}
+            <Col md={4} className="mb-3">
+              <Form.Group controlId="minBirthYearFilter">
+                <Form.Label>שנת לידה מינימלית</Form.Label>
                 <Form.Control
                   type="number"
-                  name="minPrice"
-                  value={filters.rule}
+                  name="minbirthyaer"
+                  value={filters.minbirthyaer}
                   onChange={handleInputChange}
-                  placeholder="מוכר/קונה"
+                  placeholder="שנת לידה מינימלית"
+                />
+              </Form.Group>
+            </Col>
+
+            {/* Max Birth Year Filter */}
+            <Col md={4} className="mb-3">
+              <Form.Group controlId="maxBirthYearFilter">
+                <Form.Label>שנת לידה מקסימלית</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="maxbirthyaer"
+                  value={filters.maxbirthyaer}
+                  onChange={handleInputChange}
+                  placeholder="שנת לידה מקסימלית"
+                />
+              </Form.Group>
+            </Col>
+
+            {/* Is Seller Filter */}
+            <Col md={4} className="mb-3">
+              <Form.Group controlId="isSellerFilter">
+                <Form.Check
+                  type="checkbox"
+                  name="isSeller"
+                  checked={filters.isSeller}
+                  onChange={handleInputChange}
+                  label="האם מוכר"
+                />
+              </Form.Group>
+            </Col>
+
+            {/* Is Admin Filter */}
+            <Col md={4} className="mb-3">
+              <Form.Group controlId="isAdminFilter">
+                <Form.Check
+                  type="checkbox"
+                  name="isAdmin"
+                  checked={filters.isAdmin}
+                  onChange={handleInputChange}
+                  label="האם מנהל"
                 />
               </Form.Group>
             </Col>
 
             {/* Query Type Filter */}
-            <Col md={3}>
+            <Col md={4} className="mb-3">
               <Form.Group controlId="queryType">
                 <Form.Label>סוג חיפוש</Form.Label>
                 <Form.Control
@@ -83,9 +171,11 @@ interface FiltersProps {
                 </Form.Control>
               </Form.Group>
             </Col>
-        
-            {/* Apply Filters Button */}
-            <Col md={3}>
+          </Row>
+
+          {/* Apply Filters Button */}
+          <Row>
+            <Col md={3} className="mb-3">
               <Button variant="primary" type="submit">
                 החל חיפוש
               </Button>
@@ -96,4 +186,3 @@ interface FiltersProps {
     };
     
     export default Filters;
-    

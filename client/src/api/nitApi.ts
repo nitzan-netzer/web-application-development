@@ -215,7 +215,7 @@ export async function deleteUser(userToDelete: string): Promise<any> {
     const body = JSON.stringify({ userId, userToDelete });
 
     return callApi<any>(url, {
-      method: 'DELETE',
+      method: 'POST',
       headers,
       body
     });
@@ -233,7 +233,6 @@ export async function blockUser(userToBlock: string): Promise<any> {
     throw new Error('User ID is required for blocking.');
   }
 
-  
     const url = `${API_ORIGIN}${API_BLOCK_USER}`;
     const headers = await getAuthHeaders();
     const body = JSON.stringify({ userId, userToBlock });
@@ -266,13 +265,22 @@ export async function unblockUser(userToUnBlock: string): Promise<any> {
     });
   }
 
+
+
 // Fetch all users
 export async function getAllUsers(): Promise<any> {
-    const url = `${API_ORIGIN}${API_ALL_USERS}`;
-    const headers = await getAuthHeaders();
-  
-    return callApi<any>(url, {
-      method: 'GET',
-      headers
-    });
-  }
+  const url = `${API_ORIGIN}${API_ALL_USERS}`;
+  const headers = await getAuthHeaders();
+
+  const session = await getSession() as Session | null;
+if (!session || !session.user.userId) {
+    throw new Error('User ID is missing.');
+}
+  const userId = session.user.userId;
+  const body = JSON.stringify({ userId }); 
+  return callApi<any>(url, {
+    method: 'POST',
+    headers,
+    body
+  });
+}
