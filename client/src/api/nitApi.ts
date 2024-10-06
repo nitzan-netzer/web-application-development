@@ -75,11 +75,11 @@ export async function createProduct(product: Product): Promise<any> {
     const url = `${API_ORIGIN}${API_PRODUCT_CREATE}`;
     const { name, image, category, description, price, quantity } = product;
     const session = await getSession() as Session | null;
-  
+
     if (!session || !session.user.userId) {
       throw new Error('User ID is missing.');
     }
-  
+
     const headers = await getAuthHeaders();
     const body = JSON.stringify({
       name,
@@ -91,7 +91,7 @@ export async function createProduct(product: Product): Promise<any> {
       quantity,
       userId: session.user.userId,
     });
-    
+
     return callApi<any>(url, {
       method: 'POST',
       headers,
@@ -123,7 +123,7 @@ export async function deleteProduct(productId: string): Promise<any> {
     }
     const userId = session.user.userId;
     const body = JSON.stringify({ userId });
-    
+
     const url = `${API_ORIGIN}${API_PRODUCT_DELETE}/${productId}`;
     const headers = await getAuthHeaders();
 
@@ -182,21 +182,26 @@ export async function getAllStatistics(): Promise<any> {
   });
 }
 
-// Make a transaction
-export async function makeTransaction(productId: string, quantity: number): Promise<any> {
-    const url = `${API_ORIGIN}${API_MAKE_TRANS}`;
-    const headers = await getAuthHeaders();
-    const session = await getSession() as Session | null;
-    if (!session || !session.user.userId) {
-        throw new Error('User ID is missing.');
-    }
-    const userId = session.user.userId;
-    const body = JSON.stringify({ userId, productId, quantity });
-    return callApi<any>(url, {
-        method: 'POST',
-        headers,
-        body
-    });
+// Make a transaction with a list of products
+export async function makeTransaction(products: { productId: string, quantity: number }[]): Promise<any> {
+  const url = `${API_ORIGIN}${API_MAKE_TRANS}`;
+  const headers = await getAuthHeaders();
+  const session = await getSession() as Session | null;
+  if (!session || !session.user.userId) {
+      throw new Error('User ID is missing.');
+  }
+  const userId = session.user.userId;
+
+  // Adjust the request body to include the list of products
+  const body = JSON.stringify({
+      userId,
+      products // Pass the products array directly
+  });
+  return callApi<any>(url, {
+      method: 'POST',
+      headers,
+      body
+  });
 }
 
 // Delete a user by ID
@@ -204,7 +209,7 @@ export async function deleteUser(userToDelete: string): Promise<any> {
   const session = await getSession() as Session | null;
   if (!session || !session.user.userId) {
       throw new Error('User ID is missing.');
-  }  
+  }
   const userId = session.user.userId;
 
   if (!userToDelete) {
@@ -226,12 +231,13 @@ export async function blockUser(userToBlock: string): Promise<any> {
   const session = await getSession() as Session | null;
   if (!session || !session.user.userId) {
       throw new Error('User ID is missing.');
-  }  
+  }
   const userId = session.user.userId;
 
   if (!userToBlock) {
     throw new Error('User ID is required for blocking.');
   }
+
 
     const url = `${API_ORIGIN}${API_BLOCK_USER}`;
     const headers = await getAuthHeaders();
@@ -251,7 +257,6 @@ export async function unblockUser(userToUnBlock: string): Promise<any> {
       throw new Error('User ID is missing.');
   }
   const userId = session.user.userId;
-
   if (!userToUnBlock) {
     throw new Error('User ID is required for blocking.');
   }
@@ -266,8 +271,6 @@ export async function unblockUser(userToUnBlock: string): Promise<any> {
     });
   }
 
-
-
 // Fetch all users
 export async function getAllUsers(): Promise<any> {
   const url = `${API_ORIGIN}${API_ALL_USERS}`;
@@ -278,10 +281,35 @@ if (!session || !session.user.userId) {
     throw new Error('User ID is missing.');
 }
   const userId = session.user.userId;
-  const body = JSON.stringify({ userId }); 
+  const body = JSON.stringify({ userId });
   return callApi<any>(url, {
     method: 'POST',
     headers,
     body
   });
+}
+
+export async function nis2usd(nis: number): Promise<number> {
+    const url = 'https://boi.org.il/PublicApi/GetExchangeRate?key=USD';
+    try {
+        const response = await fetch(url);
+
+        // Check if the request was successful
+        if (!response.ok) {
+            throw new Error(`Error fetching exchange rate: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        // Ensure the exchange rate exists in the response
+        if (!data.currentExchangeRate) {
+            throw new Error("Invalid exchange rate data received.");
+        }
+
+        const usd = nis / data.currentExchangeRate;
+        return usd;
+    } catch (error) {
+        console.error("Error fetching exchange rate:", error);
+        throw new Error("Failed to fetch exchange rate");
+    }
 }
