@@ -14,7 +14,7 @@ const API_ALL_PRODUCTS = '/api/product/allProducts';
 const API_STATISTICS = '/api/product/getAllStatisticsOnProducts';
 const API_MAKE_TRANS = '/api/purchase/makeTransaction';
 const API_DELETE_USER = '/api/adminRoutes/deleteUser';
-const API_BLOCK_USER = '/api/adminRoutes/blockeUser';
+const API_BLOCK_USER = '/api/adminRoutes/blockUser';
 const API_REMOVE_BLOCK_USER = '/api/adminRoutes/removeBlock';
 const API_ALL_USERS = '/api/adminRoutes/allUsers';
 
@@ -210,12 +210,12 @@ export async function deleteUser(userToDelete: string): Promise<any> {
   if (!userToDelete) {
       throw new Error('User ID is required for blocking.');
     }
-    const url = `${API_ORIGIN}${API_DELETE_USER}/${userId}`;
+    const url = `${API_ORIGIN}${API_DELETE_USER}`;
     const headers = await getAuthHeaders();
     const body = JSON.stringify({ userId, userToDelete });
 
     return callApi<any>(url, {
-      method: 'POST',
+      method: 'DELETE',
       headers,
       body
     });
@@ -251,6 +251,7 @@ export async function unblockUser(userToUnBlock: string): Promise<any> {
       throw new Error('User ID is missing.');
   }
   const userId = session.user.userId;
+
   if (!userToUnBlock) {
     throw new Error('User ID is required for blocking.');
   }
