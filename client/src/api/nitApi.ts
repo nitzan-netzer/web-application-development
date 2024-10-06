@@ -14,14 +14,13 @@ const API_ALL_PRODUCTS = '/api/product/allProducts';
 const API_STATISTICS = '/api/product/getAllStatisticsOnProducts';
 const API_MAKE_TRANS = '/api/purchase/makeTransaction';
 const API_DELETE_USER = '/api/adminRoutes/deleteUser';
-const API_BLOCK_USER = '/api/adminRoutes/blockeUser';
+const API_BLOCK_USER = '/api/adminRoutes/blockUser';
 const API_REMOVE_BLOCK_USER = '/api/adminRoutes/removeBlock';
 const API_ALL_USERS = '/api/adminRoutes/allUsers';
 
 // Utility function to get headers with authentication
 async function getAuthHeaders(): Promise<HeadersInit> {
   const session = await getSession() as Session | null;
-  console.log(session?.token);
   if (!session) {
     throw new Error('Session is missing.');
   }
@@ -40,10 +39,8 @@ async function callApi<T>(url: string, options: RequestInit): Promise<T> {
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      console.log(response);
       const errorData = await response.json();
       throw new Error(errorData.message || 'API request failed');
-
     }
 
     const data: T = await response.json();
@@ -77,11 +74,11 @@ export async function createProduct(product: Product): Promise<any> {
     const url = `${API_ORIGIN}${API_PRODUCT_CREATE}`;
     const { name, image, category, description, price, quantity } = product;
     const session = await getSession() as Session | null;
-  
+
     if (!session || !session.user.userId) {
       throw new Error('User ID is missing.');
     }
-  
+
     const headers = await getAuthHeaders();
     const body = JSON.stringify({
       name,
@@ -93,7 +90,7 @@ export async function createProduct(product: Product): Promise<any> {
       quantity,
       userId: session.user.userId,
     });
-    
+
     return callApi<any>(url, {
       method: 'POST',
       headers,
@@ -125,10 +122,9 @@ export async function deleteProduct(productId: string): Promise<any> {
     }
     const userId = session.user.userId;
     const body = JSON.stringify({ userId });
-    
+
     const url = `${API_ORIGIN}${API_PRODUCT_DELETE}/${productId}`;
     const headers = await getAuthHeaders();
-
 
     return callApi<any>(url, {
       method: 'DELETE',
@@ -213,13 +209,13 @@ export async function deleteUser(userToDelete: string): Promise<any> {
   const session = await getSession() as Session | null;
   if (!session || !session.user.userId) {
       throw new Error('User ID is missing.');
-  }  
+  }
   const userId = session.user.userId;
 
   if (!userToDelete) {
       throw new Error('User ID is required for blocking.');
     }
-    const url = `${API_ORIGIN}${API_DELETE_USER}/${userId}`;
+    const url = `${API_ORIGIN}${API_DELETE_USER}`;
     const headers = await getAuthHeaders();
     const body = JSON.stringify({ userId, userToDelete });
 
@@ -235,14 +231,14 @@ export async function blockUser(userToBlock: string): Promise<any> {
   const session = await getSession() as Session | null;
   if (!session || !session.user.userId) {
       throw new Error('User ID is missing.');
-  }  
+  }
   const userId = session.user.userId;
 
   if (!userToBlock) {
     throw new Error('User ID is required for blocking.');
   }
 
-  
+
     const url = `${API_ORIGIN}${API_BLOCK_USER}`;
     const headers = await getAuthHeaders();
     const body = JSON.stringify({ userId, userToBlock });
@@ -255,18 +251,18 @@ export async function blockUser(userToBlock: string): Promise<any> {
   }
 
 // Unblock a user by ID
-export async function unblockUser(userToUnBlock: string): Promise<any> {
+export async function unblockUser(userToRemoveBlock: string): Promise<any> {
   const session = await getSession() as Session | null;
   if (!session || !session.user.userId) {
       throw new Error('User ID is missing.');
   }
   const userId = session.user.userId;
-  if (!userToUnBlock) {
+  if (!userToRemoveBlock) {
     throw new Error('User ID is required for blocking.');
   }
     const url = `${API_ORIGIN}${API_REMOVE_BLOCK_USER}`;
     const headers = await getAuthHeaders();
-    const body = JSON.stringify({ userId, userToUnBlock });
+    const body = JSON.stringify({ userId, userToRemoveBlock });
 
     return callApi<any>(url, {
       method: 'POST',
@@ -277,36 +273,43 @@ export async function unblockUser(userToUnBlock: string): Promise<any> {
 
 // Fetch all users
 export async function getAllUsers(): Promise<any> {
-    const url = `${API_ORIGIN}${API_ALL_USERS}`;
-    const headers = await getAuthHeaders();
-  
-    return callApi<any>(url, {
-      method: 'GET',
-      headers
-    });
+  const url = `${API_ORIGIN}${API_ALL_USERS}`;
+  const headers = await getAuthHeaders();
 
+  const session = await getSession() as Session | null;
+if (!session || !session.user.userId) {
+    throw new Error('User ID is missing.');
 }
+  const userId = session.user.userId;
+  const body = JSON.stringify({ userId });
+  return callApi<any>(url, {
+    method: 'POST',
+    headers,
+    body
+  });
+}
+
 export async function nis2usd(nis: number): Promise<number> {
-  const url = 'https://boi.org.il/PublicApi/GetExchangeRate?key=USD';
-  try {
-    const response = await fetch(url);
-    
-    // Check if the request was successful
-    if (!response.ok) {
-      throw new Error(`Error fetching exchange rate: ${response.statusText}`);
+    const url = 'https://boi.org.il/PublicApi/GetExchangeRate?key=USD';
+    try {
+        const response = await fetch(url);
+
+        // Check if the request was successful
+        if (!response.ok) {
+            throw new Error(`Error fetching exchange rate: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        // Ensure the exchange rate exists in the response
+        if (!data.currentExchangeRate) {
+            throw new Error("Invalid exchange rate data received.");
+        }
+
+        const usd = nis / data.currentExchangeRate;
+        return usd;
+    } catch (error) {
+        console.error("Error fetching exchange rate:", error);
+        throw new Error("Failed to fetch exchange rate");
     }
-
-    const data = await response.json();
-
-    // Ensure the exchange rate exists in the response
-    if (!data.currentExchangeRate) {
-      throw new Error("Invalid exchange rate data received.");
-    }
-
-    const usd = nis / data.currentExchangeRate;
-    return usd;
-  } catch (error) {
-    console.error("Error fetching exchange rate:", error);
-    throw new Error("Failed to fetch exchange rate");
-  }
 }

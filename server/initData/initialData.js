@@ -26,7 +26,7 @@ async function createProducts(category, sellerName, status, photosArray, locatio
         const { lng, lat } = LOCATIONS[locationIndex];
 
         products.push({
-            name: `Product ${i}`,
+            name: `${category} Product ${i}`,
             image: photosArray[i],
             category,
             status,
