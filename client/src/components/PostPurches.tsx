@@ -10,7 +10,7 @@ type Props = {
 };
 
 interface Product {
-    location: object;
+    location: productLocation;
     name: string;
     image: string;
     category: string;
@@ -20,6 +20,17 @@ interface Product {
     userId: string;
     productId: string;
     quantity: number;
+}
+
+interface locationForMap {
+    address: string;
+    latitude: number;
+    longitude: number;
+}
+
+interface productLocation {
+    type : string;
+    coordinates: Array<number>;
 }
 
 const Map = dynamic(() => import('../components/Map'), { ssr: false });
@@ -38,18 +49,31 @@ export default function PostPurches() {
         acc + curr.price, 0
     ), [purchasedProducts]);
 
-    const locations = [
-        {
-            address: 'מרכז תל אביב',
-            latitude: 32.0853,
-            longitude: 34.7818,
-        },
-        {
-            address: 'חיפה',
-            latitude: 32.7940,
-            longitude: 34.9896,
-        }
-    ];
+    const Products: Product[] = JSON.parse(localStorage.getItem('purchasedProducts') || '[]');
+    
+    let productsLocations : locationForMap[] = [];
+
+    for (let i = 0; i < Products.length; i++) {
+        productsLocations.push({
+            address: Products[i].name,
+            latitude: Products[i].location.coordinates[1],
+            longitude: Products[i].location.coordinates[0],
+        });
+        
+    }
+
+    // const locations = [
+    //     {
+    //         address: 'מרכז תל אביב',
+    //         latitude: 32.0853,
+    //         longitude: 34.7818,
+    //     },
+    //     {
+    //         address: 'חיפה',
+    //         latitude: 32.7940,
+    //         longitude: 34.9896,
+    //     }
+    // ];
 
     return (
         <div className={styles.orderSummaryContainer}>
@@ -76,7 +100,7 @@ export default function PostPurches() {
             <div className={styles.mapContainer}>
                 <h2>כתובת לאיסוף:  </h2>
                 <div id="map" className={styles.map}>
-                    <Map locations={locations} />
+                    <Map locations={productsLocations} />
                 </div>
             </div>
         </div>

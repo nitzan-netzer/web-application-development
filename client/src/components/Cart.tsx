@@ -10,8 +10,12 @@ type Props = {
     products: Product[];
 };
 
+interface productLocation {
+    type : string;
+    coordinates: Array<number>;
+}
 interface Product {
-    location: object;
+    location: productLocation;
     name: string;
     image: string;
     category: string;
