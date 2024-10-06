@@ -21,6 +21,7 @@ const API_ALL_USERS = '/api/adminRoutes/allUsers';
 // Utility function to get headers with authentication
 async function getAuthHeaders(): Promise<HeadersInit> {
   const session = await getSession() as Session | null;
+  console.log(session?.token);
   if (!session) {
     throw new Error('Session is missing.');
   }
@@ -39,7 +40,7 @@ async function callApi<T>(url: string, options: RequestInit): Promise<T> {
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      //console.log(response);
+      console.log(response);
       const errorData = await response.json();
       throw new Error(errorData.message || 'API request failed');
 
@@ -183,7 +184,7 @@ export async function getAllStatistics(): Promise<any> {
 }
 
 // Make a transaction with a list of products
-export async function makeTransaction(productId: string, quantity: number, products: { productId: string; quantity: number; }[]): Promise<any> {
+export async function makeTransaction(products: { productId: string, quantity: number }[]): Promise<any> {
   const url = `${API_ORIGIN}${API_MAKE_TRANS}`;
   const headers = await getAuthHeaders();
   const session = await getSession() as Session | null;
@@ -191,6 +192,9 @@ export async function makeTransaction(productId: string, quantity: number, produ
       throw new Error('User ID is missing.');
   }
   const userId = session.user.userId;
+
+  console.log("product to be purchased : ", products);
+  console.log("user id : ", userId);
 
   // Adjust the request body to include the list of products
   const body = JSON.stringify({

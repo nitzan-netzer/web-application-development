@@ -41,11 +41,19 @@ const Cart: React.FC<Props> = () => {
 
     const router = useRouter();
 
-    const handlePurchase = async () => {
+    
+
+    const handlePurchase = async (products : Product[]) => {
+        
+        console.log("Cart : ", chosenProducts);
+
+        const productsToPurchase = products.map(({ productId, quantity }) => ({ productId, quantity }));
+        
+        console.log("productsToPurchase : ", productsToPurchase);
+
         try {
-            for (const product of chosenProducts) {
-                await makeTransaction(product.productId, product.quantity, chosenProducts);
-              }              
+            
+            await makeTransaction(productsToPurchase);
     
             localStorage.setItem('purchasedProducts', JSON.stringify(chosenProducts));
     
@@ -94,6 +102,9 @@ const Cart: React.FC<Props> = () => {
                                     <span>שם המוצר:</span> {product.name}
                                 </div>
                                 <div className={styles['product-detail']}>
+                                    <span>שם המוצר:</span> {product.productId}
+                                </div>
+                                <div className={styles['product-detail']}>
                                     <span>מחיר:</span> ₪{product.price}
                                 </div>
                                 <button 
@@ -129,7 +140,7 @@ const Cart: React.FC<Props> = () => {
 
                 <button 
                     className={styles['purchase-button']} 
-                    onClick={handlePurchase} 
+                    onClick={() => handlePurchase(chosenProducts)} 
                 > 
                     לרכישה
                 </button>
