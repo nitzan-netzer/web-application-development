@@ -17,18 +17,6 @@ export default async function Products() {
     const isAdmin = user.isAdmin;
 
     const data = await getAllProducts();
-
-    if (false) {
-      return (
-        <div className="App">
-        <main>
-          <ProductsPageAdmin allProducts={data}/>
-        </main>
-      </div>
-      )
-    }
-
-    else {
       return (
         <div className="App">
           <main>
@@ -36,6 +24,5 @@ export default async function Products() {
           </main>
         </div>
       );
-    }
 
 }

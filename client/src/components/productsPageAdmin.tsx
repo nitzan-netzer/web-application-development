@@ -50,9 +50,10 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
             const productId = product.productId;
             console.log("product ID : ",productId);
             try {
-                deleteProduct(productId);
+                await deleteProduct(productId);
 
-                setProducts(products.filter((p) => p.userId === product.userId));
+                setProducts((prevProducts) => prevProducts.filter((p) => p.productId !== productId));
+
                 alert(`${product.name} deleted successfully`)
             } catch (error) {
                 console.error('Error deleting product:', error);

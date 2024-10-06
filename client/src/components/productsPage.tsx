@@ -2,6 +2,7 @@
 
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Container, Row, Col, Badge, Navbar } from 'react-bootstrap';
 import ProductCard from './ProductCard';
 import Filters, { FiltersState } from './ProductsFilters';
@@ -26,6 +27,8 @@ type Props = {
 
 const ProductsPage: React.FC<Props> = ({ allProducts }) => {
 
+    const router = useRouter();
+    const { category } = router.query;
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [cart, setCart] = useState<Product[]>([]);
@@ -57,6 +60,17 @@ const ProductsPage: React.FC<Props> = ({ allProducts }) => {
           setFilteredProducts([]);
         }
       }, [allProducts]);
+
+      useEffect(() => {
+        if (router.isReady && category) {
+          const filtered = products.filter(
+            (product) => product.category.toLowerCase() === category.toString().toLowerCase()
+          );
+          setFilteredProducts(filtered);
+        } else {
+          setFilteredProducts(products); // Show all products if no category is selected
+        }
+      }, [router.isReady, category, products]);
 
     const applyFilters = (filters: FiltersState) => {
         const { category, queryType, name, minPrice, maxPrice } = filters;
@@ -136,7 +150,7 @@ const ProductsPage: React.FC<Props> = ({ allProducts }) => {
 
             <div className="product-count" dir="rtl" style={{ marginBottom: '1rem'}}>
                 <span>מספר מוצרים מוצגים: </span>
-                <Badge bg="info">{filteredProducts.length}</Badge>
+                <Badge bg='info'>{filteredProducts.length}</Badge>
             </div>
 
             <Row>

@@ -68,13 +68,13 @@ const Filters: React.FC<FiltersProps> = ({ applyFilters }) => {
               value={filters.category}
               onChange={handleInputChange}
             >
-              <option value="">All Categories</option>
-              <option value="clothes">Clothes</option>
-              <option value="Electronics">Electrical</option>
-              <option value="jewelry">Jewelry</option>
-              <option value="musical">Musical</option>
-              <option value="sport">Sport</option>
-              <option value="toys">Toys</option>
+              <option value="">כלל הקטגוריות</option>
+              <option value="clothes">ביגוד ואופנה</option>
+              <option value="Electronics">מוצרי חשמל</option>
+              <option value="jewelry">תכשיטים</option>
+              <option value="musical">מוזיקה</option>
+              <option value="sport">אביזרי ספורט</option>
+              <option value="toys">משחקים וצעצועים</option>
             </Form.Control>
           </Form.Group>
         </Col>
