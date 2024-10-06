@@ -251,18 +251,18 @@ export async function blockUser(userToBlock: string): Promise<any> {
   }
 
 // Unblock a user by ID
-export async function unblockUser(userToUnBlock: string): Promise<any> {
+export async function unblockUser(userToRemoveBlock: string): Promise<any> {
   const session = await getSession() as Session | null;
   if (!session || !session.user.userId) {
       throw new Error('User ID is missing.');
   }
   const userId = session.user.userId;
-  if (!userToUnBlock) {
+  if (!userToRemoveBlock) {
     throw new Error('User ID is required for blocking.');
   }
     const url = `${API_ORIGIN}${API_REMOVE_BLOCK_USER}`;
     const headers = await getAuthHeaders();
-    const body = JSON.stringify({ userId, userToUnBlock });
+    const body = JSON.stringify({ userId, userToRemoveBlock });
 
     return callApi<any>(url, {
       method: 'POST',

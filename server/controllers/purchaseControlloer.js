@@ -43,8 +43,6 @@ export async function purchase(req, res, next) {
                 product.status = 'soldOut';
             }
 
-            product.save();
-
             // Create new transaction
             const transaction = new Transaction({
                 userId: product._doc.userId,
@@ -54,7 +52,9 @@ export async function purchase(req, res, next) {
                 priceForOne: product._doc.price,
                 priceForMany: product._doc.price * quantity,
             });
+
             await transaction.save();
+            await product.save();
 
             transactions.push(transaction);
         }
