@@ -21,7 +21,6 @@ const API_ALL_USERS = '/api/adminRoutes/allUsers';
 // Utility function to get headers with authentication
 async function getAuthHeaders(): Promise<HeadersInit> {
   const session = await getSession() as Session | null;
-
   if (!session) {
     throw new Error('Session is missing.');
   }
@@ -189,6 +188,9 @@ export async function makeTransaction(products: { productId: string, quantity: n
       throw new Error('User ID is missing.');
   }
   const userId = session.user.userId;
+
+  console.log("product to be purchased : ", products);
+  console.log("user id : ", userId);
 
   // Adjust the request body to include the list of products
   const body = JSON.stringify({

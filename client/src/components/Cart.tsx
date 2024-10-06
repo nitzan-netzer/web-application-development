@@ -4,13 +4,18 @@ import { useRouter } from 'next/navigation';
 import styles from '../styles/cart.module.css';
 import React, { useMemo, useState, useEffect } from 'react';
 import { makeTransaction } from "@/srcapi/nitApi";
+import { nis2usd } from "@/srcapi/nitApi";
 
 type Props = {
     products: Product[];
 };
 
+interface productLocation {
+    type : string;
+    coordinates: Array<number>;
+}
 interface Product {
-    location: object;
+    location: productLocation;
     name: string;
     image: string;
     category: string;
@@ -24,6 +29,8 @@ interface Product {
 
 const Cart: React.FC<Props> = () => {    
     const [chosenProducts, setChosenProducts] = useState<Product[]>([]);
+    const [usdPrice, setUsdPrice] = useState<number | null>(null); 
+    const [isConverting, setIsConverting] = useState<boolean>(false); 
 
     useEffect(() => {
         const storedCart = localStorage.getItem('shopping cart');
@@ -38,11 +45,19 @@ const Cart: React.FC<Props> = () => {
 
     const router = useRouter();
 
-    const handlePurchase = async () => {
+    
+
+    const handlePurchase = async (products : Product[]) => {
+        
+        console.log("Cart : ", chosenProducts);
+
+        const productsToPurchase = products.map(({ productId, quantity }) => ({ productId, quantity }));
+        
+        console.log("productsToPurchase : ", productsToPurchase);
+
         try {
-            for (const product of chosenProducts) {
-                await makeTransaction(product.productId, product.quantity);
-            }
+            
+            await makeTransaction(productsToPurchase);
     
             localStorage.setItem('purchasedProducts', JSON.stringify(chosenProducts));
     
@@ -57,6 +72,19 @@ const Cart: React.FC<Props> = () => {
         const updatedProducts = chosenProducts.filter((_, i) => i !== index);
         setChosenProducts(updatedProducts);
         localStorage.setItem('shopping cart', JSON.stringify(updatedProducts));
+    };
+
+    const handleConvertToUSD = async () => {
+        setIsConverting(true); 
+        try {
+            const convertedPrice = await nis2usd(sumPrice); 
+            setUsdPrice(convertedPrice);
+        } catch (error) {
+            console.error('Error converting NIS to USD:', error);
+            alert('שגיאה בהמרת הסכום לדולרים.');
+        } finally {
+            setIsConverting(false); 
+        }
     };
 
     return (
@@ -78,6 +106,9 @@ const Cart: React.FC<Props> = () => {
                                     <span>שם המוצר:</span> {product.name}
                                 </div>
                                 <div className={styles['product-detail']}>
+                                    <span>שם המוצר:</span> {product.productId}
+                                </div>
+                                <div className={styles['product-detail']}>
                                     <span>מחיר:</span> ₪{product.price}
                                 </div>
                                 <button 
@@ -96,9 +127,24 @@ const Cart: React.FC<Props> = () => {
                     סה"כ: ₪{sumPrice}
                 </div>
 
+
+                <button 
+                    className={styles['convert-button']} 
+                    onClick={handleConvertToUSD}
+                    disabled={isConverting} 
+                > 
+                    {isConverting ? 'ממיר לדולרים...' : 'המרה לדולרים'}
+                </button>
+
+                {usdPrice !== null && (
+                    <div className={styles['usd-price']}>
+                        סה"כ בדולרים: ${usdPrice.toFixed(2)}
+                    </div>
+                )}
+
                 <button 
                     className={styles['purchase-button']} 
-                    onClick={handlePurchase} 
+                    onClick={() => handlePurchase(chosenProducts)} 
                 > 
                     לרכישה
                 </button>
