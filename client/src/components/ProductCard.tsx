@@ -3,18 +3,23 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 
-interface Product {
-  location : object;
-  name: string;
-  image: string;
-  category: string;
-  status: string;
-  description: string;
-  price: number;
-  userId: string;
-  productId: string;
-  quantity: number;
+interface productLocation {
+  type : string;
+  coordinates: Array<number>;
 }
+interface Product {
+location: productLocation;
+name: string;
+image: string;
+category: string;
+status: string;
+description: string;
+price: number;
+userId: string;
+productId: string;
+quantity: number;
+}
+
 
 interface ProductCardProps {
   product: Product;

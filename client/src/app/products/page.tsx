@@ -2,7 +2,6 @@
 
 import React from "react";
 import ProductsPage from "@/srccomponents/productsPage";
-import ProductsPageAdmin from "@/srccomponents/productsPageAdmin";
 import {getAllProducts} from "@/srcapi/nitApi";
 import { getSession}  from '@/srcapp/lib/session' 
 import { Session } from '@/srctypes/session.type'

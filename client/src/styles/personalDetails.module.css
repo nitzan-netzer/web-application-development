@@ -1,0 +1,76 @@
+.toolkitSaller {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #dfe5e7;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Ariel', sans-serif;
+    text-align: right;
+}
+
+.title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.paragraph {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.successMessage {
+    margin-bottom: 20px;
+}
+
+.label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.inputField {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    text-align: right;
+}
+
+.inputField:focus {
+    border-color: #00baf3;
+    outline: none;
+}
+
+.button {
+    width: 100%;
+    padding: 10px;
+    background-color: #326646;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #005bb5;
+}
+
+.checkbox {
+    margin-right: 10px;
+}
+
+.divMargin {
+    margin-bottom: 15px;
+}
