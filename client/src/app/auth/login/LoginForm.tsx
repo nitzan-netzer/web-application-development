@@ -50,9 +50,9 @@ function LoginForm() {
   }, [formState]);
 
   return (
-    <div dir="rtl">
-      <div className={styles.wrapper}>
-        <form ref={formRef} action={formAction}>
+    <div className={styles["login-page-container"]} dir="rtl">
+    <div className={styles.wrapper}>
+      <form ref={formRef} action={formAction}>
           <h1>התחברות למשתמש קיים</h1>
           <div className={styles.inputBox}>
             <input

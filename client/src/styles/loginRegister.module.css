@@ -1,14 +1,38 @@
+/* Center the wrapper in the middle of the page */
+.login-page-container {
+  display: flex;
+  align-items: center;    /* Vertically center the content */
+  justify-content: center; /* Horizontally center the content */
+  height: 100vh;          /* Set the height to 100% of the viewport */
+  background: #f5f5f5;    /* Optional: Set a background color for the page */
+  padding: 20px;     /* Adds padding to ensure it doesn't touch the viewport edges */
+  box-sizing: border-box; /* Include padding in the height/width calculation */
+}
+
+.register-page-container {
+  display: flex;
+  align-items: center;    /* Vertically center the content */
+  justify-content: center; /* Horizontally center the content */
+  height: 100vh;          /* Set the height to 100% of the viewport */
+  background: #f5f5f5;    /* Optional: Set a background color for the page */
+  padding: 20px;   
+  margin-top: 110px;       /* Adds padding to ensure it doesn't touch the viewport edges */
+  box-sizing: border-box; /* Include padding in the height/width calculation */
+}
 
 
+/* Wrapper styling for the form */
 .wrapper {
-  width: 420px;
-  background: transparent;
+  max-width: 420px;                   /* Set a maximum width for the form */
+  width: 100%;                        /* Allow the form to be responsive */
+  background: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
   border: solid 2px rgba(34, 139, 34, 0.6); /* Dark green border with transparency */
-  backdrop-filter: blur(20px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);        /* Adds blur effect to the background */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Increase shadow for depth */
   color: #22B357; 
   border-radius: 10px;
   padding: 30px 40px; 
+  box-sizing: border-box;             /* Include padding and border in the width/height */
 }
 
 .wrapper h1 {
@@ -37,7 +61,7 @@
 }
 
 .inputBox input::placeholder {
-  color: #1B8341; /* Lighter yellow for placeholder text */
+  color: #1B8341; /* Placeholder text color */
 }
 
 .inputBox .icon {
@@ -46,7 +70,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
-  color: #135E2F; /* Dark yellow icon color */
+  color: #135E2F; /* Icon color */
 }
 
 .wrapper .rememberForgot {
@@ -54,7 +78,7 @@
   justify-content: space-between;
   font-size: 14.5px;
   margin: -15px 0 15px;
-  color: #135E2F; /* Dark yellow for text */
+  color: #135E2F;
 }
 
 .rememberForgot label input {
@@ -63,7 +87,7 @@
 }
 
 .rememberForgot a {
-  color: #000000; /* Dark yellow for links */
+  color: #000000;
   text-decoration: none;
 }
 
@@ -81,7 +105,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   font-size: 16px;
-  color: #eceaea; /* Dark yellow text color for the button */
+  color: #eceaea; /* Button text color */
   font-weight: 500;
 }
 
@@ -89,11 +113,11 @@
   font-size: 14.5px;
   text-align: center;
   margin: 20px 0 15px;
-  color: #135E2F; /* Dark yellow for the text */
+  color: #135E2F; /* Link text color */
 }
 
 .registerLink p a {
-  color: #3468d1; /* Dark yellow for the link */
+  color: #3468d1; /* Link color */
   text-decoration: none;
   font-weight: 600;
 }
