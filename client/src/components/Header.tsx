@@ -152,7 +152,7 @@ function Header({ user }: HeaderProps) {
             {isBuyer && username !== "אורח" && (
               <>
                 <Nav.Link href="/products" className="mx-3">
-                  מוצרים שלנו
+                  המוצרים שלנו
                 </Nav.Link>
                 <Nav.Link href="/toolkit" className="mx-3">
                   האם תרצה להיות מוכר

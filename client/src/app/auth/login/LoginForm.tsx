@@ -50,14 +50,14 @@ function LoginForm() {
   }, [formState]);
 
   return (
-    <div>
+    <div dir="rtl">
       <div className={styles.wrapper}>
         <form ref={formRef} action={formAction}>
-          <h1>Login</h1>
+          <h1>התחברות למשתמש קיים</h1>
           <div className={styles.inputBox}>
             <input
               type="Email"
-              placeholder="Email"
+              placeholder="דואר אלקטורני"
               required
               {...register("email")}
             />
@@ -72,7 +72,7 @@ function LoginForm() {
           <div className={styles.inputBox}>
             <input
               type="password"
-              placeholder="Password"
+              placeholder="סיסמא"
               required
               {...register("password")}
             />
@@ -84,13 +84,13 @@ function LoginForm() {
             {errors["password"] && errors["password"]?.message}
           </p>
 
-          <div className={styles.rememberForgot}>
+          {/* <div className={styles.rememberForgot}>
             <label>
               <input type="checkbox" />
-              Remember me
+              זכור אותו
             </label>
-            <a href="#">Forgot password</a>
-          </div>
+            <a href="#">שכחתי סיסמא</a>
+          </div> */}
 
           <SubmitButton
             text="Submit"
@@ -100,8 +100,8 @@ function LoginForm() {
 
           <div className={styles.registerLink}>
             <p>
-              Don't have an account?
-              <Link href="/auth/register">Sign up</Link>
+              אין לך עדיין חשבון?
+              <Link href="/auth/register">להרשמה</Link>
             </p>
           </div>
         </form>
