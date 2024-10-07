@@ -42,6 +42,44 @@
         }
       }
     },
+    "/auth/updatePersonalDetails": {
+      "post": {
+        "summary": "user request to updatePersonalDetails",
+        "description": "This endpoint updatePersonalDetails",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User request to sell products",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserRegistration"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "updatePersonalDetails successful"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "/auth/login": {
       "post": {
         "summary": "Log in a user",
@@ -271,6 +309,37 @@
         "summary": "Get all products",
         "description": "This endpoint fetches all products",
         "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "description": "Bearer JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products fetched successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/product/allProducts/{userId}": {
+      "get": {
+        "summary": "Get all products",
+        "description": "This endpoint fetches all products",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "description": "ID of the user to fetch",
+            "required": true,
+            "type": "string",
+            "example": "603d53a7a262f90b60d8dbd0"
+          },
           {
             "in": "header",
             "name": "x-auth-token",
