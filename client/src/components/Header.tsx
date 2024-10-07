@@ -42,11 +42,11 @@ function Header({ user }: HeaderProps) {
         <span style={{ marginLeft: "20px", fontSize: "18px" }}>
           שלום, {username}
         </span>
-        {username !== "אורח" && (
+        {/* {username !== "אורח" && (
               <Nav.Link href="/personalArea" className="mx-3">
                 האזור אישי
               </Nav.Link>
-            )}
+            )} */}
               
         {user ? (
           <Button
