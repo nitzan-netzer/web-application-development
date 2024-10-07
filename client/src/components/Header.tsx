@@ -47,7 +47,7 @@ function Header({ user }: HeaderProps) {
                 האזור אישי
               </Nav.Link>
             )} */}
-              
+
         {user ? (
           <Button
             variant="outline-success"
@@ -87,26 +87,26 @@ function Header({ user }: HeaderProps) {
             </Button>
           </>
         )}
-          {/* Conditionally render Buyer-specific links */}
-              {isBuyer && username !== "אורח"  && (
-              <>
-                <a href="/cart" className="ms-2">
-                  <img
-                    src={"/shopping-cart.png"}
-                    width="30"
-                    height="30"
-                    className="d-inline-block align-top"
-                    alt="Icon"
-                    style={{
-                      position: "relative",
-                      top: "10px",
-                      left: "10px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </a>
-              </>
-            )}
+        {/* Conditionally render Buyer-specific links */}
+        {isBuyer && username !== "אורח" && (
+          <>
+            <a href="/cart" className="ms-2">
+              <img
+                src={"/shopping-cart.png"}
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+                alt="Icon"
+                style={{
+                  position: "relative",
+                  top: "10px",
+                  left: "10px",
+                  cursor: "pointer",
+                }}
+              />
+            </a>
+          </>
+        )}
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="navbarScroll">
@@ -127,10 +127,6 @@ function Header({ user }: HeaderProps) {
             <Nav.Link href="/policy" className="mx-3">
               תקנון
             </Nav.Link>
-            <Nav.Link href="/toolkit" className="mx-3">
-              האם תרצה להיות מוכר
-            </Nav.Link>
-
 
             {/* Conditionally render Admin links */}
             {isAdmin && (
@@ -153,12 +149,16 @@ function Header({ user }: HeaderProps) {
                 ארגז כלים
               </Nav.Link>
             )}
-              {isBuyer && username !== "אורח"  && (
+            {isBuyer && username !== "אורח" && (
               <>
                 <Nav.Link href="/products" className="mx-3">
                   מוצרים שלנו
                 </Nav.Link>
-                </>
+                <Nav.Link href="/toolkit" className="mx-3">
+                  האם תרצה להיות מוכר
+                </Nav.Link>
+
+              </>
             )}
           </Nav>
         </Navbar.Collapse>

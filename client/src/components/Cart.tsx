@@ -105,9 +105,6 @@ const Cart: React.FC<Props> = () => {
                                     <span>שם המוצר:</span> {product.name}
                                 </div>
                                 <div className={styles['product-detail']}>
-                                    <span>שם המוצר:</span> {product.productId}
-                                </div>
-                                <div className={styles['product-detail']}>
                                     <span>מחיר:</span> ₪{product.price}
                                 </div>
                                 <button 
