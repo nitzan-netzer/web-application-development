@@ -6,6 +6,7 @@ import { Session } from '../types/session.type';
 
 const API_ORIGIN = 'http://localhost:3001';
 const API_REQUEST_TO_SELL = '/api/auth/requestToSell'
+const API_USER_UPDATE = '/api/auth/updatePersonalDetails'
 const API_PRODUCT_CREATE = '/api/product/create';
 const API_PRODUCT_UPDATE = '/api/product/update';
 const API_PRODUCT_DELETE = '/api/product/product';
@@ -27,6 +28,7 @@ async function getAuthHeaders(): Promise<HeadersInit> {
   if (!session || !session.token) {
     throw new Error('Authentication token is missing.');
   }
+  //console.log("sessin:",session.token);
   return {
     'Content-Type': 'application/json',
     'x-auth-token': session.token,
@@ -67,6 +69,26 @@ export async function PostRequestToSell(): Promise<any> {
         headers,
         body
     });
+}
+//update user details
+export async function updateUser(email:string,birthYear:number,
+   address:string, gender:string ,isSeller: boolean): Promise<any> {
+  const url = `${API_ORIGIN}${API_USER_UPDATE}`;
+  const headers = await getAuthHeaders();
+  const session = await getSession() as Session | null;
+  if (!session || !session.user.userId) {
+      throw new Error('User ID is missing.');
+  }
+  const userId = session.user.userId;
+  const username = session.user.username;
+  const name = session.user.name;
+  const body = JSON.stringify({userId, username, name, email, birthYear, address,gender, isSeller });
+
+  return callApi<any>(url, {
+      method: 'POST',
+      headers,
+      body
+  });
 }
 
 // Create a new product

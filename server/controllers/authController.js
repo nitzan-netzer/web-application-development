@@ -114,17 +114,15 @@ async function updatePersonalDetails(req, res) {
     if (!user) {
         return res.status(404).json({ msg: 'User not found' });
     }
-
-    user.username = user.username || username;
-    user.name = user.name || name;
-    user.email = user.email || email;
-    user.birthYear = user.birthYear || birthYear;
-    user.address = user.address || address;
-    user.gender = user.gender || gender;
-    user.isSeller = user.isSeller || isSeller;
-
+    
+    user.username = username ||  user.username;
+    user.name =  name || user.name;
+    user.email = email ||  user.email;
+    user.birthYear = birthYear ||  user.birthYear;
+    user.address = address ||  user.address;
+    user.gender = gender ||  user.gender;
+    user.isSeller = isSeller || user.isSeller;
     user.save();
-
     return res.status(200).json({user})
 }
 
