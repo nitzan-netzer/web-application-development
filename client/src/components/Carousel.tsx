@@ -4,7 +4,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import React from 'react';
 import '../styles/AppCarousel.css';
 
-var CarouselData = [
+const CarouselData = [
     {
         id: 1,
         image: './top_5_products.png',
@@ -27,28 +27,21 @@ var CarouselData = [
 
 function AppCarousel() {
   return (
-            <Carousel>
-                {
-                    CarouselData.map(item => (
-                        <Carousel.Item key={item.id}>
-                            <img
-                                className='carousel-image'  // Apply custom class here
-                                src={item.image}
-                                alt={"Slide " + item.id}
-                            />
-                            <Carousel.Caption>
-                                <h3 style={{ color: '#0C5C07',
-                                    textShadow: '-1px -1px 0 #BFD1BD, 1px -1px 0 #BFD1BD, -1px 1px 0 #BFD1BD, 1px 1px 0 #BFD1BD',
-                                    fontSize: '24px',
-                                    fontWeight: 'bold' }}>{item.title}</h3>
-                                <p style={{ color: '#0C5C07',
-                                    textShadow: '-1px -1px 0 #BFD1BD, 1px -1px 0 #BFD1BD, -1px 1px 0 #BFD1BD, 1px 1px 0 #BFD1BD',
-                                    fontSize: '17px',}}>{item.description}</p>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                    ))
-                }
-            </Carousel>
+    <Carousel>
+      {CarouselData.map(item => (
+        <Carousel.Item key={item.id}>
+          <img
+            className="carousel-image" 
+            src={item.image}
+            alt={"Slide " + item.id}
+          />
+          <Carousel.Caption>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      ))}
+    </Carousel>
   )
 }
 
