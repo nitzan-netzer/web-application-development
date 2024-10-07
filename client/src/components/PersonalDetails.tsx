@@ -29,55 +29,59 @@ const PersonalDetails = () => {
         localStorage.setItem('isSeller', JSON.stringify(isSeller));
 
         setSuccess(true);
-        setTimeout(() => setSuccess(false), 2000); 
+        setTimeout(() => setSuccess(false), 2000);
     };
 
     return (
         <div className="toolkitSaller">
-            <h1>Update Personal Details</h1>
+            <h1 className={styles.title}>כאן תוכל/י לעדכן את הפרטים האישיים שלך</h1>
 
-            {success && <p style={{ color: 'green' }}>Details updated successfully!</p>}
+            {success && <p className={`${styles.paragraph} ${styles.successMessage}`}>פרטיך עודכנו בהצלחה</p>}
 
-            <div>
-                <label>Name:</label>
+            <div className={styles.divMargin}>
+                <label className={styles.label}>שם</label>
                 <input 
                     type="text" 
                     value={name} 
                     onChange={(e) => setName(e.target.value)} 
+                    className={styles.inputField} 
                 />
             </div>
 
-            <div>
-                <label>Email:</label>
+            <div className={styles.divMargin}>
+                <label className={styles.label}>Email</label>
                 <input 
                     type="email" 
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)} 
+                    className={styles.inputField} 
                 />
             </div>
 
-            <div>
-                <label>Address:</label>
+            <div className={styles.divMargin}>
+                <label className={styles.label}>כתובת</label>
                 <input 
                     type="text" 
                     value={address} 
-                    onChange={(e) => setAddress(e.target.value)} 
+                    onChange={(e) => setAddress(e.target.value)}
+                    className={styles.inputField} 
                 />
             </div>
 
-            <div>
-                <label>Are you a seller?</label>
+            <div className={styles.divMargin}>
+            <label className={styles.label}>האם תרצה להיות מוכר</label>
                 <input 
                     type="checkbox" 
                     checked={isSeller} 
-                    onChange={(e) => setIsSeller(e.target.checked)} 
+                    onChange={(e) => setIsSeller(e.target.checked)}
+                    className={styles.checkbox} 
                 />
             </div>
 
-            <button onClick={handleUpdateDetails}>
-                Update Details
+            <button onClick={handleUpdateDetails} className={styles.button}>
+                עדכן
             </button>
-        </div>
+        </div >
     );
 };
 

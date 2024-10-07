@@ -62,19 +62,6 @@ export default function PostPurches() {
         
     }
 
-    // const locations = [
-    //     {
-    //         address: 'מרכז תל אביב',
-    //         latitude: 32.0853,
-    //         longitude: 34.7818,
-    //     },
-    //     {
-    //         address: 'חיפה',
-    //         latitude: 32.7940,
-    //         longitude: 34.9896,
-    //     }
-    // ];
-
     return (
         <div className={styles.orderSummaryContainer}>
             <h1>סיכום ההזמנה</h1>

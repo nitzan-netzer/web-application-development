@@ -48,18 +48,17 @@ const Cart: React.FC<Props> = () => {
     
 
     const handlePurchase = async (products : Product[]) => {
-        
-        console.log("Cart : ", chosenProducts);
 
         const productsToPurchase = products.map(({ productId, quantity }) => ({ productId, quantity }));
-        
-        console.log("productsToPurchase : ", productsToPurchase);
 
         try {
             
             await makeTransaction(productsToPurchase);
     
+            //clearing the cart from products
             localStorage.setItem('purchasedProducts', JSON.stringify(chosenProducts));
+            setChosenProducts([]);
+            localStorage.removeItem('shopping cart');
     
             router.push('/postPurches');
         } catch (error) {

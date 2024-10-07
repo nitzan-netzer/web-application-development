@@ -43,7 +43,7 @@ function Header({ user }: HeaderProps) {
           שלום, {username}
         </span>
         {username !== "אורח" && (
-              <Nav.Link href="/profile" className="mx-3">
+              <Nav.Link href="/personalArea" className="mx-3">
                 האזור אישי
               </Nav.Link>
             )}
@@ -126,6 +126,9 @@ function Header({ user }: HeaderProps) {
             </Nav.Link>
             <Nav.Link href="/policy" className="mx-3">
               תקנון
+            </Nav.Link>
+            <Nav.Link href="/toolkit" className="mx-3">
+              האם תרצה להיות מוכר
             </Nav.Link>
 
 
