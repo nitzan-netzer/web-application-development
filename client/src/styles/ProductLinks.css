@@ -1,10 +1,32 @@
+/* ProductLinks.css */
+
+/* Center the category title below the image and apply styles */
+.overlay-text {
+  text-align: center;  /* Centers the text below the image */
+  color: #0B3D0B;      /* Very dark green color */
+  font-family: 'Lucida Console', 'Courier New', monospace; /* Font family */
+  font-weight: bold;   /* Bold font */
+  margin-top: 10px;    /* Adds some space between the image and the text */
+}
+
+/* Style for the main header */
+.main-header {
+  text-align: center;
+  color: #63A55E;      /* Main green color */
+  text-shadow: 
+    -1px -1px 0 #BFD1BD, 
+    1px -1px 0 #BFD1BD, 
+    -1px 1px 0 #BFD1BD, 
+    1px 1px 0 #BFD1BD;
+  font-weight: bold;
+}
+
+/* Image size styling */
 .fixed-size-img {
-    width: 150px;   /* Set the fixed width */
-    height: 150px;  /* Set the fixed height */
-    object-fit: cover; /* Ensure the image fits within the dimensions */
-  }
-  
-  .overlay-text {
-    text-align: center;
-    margin-top: 10px;
-  }
+  width: 100%;         /* Ensure the image scales with the container */
+  max-width: 150px;     /* Set a max width for the image */
+  height: auto;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;      /* Centers the image */
+}

@@ -1,0 +1,41 @@
+/* MarketingComponent.css */
+
+/* Container styling */
+.mt-5 {
+    margin-top: 3rem; /* Bootstrap class for margin-top */
+  }
+  
+  /* Center text in heading */
+  .marketing-heading {
+    color: #4CAF50; /* Green color for the heading */
+    font-weight: bold; /* Bold font */
+    text-align: center;
+    margin-bottom: 1.5rem; /* Space below the heading */
+  }
+  
+  /* Card styling */
+  .marketing-card {
+    text-align: center; /* Center-align text in the card */
+    border-color: #135E2F; /* Yellow border */
+    margin-bottom: 1.5rem; /* Space below each card */
+  }
+  
+  /* Card title styling */
+  .marketing-card-title {
+    color: #4CAF50; /* Green color for the card title */
+    font-weight: bold; /* Make the title bold */
+  }
+  
+  /* Button styling for 'success' variant */
+  .btn-success {
+    background-color: #4CAF50; /* Green button background */
+    border-color: #4CAF50; /* Green border */
+  }
+  
+  /* Button styling for 'warning' variant */
+  .btn-warning {
+    background-color: #FFC107; /* Yellow button background */
+    border-color: #FFC107; /* Yellow border */
+    color: #fff; /* White text color */
+  }
+  
