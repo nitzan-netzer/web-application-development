@@ -19,7 +19,6 @@ function Header({ user }: HeaderProps) {
     await logout();
     router.push('/auth/login');
   };
-
   const username = user?.name || "אורח"; // Default to "אורח" if user is undefined
   const isAdmin = user?.isAdmin; // Check if user is admin
   const isSeller = user?.isSeller; // Check if user is seller
@@ -39,7 +38,15 @@ function Header({ user }: HeaderProps) {
         </Navbar.Brand>
 
         {/* Greeting user */}
-        <span className={styles.username}>שלום, {username}</span>
+
+        <span style={{ marginLeft: "20px", fontSize: "18px" }}>
+          שלום, {username}
+        </span>
+        {username !== "אורח" && (
+              <Nav.Link href="/personalArea" className="mx-3">
+                האזור אישי
+              </Nav.Link>
+            )}
 
         <div className={styles['auth-buttons']}>
           {user ? (

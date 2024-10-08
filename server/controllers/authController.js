@@ -103,4 +103,27 @@ async function requestToSell(req, res) {
   }
 }
 
-export {register,login, requestToSell}
+async function updatePersonalDetails(req, res) {
+    const {
+        userId, username, name, email,
+        birthYear, address, gender, isSeller,
+    } = req.body;
+
+    const user = await User.findOne({userId});
+
+    if (!user) {
+        return res.status(404).json({ msg: 'User not found' });
+    }
+    
+    user.username = username ||  user.username;
+    user.name =  name || user.name;
+    user.email = email ||  user.email;
+    user.birthYear = birthYear ||  user.birthYear;
+    user.address = address ||  user.address;
+    user.gender = gender ||  user.gender;
+    user.isSeller = isSeller || user.isSeller;
+    user.save();
+    return res.status(200).json({user})
+}
+
+export {register,login, requestToSell, updatePersonalDetails}

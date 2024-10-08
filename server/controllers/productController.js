@@ -151,6 +151,16 @@ export async function getAllProducts(req, res) {
     }
 }
 
+export async function getAllProductsByUserId(req, res) {
+    try {
+        const { userId } = req.params;
+        const products = await Product.find({userId});
+        res.status(200).json({ products });
+    } catch (error) {
+        res.status(500).json({ msg: 'Server error' });
+    }
+}
+
 export async function getAllStatisticsOnProducts(req, res) {
     try {
         const statistics = await getAllStatistics();
@@ -160,3 +170,4 @@ export async function getAllStatisticsOnProducts(req, res) {
         res.status(500).json({ msg: 'Server error' });
     }
 }
+
