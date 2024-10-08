@@ -5,7 +5,7 @@ import "../styles/marketingVideo.css";
 
 const VideoComponent: React.FC = () => {
 
-    const videoLink = "";
+    const videoLink = "./marketingVideo.mp4";
   return (
     <div className="container mt-4" dir="rtl">
       <h5 className="text-center mb-4">ואם עדיין לא השתכנעתם - מוזמנים לצפות בוידאו הבא</h5>
