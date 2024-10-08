@@ -28,11 +28,11 @@ async function createProducts(category, sellerName, status, photosArray, locatio
         const { lng, lat } = LOCATIONS[locationI];
 
         products.push({
-            name: `${category} Product ${i}`,
+            name: `${category} ${i}`,
             image: photosArray[i],
             category,
             status,
-            description: `Description for product ${i}`,
+            description: `מוצר נהדר ומקסים`,
             price: Math.floor(Math.random() * 1000) + 1,
             username: sellerName,
             userId: uuid(),
