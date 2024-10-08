@@ -1,0 +1,62 @@
+/* Header.module.css */
+
+/* Ensure the navbar is taking the full width */
+.navbar {
+    width: 100%;
+    z-index: 1000; /* Ensure it stays on top of other content */
+    height: 70px; /* Set a fixed height for the navbar */
+  }
+  
+  /* Navbar links styling */
+  .navLink {
+    position: relative;
+    text-decoration: none;
+    color: inherit; /* Inherit current text color */
+    transition: color 0.3s ease;
+    white-space: nowrap; /* Prevents the text from wrapping */
+  }
+  
+  /* Hover effect for the links in the navbar with sliding underline */
+  .navLink:hover {
+    color: #135E2F; /* Change color to dark green on hover */
+  }
+  
+  .navLink::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #135E2F; /* Dark green underline */
+    bottom: -5px; /* Slightly below the text */
+    left: 0;
+    transition: width 0.3s ease; /* Sliding effect */
+  }
+  
+  .navLink:hover::after {
+    width: 100%; /* Full width underline on hover */
+  }
+  
+  /* Prevent the navbar links from wrapping */
+  .navbarNav {
+    flex-wrap: nowrap; /* Prevents links from wrapping to the next line */
+  }
+  
+  /* Centering the התחברות, הרשמה, and התנתקות buttons vertically in the navbar */
+  .auth-buttons {
+    display: flex;
+    align-items: center; /* Center vertically within the navbar */
+    height: 100%; /* Full height of the navbar */
+  }
+  
+  /* Styling the buttons */
+  .button {
+    margin-left: 20px; /* Spacing between buttons */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+  }
+  
+  /* Greeting user */
+  .username {
+    margin-left: 20px;
+    font-size: 18px;
+  }
+  

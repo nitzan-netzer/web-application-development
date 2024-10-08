@@ -41,6 +41,7 @@ async function callApi<T>(url: string, options: RequestInit): Promise<T> {
     const response = await fetch(url, options);
 
     if (!response.ok) {
+      console.log(response);
       const errorData = await response.json();
       throw new Error(errorData.message || 'API request failed');
     }
@@ -119,14 +120,23 @@ export async function createProduct(product: Product): Promise<any> {
       body,
     });
   }
-// Update an existing product
-export async function updateProduct(product: Product): Promise<any> {
-  const url = `${API_ORIGIN}${API_PRODUCT_UPDATE}`;
-  const headers = await getAuthHeaders();
-  const body = JSON.stringify(product);
 
+// Update an existing product
+export async function updateProduct(productId: string, product: Product): Promise<any> {
+  const url = `${API_ORIGIN}${API_PRODUCT_UPDATE}/${productId}`;
+  const headers = await getAuthHeaders();
+  const body = JSON.stringify({
+    name: product.name,
+    image: product.image,
+    category: product.category,
+    status: product.status,
+    description: product.description,
+    price: product.price,
+    userId: product.userId,
+    quantity: product.quantity
+  });
   return callApi<any>(url, {
-    method: 'PUT',
+    method: 'POST',
     headers,
     body,
   });

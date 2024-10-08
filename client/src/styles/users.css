@@ -1,0 +1,127 @@
+/* General Page Styling */
+body {
+    font-family: 'Arial, sans-serif';
+    background-color: #f0f0f0;
+  }
+  
+  .container {
+    padding: 2rem;
+  }
+  
+  /* User Card Styling */
+  .UsersCard {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  
+  .UsersCard:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .accordion-header {
+    font-weight: bold;
+    color: #333;
+    background-color: #457b9d;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .accordion-body {
+    background-color: #fff;
+    color: #555;
+    padding: 1rem;
+    border-radius: 0 0 10px 10px;
+  }
+  
+  .accordion-body p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .accordion-body .btn-danger {
+    background-color: #e63946;
+    border: none;
+    margin-right: 0.5rem;
+    transition: background-color 0.3s;
+  }
+  
+  .accordion-body .btn-danger:hover {
+    background-color: #c9252b;
+  }
+  
+  .accordion-body .btn-primary {
+    background-color: #1d3557;
+    border: none;
+    margin-right: 0.5rem;
+    transition: background-color 0.3s;
+  }
+  
+  .accordion-body .btn-primary:hover {
+    background-color: #457b9d;
+  }
+  
+  .accordion-body .btn-success {
+    background-color: #2a9d8f;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .accordion-body .btn-success:hover {
+    background-color: #21867a;
+  }
+  
+  /* Filters Styling */
+  .form-group label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .form-control {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .btn-primary {
+    background-color: #457b9d;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #1d3557;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .UsersCard {
+      margin-bottom: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .form-group {
+      margin-bottom: 1rem;
+    }
+  }
+  
+  /* Custom RTL Styles */
+  [dir="rtl"] .form-control {
+    text-align: right;
+  }
+  
+  [dir="rtl"] .accordion-header,
+  [dir="rtl"] .accordion-body p {
+    text-align: right;
+  }
+  
+  [dir="rtl"] .accordion-body .btn-danger,
+  [dir="rtl"] .accordion-body .btn-primary,
+  [dir="rtl"] .accordion-body .btn-success {
+    float: left;
+    margin-right: 0;
+    margin-left: 0.5rem;
+  }

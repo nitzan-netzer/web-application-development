@@ -1,118 +1,162 @@
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* Center the wrapper in the middle of the page */
+.login-page-container {
+  display: flex;
+  align-items: center;    /* Vertically center the content */
+  justify-content: center; /* Horizontally center the content */
+  height: 100vh;          /* Set the height to 100% of the viewport */
+  background: #f5f5f5;    /* Optional: Set a background color for the page */
+  padding: 20px;     /* Adds padding to ensure it doesn't touch the viewport edges */
+  box-sizing: border-box; /* Include padding in the height/width calculation */
+}
 
-    min-height: 100vh;
-    background: url("../../public/second-hand-store-picture.png") no-repeat;
-    background-size: cover;
-    background-position: center;
-    align-items: center;
-    justify-content: center;
-    display: flex;
+.register-page-container {
+  display: flex;
+  align-items: center;    /* Vertically center the content */
+  justify-content: center; /* Horizontally center the content */
+  height: 100vh;          /* Set the height to 100% of the viewport */
+  background: #f5f5f5;    /* Optional: Set a background color for the page */
+  padding: 20px;   
+  margin-top: 110px;       /* Adds padding to ensure it doesn't touch the viewport edges */
+  box-sizing: border-box; /* Include padding in the height/width calculation */
+}
 
-} */
 
+/* Wrapper styling for the form */
 .wrapper {
-    width: 420px;
-    background: transparent;
-    /* background: slateblue; */
-    border: solid 2px rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color: white;
-    border-radius: 10px;
-    padding: 30px 40px; 
-  }
-  
-  .wrapper h1 {
-    font-size: 36px;
-    text-align: center;
-  }
-  
-  .wrapper .inputBox {
-    position: relative;
-    width: 100%;
-    height: 50px;
-    margin: 30px 0;
-  }
-  
-  .inputBox input {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    /* border: none; */
-    outline: none;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 40px;
-    font-size: 16px;
-    color: #fff;
-    padding: 20px 45px 20px 20px;
-  }
-  
-  .inputBox input::placeholder {
-    color: #fff;
-  }
-  
-  .inputBox .icon {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
-  }
-  
-  .wrapper .rememberForgot {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14.5px;
-    margin: -15px 0 15px;
-  }
-  
-  .rememberForgot label input {
-    accent-color: #fff;
-    margin-right: 3px;
-  }
-  
-  .rememberForgot a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .rememberForgot a:hover {
-    text-decoration: underline;
-  }
-  
-  .wrapper button {
-    width: 100%;
-    height: 45px;
-    background: #fff;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    font-size: 16px;
-    color: #333;
-    font-weight: 300;
-  }
-  
-  .wrapper .registerLink {
-    font-size: 14.5px;
-    text-align: center;
-    margin: 20px 0 15px;
-  }
-  
-  .registerLink p a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  
-  .registerLink p a:hover {
-    text-decoration: underline;
-  }
+  max-width: 420px;                   /* Set a maximum width for the form */
+  width: 100%;                        /* Allow the form to be responsive */
+  background: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+  border: solid 2px rgba(34, 139, 34, 0.6); /* Dark green border with transparency */
+  backdrop-filter: blur(10px);        /* Adds blur effect to the background */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Increase shadow for depth */
+  color: #22B357; 
+  border-radius: 10px;
+  padding: 30px 40px; 
+  box-sizing: border-box;             /* Include padding and border in the width/height */
+}
+
+.wrapper h1 {
+  font-size: 36px;
+  text-align: center;
+  color: #1B8341; 
+}
+
+.wrapper .inputBox {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 30px 0;
+}
+
+.inputBox input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  outline: none;
+  border: 2px solid rgba(34, 139, 34, 0.6); /* Dark green border with transparency */
+  border-radius: 40px;
+  font-size: 16px;
+  color: #1B8341; 
+  padding: 20px 45px 20px 20px;
+}
+
+.inputBox input::placeholder {
+  color: #1B8341; /* Placeholder text color */
+}
+
+.inputBox .icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #135E2F; /* Icon color */
+}
+
+.wrapper .rememberForgot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14.5px;
+  margin: -15px 0 15px;
+  color: #135E2F;
+}
+
+.rememberForgot label input {
+  accent-color: #228b22; /* Dark green for checkbox accent */
+  margin-right: 3px;
+}
+
+.rememberForgot a {
+  color: #000000;
+  text-decoration: none;
+}
+
+.rememberForgot a:hover {
+  text-decoration: underline;
+}
+
+.wrapper button {
+  width: 100%;
+  height: 45px;
+  background: #135E2F; /* Dark green button background */
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #eceaea; /* Button text color */
+  font-weight: 500;
+}
+
+.wrapper .registerLink {
+  font-size: 14.5px;
+  text-align: center;
+  margin: 20px 0 15px;
+  color: #135E2F; /* Link text color */
+}
+
+.registerLink p a {
+  color: #3468d1; /* Link color */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.registerLink p a:hover {
+  text-decoration: underline;
+}
+
+/* Custom style for the checkbox wrapper */
+.wrapper .customCheckbox {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.customCheckbox input[type="checkbox"] {
+  appearance: none; /* Remove default styling */
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: 2px solid #0d3f20; /* Dark green border */
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+
+.customCheckbox input[type="checkbox"]:checked {
+  background-color: #135E2F; /* Dark green background when checked */
+}
+
+.customCheckbox input[type="checkbox"]:checked::before {
+  content: "✔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff; /* White checkmark */
+  font-size: 16px;
+  line-height: 1;
+}

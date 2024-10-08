@@ -1,62 +1,85 @@
-/* Flexbox container for map and table */
 .contact-us-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px;
-  gap: 20px; /* Space between the map and the table */
-  direction: rtl; /* Make the layout RTL to change the order */
+  padding: 50px 20px;
+  background-color: #F5F5F5;
+  font-family: 'Arial', sans-serif;
 }
 
-/* Map styling */
-.map-container {
-  flex: 1; /* Make the map take up a portion of the space */
-  margin-left: 20px; /* Add some space between the map and the table */
-}
-
-/* Table styling */
 .team-container {
-  flex: 1; /* Make the table take up the remaining space */
-  max-width: 400px; /* Limit table width */
-  text-align: right; /* Align text to the right for Hebrew */
-}
-
-/* Center the 'Our Team' heading */
-.team-title {
+  margin-bottom: 40px;
   text-align: center;
-  margin-bottom: 10px;
-  font-size: 24px;
-  color: #333;
 }
 
-/* Table element styling */
+.team-title {
+  color: #135E2F;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 2px 2px #333;
+  transition: font-size 2s;
+}
+
+.team-title:hover {
+  font-size: 50px
+}
+
+
 .team-table {
   width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .team-table th, .team-table td {
-  padding: 8px;
-  border: 1px solid #ddd;
-  text-align: left; /* Align table text to the left */
-}
-
-/* Green and yellow table header */
-.team-table th {
-  background-color: green;
-  color: yellow;
-  font-weight: bold;
-}
-
-/* Table data cells */
-.team-table td {
-  background-color: #fff; /* Optional: Add a background color for the table cells */
-}
-
-/* Optional map address styling */
-.map-address {
+  padding: 15px 10px;
   text-align: center;
-  margin-top: 10px;
+  border: 1px solid #ddd;
   font-size: 18px;
+}
+
+.team-table th {
+  background-color: #135E2F;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.team-table td {
+  background-color: #f9f9f9;
   color: #333;
+}
+
+.team-table tr:nth-child(even) td {
+  background-color: #E5E5E5;
+}
+
+.map-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.map-address {
+  color: #135E2F;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 15px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+  .team-title {
+    font-size: 28px;
+  }
+  
+  .team-table th, .team-table td {
+    font-size: 16px;
+  }
+  
+  .map-address {
+    font-size: 20px;
+  }
 }

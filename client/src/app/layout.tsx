@@ -29,7 +29,7 @@ export default async function RootLayout({
         <Header user={user}/>
           {/* <Header /> */}
           <main style={{ paddingTop: '70px' }}>{children}</main>
-          {/* <Footer /> */}
+          <Footer />
         </body>
     </html>
   );

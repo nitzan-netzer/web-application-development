@@ -1,0 +1,126 @@
+/* General container styling */
+.container {
+    background-color: #f7fff7;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Helvetica Neue', sans-serif;
+  }
+  
+  .navbar {
+    background-color: #a8d5ba;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar .navbar-brand {
+    color: #135e2f;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .navbar .navbar-text {
+    color: #135e2f;
+    font-weight: 500;
+  }
+  
+  .navbar .badge {
+    background-color: #ffbf69;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .product-count {
+    background-color: #c3e5ae;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #135e2f;
+  }
+  
+  .row {
+    margin-top: 20px;
+  }
+  
+  /* Product Cards Styling */
+  .card {
+    border: 2px solid #80af81;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    background-color: #f7fff7;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-img-top {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    object-fit: cover;
+  }
+  
+  .card-title {
+    font-size: 22px;
+    color: #135e2f;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 16px;
+    color: #508d4e;
+    line-height: 1.5;
+  }
+  
+  .card-text strong {
+    color: #135e2f;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  /* Local class for submit buttons */
+  .submit-button {
+    background-color: #135e2f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #0c3e22;
+  }
+  
+  .button-danger {
+    background-color: #f94144;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button-danger:hover {
+    background-color: #d62828;
+  }
+  
+  .form-label {
+    color: #135e2f;
+    font-weight: bold;
+  }
+  
+  .form-control {
+    border-radius: 8px;
+    border: 2px solid #80af81;
+    padding: 10px;
+  }
+  

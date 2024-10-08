@@ -1,10 +1,7 @@
 import AppCarousel from "@/srccomponents/Carousel";
 import ProductsLinks from "@/srccomponents/categoryImages";
 import PagesLinks from "@/srccomponents/pagesLinks";
-// import { Provider } from 'react-redux'
-// import { store } from '../store'
-
-// import Header from "@/srccomponents/Header";
+import Video from "@/srccomponents/marketingVideo";
 
 export default function Home() {
   return (
@@ -14,6 +11,7 @@ export default function Home() {
         <AppCarousel />
         <ProductsLinks/>
         <PagesLinks/>
+        <Video/>
       </main>
       {/* </Provider> */}
     </div>

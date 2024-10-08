@@ -4,23 +4,21 @@ import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 
 interface productLocation {
-  type : string;
+  type: string;
   coordinates: Array<number>;
 }
 interface Product {
-location: productLocation;
-name: string;
-image: string;
-category: string;
-status: string;
-description: string;
-price: number;
-userId: string;
-productId: string;
-quantity: number;
+  location: productLocation;
+  name: string;
+  image: string;
+  category: string;
+  status: string;
+  description: string;
+  price: number;
+  userId: string;
+  productId: string;
+  quantity: number;
 }
-
-
 
 interface ProductCardProps {
   product: Product;
@@ -30,7 +28,7 @@ interface ProductCardProps {
 const ProductCardAdmin: React.FC<ProductCardProps> = ({ product, handleDelete }) => {
   return (
     <Card className="mb-4" dir="rtl">
-      {product.image && <Card.Img variant="top" src={product.image} style={{width: '295px', height: '200px'}} />}
+      {product.image && <Card.Img variant="top" src={product.image} style={{ width: '295px', height: '200px' }} />}
       <Card.Body>
         <Card.Title>{product.name}</Card.Title>
         <Card.Text>{product.description}</Card.Text>

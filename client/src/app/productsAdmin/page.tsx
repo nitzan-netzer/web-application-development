@@ -8,19 +8,29 @@ import { Session } from '@/srctypes/session.type'
 
 export default async function Products() {
   const session = await getSession();
-    if (!session) {
-        throw new Error('Session is missing.');
-    }
-  
-    const user = session.user as Session['user'];
-    console.log("user ID: ", user);
-  const data = await getAllProducts();
+  if (!session) {
+      throw new Error('Session is missing.');
+  }
 
-  return (
-    <div className="App">
-      <main>
-        <ProductsPageAdmin allProducts={data}/>
-      </main>
-    </div>
-  );
+  const curr_user = session.user as Session['user'];
+  const isAdmin = curr_user.isAdmin;
+
+  if (isAdmin) {
+    const data = await getAllProducts();
+    return (
+      <div className="App">
+        <main>
+          <ProductsPageAdmin allProducts={data}/>
+        </main>
+      </div>
+    );
+  }
+
+  else {
+    return (
+      <div className="App">
+        אין לך הרשאה להיכנס לאזור הזה
+      </div>
+    );
+  }
 }

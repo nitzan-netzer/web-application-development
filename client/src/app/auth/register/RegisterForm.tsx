@@ -58,103 +58,105 @@ function RegisterForm() {
   }, [formState]);
 
   return (
-    <div className={styles.wrapper}>
-      <form ref={formRef} action={formAction}>
-        <h1>Register</h1>
+    <div className={styles["register-page-container"]} dir="rtl">
+      <div className={styles.wrapper}>
+        <form ref={formRef} action={formAction}>
+          <h1>הרשמה</h1>
 
-        <div className={styles.inputBox}>
-          <input
-            type="text"
-            placeholder="Enter Username"
-            {...register("username")}
-          />
-          <FaUser className={styles.icon} />
-        </div>
+          <div className={styles.inputBox}>
+            <input
+              type="text"
+              placeholder="הכנס שם משתמש"
+              {...register("username")}
+            />
+            <FaUser className={styles.icon} />
+          </div>
 
-        <div className={styles.inputBox}>
-          <input
-            type="text"
-            placeholder="Enter your name"
-            {...register("name")}
-          />
-          <FaUser className={styles.icon} />
-        </div>
+          <div className={styles.inputBox}>
+            <input
+              type="text"
+              placeholder="הכנס שם מלא"
+              {...register("name")}
+            />
+            <FaUser className={styles.icon} />
+          </div>
 
-        <div className={styles.inputBox}>
-          <input
-            type="email"
-            placeholder="Enter your email"
-            {...register("email")}
-          />
-          <MdEmail className={styles.icon} />
-        </div>
+          <div className={styles.inputBox}>
+            <input
+              type="email"
+              placeholder="הכנס כתובת דואר אלקטורני"
+              {...register("email")}
+            />
+            <MdEmail className={styles.icon} />
+          </div>
 
-        <p>
-          {formState.errors?.["email"]}
-          {errors["email"] && errors["email"]?.message}
-        </p>
+          <p>
+            {formState.errors?.["email"]}
+            {errors["email"] && errors["email"]?.message}
+          </p>
 
-        <div className={styles.inputBox}>
-          <input
-            type="text"
-            placeholder="Enter your address"
-            {...register("address")}
-          />
-          <FaHome className={styles.icon} />
-        </div>
+          <div className={styles.inputBox}>
+            <input
+              type="text"
+              placeholder="הכנס כתובת (רחוב ומספר, עיר)"
+              {...register("address")}
+            />
+            <FaHome className={styles.icon} />
+          </div>
 
-        <div className={styles.inputBox}>
-          <Form.Select aria-placeholder="Gender" {...register("gender")}>
-            <option value="">Select gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </Form.Select>
-        </div>
+          <div className={styles.inputBox}>
+            <Form.Select aria-placeholder="Gender" {...register("gender")}>
+              <option value="">בחר מין</option>
+              <option value="male">זכר</option>
+              <option value="female">נקבה</option>
+            </Form.Select>
+          </div>
 
-        <div className={styles.inputBox}>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            {...register("password")}
-          />
-          <TbPassword className={styles.icon} />
-        </div>
+          <div className={styles.inputBox}>
+            <input
+              type="password"
+              placeholder="הכנס סיסמא"
+              {...register("password")}
+            />
+            <TbPassword className={styles.icon} />
+          </div>
 
-        <p>
-          {formState.errors?.["password"]}
-          {errors["password"] && errors["password"]?.message}
-        </p>
+          <p>
+            {formState.errors?.["password"]}
+            {errors["password"] && errors["password"]?.message}
+          </p>
 
-        <div className={styles.inputBox}>
-          <input
-            type="password"
-            placeholder="password confirmation"
-            {...register("passwordConfirmation")}
-          />
-          {/* <TbPassword className={styles.icon} /> */}
-        </div>
+          <div className={styles.inputBox}>
+            <input
+              type="password"
+              placeholder="הכנס סיסמא שנית"
+              {...register("passwordConfirmation")}
+            />
+            {/* <TbPassword className={styles.icon} /> */}
+          </div>
 
-        <p>
-          {formState.errors?.["passwordConfirmation"]}
-          {errors["passwordConfirmation"] &&
-            errors["passwordConfirmation"]?.message}
-        </p>
+          <p>
+            {formState.errors?.["passwordConfirmation"]}
+            {errors["passwordConfirmation"] &&
+              errors["passwordConfirmation"]?.message}
+          </p>
 
-        <div>
-          <Form.Check
-            type="checkbox"
-            label="Are you a seller?"
-            {...register("isSeller")}
-          />
-        </div>
+          <div>
+            <Form.Check
+              type="checkbox"
+              label="מעוניין למכור באתר"
+              {...register("isSeller")}
+            />
+          </div>
 
-        <SubmitButton text="Submit" className="btn m-3" />
+          <SubmitButton text="Submit" className="btn m-3" />
 
-        <div className={styles.registerLink}>
-          <p>Already have an account?</p>
-          <Link href="/auth/login">Sign in</Link>
-        </div>
-      </form>
+          <div className={styles.registerLink}>
+            <p>יש לך כבר חשבון?</p>
+            <Link href="/auth/login">לחץ כאן להתחברות</Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

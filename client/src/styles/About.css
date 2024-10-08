@@ -1,0 +1,93 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url('/client/public/fonts/Heebo-Regular.woff');
+}
+
+#acout-block {
+  background-color: #F5F5F5;
+  padding: 60px 20px;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.title-holder h2 {
+  color: #135E2F;
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.subtitle {
+  color: #555;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 40px;
+  font-style: italic;
+}
+
+img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.text-end {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.text-end p {
+  margin-bottom: 15px;
+}
+
+.text-end p:nth-child(1) {
+  color: #135E2F;
+  font-weight: bold;
+}
+
+.text-end p:nth-child(5) {
+  font-weight: bold;
+  color: #135E2F;
+}
+
+.multi-column-container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.multi-column-links {
+  column-count: 3;
+  column-gap: 30px;
+  font-size: 18px;
+}
+
+.multi-column-links a {
+  display: block;
+  color: #135E2F;
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color 0.3s;
+}
+
+.multi-column-links a:hover {
+  color: #0d3f1f;
+}
+
+@media (max-width: 767px) {
+  .text-end {
+    text-align: center;
+  }
+  .title-holder h2 {
+    font-size: 28px;
+  }
+  .subtitle {
+    font-size: 18px;
+  }
+  .multi-column-links {
+    column-count: 1;
+  }
+}

@@ -1,37 +1,70 @@
 .policy-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    direction: rtl;
-    color: #3e2723;
-    background-color: #e0f2f1;
-    border-radius: 10px;
-}
-
-.policy-header {
+    background-color: #F5F5F5;
+    padding: 60px 20px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+  
+  .policy-header {
     text-align: center;
-}
-
-.card {
-    width: 90%;
-    margin: 2px 0;
-    border-radius: 2px;
-}
-
-.card-header {
-    background-color: #2e6830;
-    color: white;
+    margin-bottom: 40px;
+  }
+  
+  .policy-header b {
+    font-size: 28px;
+    color: #135E2F;
+    font-weight: bold;
+  }
+  
+  .policy-header p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+    margin-top: 10px;
+  }
+  
+  .card {
+    background-color: #fff;
+    border: 1px solid #135E2F;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    padding: 15px 20px;
+    background-color: #135E2F;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
     cursor: pointer;
-    font-size: large;
-    text-align: center;
-}
-
-.card-header:hover {
-    background-color: #577e58;
-}
-
-.card-body {
-    background-color: #a5d6a7;
-    text-align: center;
-}
+    text-align: right;
+    border-radius: 8px 8px 0 0;
+    transition: background-color 0.3s ease;
+  }
+  
+  .card-header:hover {
+    background-color: #0C4B1D;
+  }
+  
+  .card-body {
+    padding: 20px;
+    background-color: #F9F9F9;
+    border-top: 1px solid #ddd;
+    color: #333;
+    line-height: 1.8;
+    text-align: right;
+    overflow: hidden;
+    font-size: 17px;
+    font-family: 'Helvetica Neue', sans-serif;
+  }
+  
+  .text-muted {
+    color: #5d4037;
+  }
+  
+  .text-muted strong {
+    font-size: 18px;
+    color: #135E2F;
+  }
+  

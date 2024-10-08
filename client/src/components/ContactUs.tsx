@@ -1,8 +1,8 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import '../styles/ContactUs.css'; // Ensure this file exists
+import '../styles/ContactUs.css'; 
 
-// Dynamically import the Map component to avoid SSR issues
+
 const Map = dynamic(() => import('../components/Map'), { ssr: false });
 
 const ContactUs = () => {
@@ -15,12 +15,13 @@ const ContactUs = () => {
   ];
 
   const teamMembers = [
-    { name: 'ניצן נצר', role: 'מוכר כלי נגינה' },
-    { name: 'רותם רז', role: 'מוכרת בגדים' },
-    { name: 'עינב חימוביץ', role: 'מוכר מוצרי חשמל' },
-    { name: 'אור כהן נזנין', role: 'מוכרת תכשיטים' },
-    { name: 'אדיר יצחקי', role: 'מוכר מוצרי ספורט' },
-    { name: 'דנה כהן', role: 'מוכרת צעצועים' }
+    { name: 'חיים שפיר', role: 'מנכ"ל' },
+    { name: 'ניצן נצר', role: 'מייסד ומנהל כספים' },
+    { name: 'רותם רז', role: 'מייסדת ומנהלת מחלקת הקיימות' },
+    { name: 'עינב חימוביץ', role: 'מייסד ומנהל מחלקת המוכרים' },
+    { name: 'אור כהן נזנין', role: 'מייסדת ומנהלת מחלקת הסושיאל' },
+    { name: 'אדיר יצחקי', role: 'מייסד ומנהל מחלקת התוכנה' },
+    { name: 'דנה כהן', role: 'מייסדת ומנהלת מחלקת השיווק' }
   ];
 
   return (

@@ -1,0 +1,18 @@
+footer {
+    background-color: #0c3b1d; 
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  footer a:hover {
+    color: #ccc;
+  }
