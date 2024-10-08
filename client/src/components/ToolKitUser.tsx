@@ -2,10 +2,11 @@
 
 import React, { useState } from 'react';
 import { PostRequestToSell } from '@/srcapi/nitApi';
+import styles from '../styles/toolkit-user.module.css'; // Import the CSS module
 
 const ToolKitUser = () => {
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
     const handleRequestToSell = async () => {
@@ -14,30 +15,31 @@ const ToolKitUser = () => {
         setSuccess(false);
 
         try {
-            // Call the PostRequestToSell function
-            const response = await PostRequestToSell(); // Assuming it returns something
-            setSuccess(true); // Show success message on completion
+            const response = await PostRequestToSell();
+            setSuccess(true);
         } catch (error) {
-            console.error('API call failed:', error);
             if (error instanceof Error) {
                 setError('Error requesting to sell: ' + error.message);
             } else {
                 setError('An unexpected error occurred.');
             }
         } finally {
-            console.log('Resetting loading state');
-            setLoading(false); // Ensure loading is reset no matter what
+            setLoading(false);
         }
     }
 
     return (
-        <div>
-            <button onClick={handleRequestToSell} disabled={loading}>
-                {loading ? 'Processing...' : 'Request to sell'}
+        <div className={styles.container} dir='rtl'>
+            <button 
+              onClick={handleRequestToSell} 
+              disabled={loading}
+              className={styles.button}
+            >
+                {loading ? 'טוען...' : 'לחץ כאן כדי להפוך למוכר'}
             </button>
             
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {success && <p style={{ color: 'green' }}>Request successful!</p>}
+            {error && <p className={`${styles.message} ${styles.error}`}>{error}</p>}
+            {success && <p className={`${styles.message} ${styles.success}`}>מזל טוב! התנתק והתחבר מחדש על מנת לעדכן את האתר בהתאם</p>}
         </div>
     );
 }

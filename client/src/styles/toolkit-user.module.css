@@ -1,0 +1,44 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #d6efd8; /* Light background from palette */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .button {
+    background-color: #508d4e; /* Dark green from palette */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:disabled {
+    background-color: #80af81; /* Lighter green for disabled state */
+    cursor: not-allowed;
+  }
+  
+  .button:hover:not(:disabled) {
+    background-color: #315319; /* Darker green for hover effect */
+  }
+  
+  .message {
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  .error {
+    color: #a53119; /* Dark red for error messages */
+  }
+  
+  .success {
+    color: #508d4e; /* Dark green for success message */
+  }
+  
