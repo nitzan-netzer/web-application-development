@@ -1,40 +1,34 @@
-/* AppCarousel.css */
-
-/* Style for carousel images */
 .carousel-image {
     width: 100%;
     height: auto;
     object-fit: cover;
   }
   
-  /* Style for the caption container to improve readability */
   .carousel-caption {
-    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark background for readability */
+    background-color: rgba(0, 0, 0, 0.4);
     padding: 15px;
     border-radius: 8px;
   }
   
-  /* Style for the title in the Carousel */
   .carousel-caption h3 {
-    color: #F0FFF0; /* Light color for better contrast with green images */
+    color: #F0FFF0; 
     text-shadow: 
       -1px -1px 0 rgba(0, 0, 0, 0.5), 
       1px -1px 0 rgba(0, 0, 0, 0.5), 
       -1px 1px 0 rgba(0, 0, 0, 0.5), 
       1px 1px 0 rgba(0, 0, 0, 0.5);
-    font-size: 4vw; /* Font size relative to viewport width to adapt with screen size */
+    font-size: 4vw;
     font-weight: bold;
     margin-bottom: 10px;
   }
   
-  /* Style for the description in the Carousel */
   .carousel-caption p {
-    color: #F0FFF0; /* Light color for better contrast */
+    color: #F0FFF0; 
     text-shadow: 
       -1px -1px 0 rgba(0, 0, 0, 0.5), 
       1px -1px 0 rgba(0, 0, 0, 0.5), 
       -1px 1px 0 rgba(0, 0, 0, 0.5), 
       1px 1px 0 rgba(0, 0, 0, 0.5);
-    font-size: 1vw; /* Responsive font size */
+    font-size: 1vw; 
   }
   
