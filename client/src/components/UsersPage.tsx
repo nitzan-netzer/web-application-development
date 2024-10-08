@@ -5,6 +5,7 @@ import { Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import Filters, { FiltersState } from './UsersFilters';
 import UserCard from './UsersCard';
 import { deleteUser, blockUser, unblockUser } from "@/srcapi/nitApi";
+import "../styles/users.css"
 
 interface User {
     username: string;
@@ -129,18 +130,20 @@ const UsersPage: React.FC<UsersCardProps> = ({ allUsers }) => {
     };
 
     return (
-        <Container>
-            <h1 className="mt-4">ניהול משתמשים</h1>
-            <Filters applyFilters={applyFilters} />
+        <div dir='rtl'>
+            <Container>
+                <h1 className="mt-4">ניהול משתמשים</h1>
+                <Filters applyFilters={applyFilters} />
 
-            <Row>
-                {filteredUsers.map((user) => (
-                    <Col sm={6} md={4} key={user.userId}>
-                        <UserCard user={user} deleteUser={deleteUsers} blockUser={blockUsers} unblockUser={unblockUsers} />
-                    </Col>
-                ))}
-            </Row>
-        </Container>
+                <Row>
+                    {filteredUsers.map((user) => (
+                        <Col sm={6} md={4} key={user.userId}>
+                            <UserCard user={user} deleteUser={deleteUsers} blockUser={blockUsers} unblockUser={unblockUsers} />
+                        </Col>
+                    ))}
+                </Row>
+            </Container>
+        </div>
     );
 };
 

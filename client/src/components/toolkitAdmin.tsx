@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StatisticsResponse } from '../types/statictics';
 import '../styles/ToolkitAdmin.css';
 
@@ -23,6 +23,22 @@ const ToolkitAdmin: React.FC<ToolKitAdminProps> = ({ data }) => {
   const averageSalesPerSeller = data.statistics.avgSalesPerSeller;
   const topSellers = data.statistics.sellerRanking;
   const topCategories = data.statistics.top5Categories;
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.fillStyle = '#457b9d';
+        ctx.fillRect(10, 10, 150, 100);
+        ctx.fillStyle = '#1d3557';
+        ctx.font = '20px Arial';
+        ctx.fillText('Canvas Example', 20, 50);
+      }
+    }
+  }, []);
 
   return (
     <div className="container mt-5" dir="rtl">
@@ -74,6 +90,10 @@ const ToolkitAdmin: React.FC<ToolKitAdminProps> = ({ data }) => {
             </div>
           </div>
         </section>
+      </div>
+
+      <div className="canvas-container">
+        <canvas ref={canvasRef} width="400" height="200"></canvas>
       </div>
     </div>
   );

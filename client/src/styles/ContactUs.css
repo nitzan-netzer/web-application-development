@@ -16,7 +16,14 @@
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
+  text-shadow: 2px 2px #333;
+  transition: font-size 2s;
 }
+
+.team-title:hover {
+  font-size: 50px
+}
+
 
 .team-table {
   width: 100%;

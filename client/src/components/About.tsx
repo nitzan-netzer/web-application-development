@@ -5,9 +5,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
-import '../styles/About.css'; 
+import '../styles/About.css';
 
 function About() {
+
+    const link = "https://www.academy.org.il/?utm_source=google&utm_medium=cpc&utm_content=154182892207&utm_term=%D7%94%D7%9E%D7%9B%D7%9C%D7%9C%D7%94%20%D7%9C%D7%9E%D7%A0%D7%94%D7%9C&utm_campaign=search_brand&utm_id=17646779236&gad_source=1&gclid=Cj0KCQjwsJO4BhDoARIsADDv4vASppeUwWVFh9ntfJLaE3Va76t4t_H32TTqB1GD-CrtoyjLcVHvZwYaAjsSEALw_wcB";
+
     return (
         <div dir="rtl">
             <section id="about" className='block acout-block'>
@@ -30,8 +33,17 @@ function About() {
                     </Row>
                 </Container>
             </section>
+            <br></br>
+            <div className="multi-column-container">
+                <h1>הצטרפו אלינו ברשתות</h1>
+                <div className="multi-column-links">
+                    <a href={link} target="_blank" rel="noopener noreferrer">Facebook</a>
+                    <a href={link} target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href={link} target="_blank" rel="noopener noreferrer">Twitter</a>
+                </div>
+            </div>
         </div>
     )
 }
 
-export default About
+export default About;

@@ -17,6 +17,7 @@ export default function ProductsLinks() {
     { name: 'sport', image: '/category_sport.jpg', title: "אביזרי ספורט"},
     { name: 'toys', image: '/category_toys.jpg', title: "משחקים וצעצועים"}
   ];
+  
 
   return (
     <Container>
