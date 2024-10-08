@@ -18,7 +18,6 @@ function Header({ user }: HeaderProps) {
     await logout();
     router.push('/auth/login');
   };
-
   const username = user?.name || "אורח"; // Default to "אורח" if user is undefined
   const isAdmin = user?.isAdmin; // Check if user is admin
   const isSeller = user?.isSeller; // Check if user is seller
@@ -42,11 +41,11 @@ function Header({ user }: HeaderProps) {
         <span style={{ marginLeft: "20px", fontSize: "18px" }}>
           שלום, {username}
         </span>
-        {/* {username !== "אורח" && (
+        {username !== "אורח" && (
               <Nav.Link href="/personalArea" className="mx-3">
                 האזור אישי
               </Nav.Link>
-            )} */}
+            )}
 
         {user ? (
           <Button
@@ -153,9 +152,6 @@ function Header({ user }: HeaderProps) {
               <>
                 <Nav.Link href="/products" className="mx-3">
                   מוצרים שלנו
-                </Nav.Link>
-                <Nav.Link href="/toolkit" className="mx-3">
-                  האם תרצה להיות מוכר
                 </Nav.Link>
 
               </>
