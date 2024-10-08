@@ -1,0 +1,73 @@
+/* About.css */
+
+/* Main section styling */
+#acout-block {
+    background-color: #F5F5F5; /* Light gray background to make the content stand out */
+    padding: 60px 20px; /* Generous padding for spacing */
+    color: #333; /* Dark text for readability */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Title styling */
+  .title-holder h2 {
+    color: #135E2F; /* Dark green color */
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase; /* Marketing style: Uppercase for emphasis */
+    letter-spacing: 1.5px;
+  }
+  
+  /* Subtitle styling */
+  .subtitle {
+    color: #555; /* Slightly lighter gray for the subtitle */
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 40px;
+    font-style: italic; /* Italic subtitle for a softer touch */
+  }
+  
+  /* Image styling */
+  img {
+    max-width: 100%; /* Ensure the image is responsive */
+    border-radius: 10px; /* Slightly rounded corners for a modern look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  /* Text styling for the right column */
+  .text-end {
+    font-size: 18px;
+    line-height: 1.6; /* Increased line height for readability */
+    color: #333; /* Darker text for readability */
+  }
+  
+  .text-end p {
+    margin-bottom: 15px; /* Spacing between paragraphs */
+  }
+  
+  /* Marketing-inspired bold emphasis on certain key words */
+  .text-end p:nth-child(1) {
+    color: #135E2F;
+    font-weight: bold; /* Emphasize the first paragraph */
+  }
+  
+  /* Add a call-to-action effect with bold green highlight */
+  .text-end p:nth-child(5) {
+    font-weight: bold;
+    color: #135E2F; /* Dark green color for emphasis */
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 767px) {
+    .text-end {
+      text-align: center; /* Center text on smaller screens for better layout */
+    }
+    .title-holder h2 {
+      font-size: 28px; /* Adjust title size for smaller screens */
+    }
+    .subtitle {
+      font-size: 18px; /* Adjust subtitle size for smaller screens */
+    }
+  }
+  
