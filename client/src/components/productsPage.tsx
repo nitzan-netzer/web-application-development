@@ -1,12 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation'; // Updated import
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Container, Row, Col, Badge, Navbar } from 'react-bootstrap';
 import ProductCard from './ProductCard';
 import Filters, { FiltersState } from './ProductsFilters';
-import styles from "@/srcstyles/products-page.module.css"
-
+import styles from "@/srcstyles/products-page.module.css";
 
 interface productLocation {
     type: string;
@@ -31,14 +30,14 @@ type Props = {
 
 const ProductsPage: React.FC<Props> = ({ allProducts }) => {
     const router = useRouter();
-    const searchParams = useSearchParams(); // New hook to access search params
+    const searchParams = useSearchParams();
     const [category, setCategory] = useState<string | undefined>(undefined);
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [cart, setCart] = useState<Product[]>([]);
 
     useEffect(() => {
-        const savedCart = localStorage.getItem('shopping cart');
+        const savedCart = localStorage.getItem('shoppingCart');
         if (savedCart) {
             setCart(JSON.parse(savedCart));
         }
@@ -46,13 +45,12 @@ const ProductsPage: React.FC<Props> = ({ allProducts }) => {
 
     useEffect(() => {
         if (cart.length > 0 && typeof window !== 'undefined') {
-            localStorage.setItem('shopping cart', JSON.stringify(cart));
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
         }
     }, [cart]);
 
     useEffect(() => {
         if (Array.isArray(allProducts) && allProducts.length > 0) {
-            // Filter out products with status 'soldOut'
             const availableProducts = allProducts.filter(
                 (product) => product.status !== 'soldOut'
             );
@@ -64,7 +62,6 @@ const ProductsPage: React.FC<Props> = ({ allProducts }) => {
         }
     }, [allProducts]);
 
-    // Handle the search parameters
     useEffect(() => {
         const categoryParam = searchParams.get('category');
         if (categoryParam) {
@@ -82,7 +79,7 @@ const ProductsPage: React.FC<Props> = ({ allProducts }) => {
             );
             setFilteredProducts(filtered);
         } else {
-            setFilteredProducts(products); // Show all products if no category is selected
+            setFilteredProducts(products);
         }
     }, [category, products]);
 
@@ -134,9 +131,6 @@ const ProductsPage: React.FC<Props> = ({ allProducts }) => {
         const updatedCart = [...cart, product];
         setCart(updatedCart);
         localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
-        console.log('updatedCart', updatedCart);
-        const data = localStorage.getItem('shopping cart');
-        console.log('shopping cart', data);
     };
 
     return (
@@ -165,7 +159,7 @@ const ProductsPage: React.FC<Props> = ({ allProducts }) => {
 
             <Row>
                 {filteredProducts.map((product) => (
-                    <Col key={product.name} sm={12} md={6} lg={4}>
+                    <Col key={product.productId} sm={12} md={6} lg={4}>
                         <ProductCard product={product} addToCart={addToCart} />
                     </Col>
                 ))}

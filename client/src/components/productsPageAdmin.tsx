@@ -54,6 +54,7 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
       try {
         await deleteProduct(productId);
         setProducts((prevProducts) => prevProducts.filter((p) => p.productId !== productId));
+        setFilteredProducts((prevFiltered) => prevFiltered.filter((p) => p.productId !== productId));
         alert(`${product.name} deleted successfully`);
       } catch (error) {
         console.error('Error deleting product:', error);
@@ -69,8 +70,8 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
   };
 
   const handleUpdateChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setUpdatedProduct((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    setUpdatedProduct((prev) => ({ ...prev, [name]: type === 'number' ? Number(value) : value }));
   };
 
   const handleUpdate = async () => {
@@ -158,7 +159,7 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
 
       <Row>
         {filteredProducts.map((product) => (
-          <Col key={product.name} sm={12} md={6} lg={4}>
+          <Col key={product.productId} sm={12} md={6} lg={4}>
             <ProductCardAdmin
               product={product}
               handleDelete={handleDelete}
@@ -197,7 +198,7 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
               <Form.Control
                 type="number"
                 name="price"
-                value={updatedProduct.price || ''}
+                value={updatedProduct.price !== undefined ? updatedProduct.price : ''}
                 onChange={handleUpdateChange}
               />
             </Form.Group>
@@ -206,7 +207,7 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
               <Form.Control
                 type="number"
                 name="quantity"
-                value={updatedProduct.quantity || ''}
+                value={updatedProduct.quantity !== undefined ? updatedProduct.quantity : ''}
                 onChange={handleUpdateChange}
               />
             </Form.Group>
