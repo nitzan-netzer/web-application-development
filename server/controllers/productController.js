@@ -59,10 +59,8 @@ export async function createProduct(req, res, next) {
 
 export async function updateProduct(req, res, next) {
     console.log("Updating Product");
-    const { name, image, category, status, description, price, userId } = req.body;
-    console.log(name, image, category, status, description, price);
+    const { name, image, category, status, description, price, userId, quantity} = req.body;
     const { productId } = req.params;
-    console.log(req.params);
     try {
         // Fetch the user to ensure it exists
         const user = await User.findOne({userId});
@@ -86,7 +84,7 @@ export async function updateProduct(req, res, next) {
         product.status = status || product.status;
         product.description = description || product.description;
         product.price = price || product.price;
-
+        product.quantity = quantity || product.quantity;
         // Save the updated product
         const savedProduct = await product.save();
         res.status(200).json({ msg: 'Product updated successfully', product: savedProduct });
