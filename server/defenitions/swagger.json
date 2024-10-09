@@ -184,7 +184,7 @@
         }
       }
     },
-    "/product/update": {
+    "/product/update/{productId}": {
       "post": {
         "summary": "Update an existing product",
         "description": "This endpoint updates an existing product",
