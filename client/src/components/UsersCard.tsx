@@ -34,8 +34,7 @@ const UserCard: React.FC<UsersCardProps> = ({ user, deleteUser, blockUser, unblo
             <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0" style={{
                     backgroundColor: user.isBlocked ? '#e0e0e0' : '#fff', 
-                    // pointerEvents: user.isBlocked ? 'none' : 'auto', 
-                    // opacity: user.isBlocked ? 0.6 : 1, 
+                    opacity: user.isBlocked ? 0.6 : 1, 
                 }}>
                     <Accordion.Header>{user.username}</Accordion.Header>
                     <Accordion.Body>

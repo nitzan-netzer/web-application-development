@@ -76,6 +76,26 @@ function Header({ user }: HeaderProps) {
             </>
           )}
         </div>
+         {/* Conditionally render Buyer-specific links */}
+         {isBuyer && username !== "אורח" && (
+          <>
+            <a href="/cart" className="ms-2">
+              <img
+                src={"/shopping-cart.png"}
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+                alt="Icon"
+                style={{
+                  position: "relative",
+                  top: "10px",
+                  left: "10px",
+                  cursor: "pointer",
+                }}
+              />
+            </a>
+          </>
+        )}
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="navbarScroll">
@@ -120,9 +140,6 @@ function Header({ user }: HeaderProps) {
               <>
                 <Nav.Link href="/products" className={`${styles.navLink} mx-3`}>
                   המוצרים שלנו
-                </Nav.Link>
-                <Nav.Link href="/toolkit" className={`${styles.navLink} mx-3`}>
-                  האם תרצה להיות מוכר
                 </Nav.Link>
               </>
             )}

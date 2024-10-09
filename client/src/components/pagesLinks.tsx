@@ -67,7 +67,7 @@ export default function MarketingComponent() {
                                 <Card.Text>
                                     כאן תוכלו לקרוא את התקנון של האתר ואת הערכים שלנו.
                                 </Card.Text>
-                                <Link href="/Policy" passHref>
+                                <Link href="/policy" passHref>
                                     <Button variant="success">קראו את התקנון</Button>
                                 </Link>
                             </Card.Body>
@@ -82,7 +82,7 @@ export default function MarketingComponent() {
                                 <Card.Text>
                                     כאן תוכלו לערוך את המידע האישי שלכם ולעדכן את הפרטים האישיים.
                                 </Card.Text>
-                                <Link href="/personalPage" passHref>
+                                <Link href="/personalArea" passHref>
                                     <Button variant="warning">ערכו את הפרטים</Button>
                                 </Link>
                             </Card.Body>

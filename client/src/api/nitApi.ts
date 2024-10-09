@@ -135,6 +135,8 @@ export async function updateProduct(productId: string, product: Product): Promis
     userId: product.userId,
     quantity: product.quantity
   });
+
+  console.log("body",body);
   return callApi<any>(url, {
     method: 'POST',
     headers,
