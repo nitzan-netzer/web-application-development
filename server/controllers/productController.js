@@ -1,6 +1,5 @@
 import { Product } from '../models/product.js';
 import { User } from '../models/user.js';
-import { createImage } from "../middleware/imageUpload.js";
 import { getAllStatistics } from "../statistics/statisticsQueries.js";
 import { getLatLong } from "../utils/utils.js";
 
@@ -62,10 +61,6 @@ export async function updateProduct(req, res, next) {
     const { name, image, category, status, description, price, userId } = req.body;
 
     const { productId } = req.params;
-
-    if (image) {
-        createImage();
-    }
 
     try {
         // Fetch the user to ensure it exists
