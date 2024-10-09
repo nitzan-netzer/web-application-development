@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Badge, Button, Modal, Form } from 'react-bootstrap';
 import Filters, { FiltersState } from './ProductsFilters';
 import ProductCardAdmin from './ProductCardAdmin';
-import { deleteProduct } from '@/srcapi/nitApi';
+import { deleteProduct, updateProduct } from '@/srcapi/nitApi';
 
 interface productLocation {
   type: string;
@@ -30,11 +30,12 @@ type Props = {
 const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [currentFilters, setCurrentFilters] = useState<FiltersState | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [updatedProduct, setUpdatedProduct] = useState<Partial<Product>>({});
 
   useEffect(() => {
     if (Array.isArray(allProducts) && allProducts.length > 0) {
-      // Filter out products with status 'soldOut'
       const availableProducts = allProducts.filter(
         (product) => product.status !== 'soldOut'
       );
@@ -52,18 +53,7 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
       console.log('product ID : ', productId);
       try {
         await deleteProduct(productId);
-
-        // Update products state
-        const updatedProducts = products.filter((p) => p.productId !== productId);
-        setProducts(updatedProducts);
-
-        // Reapply filters after deleting a product
-        if (currentFilters) {
-          applyFilters(currentFilters, updatedProducts);
-        } else {
-          setFilteredProducts(updatedProducts);
-        }
-
+        setProducts((prevProducts) => prevProducts.filter((p) => p.productId !== productId));
         alert(`${product.name} deleted successfully`);
       } catch (error) {
         console.error('Error deleting product:', error);
@@ -72,18 +62,57 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
     }
   };
 
-  const applyFilters = (filters: FiltersState, productsToFilter = products) => {
+  const handleEdit = (product: Product) => {
+    setSelectedProduct(product);
+    setUpdatedProduct(product); // Prefill the modal with the selected product details
+    setShowEditModal(true);
+  };
+
+  const handleUpdateChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setUpdatedProduct((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleUpdate = async () => {
+    if (selectedProduct) {
+      try {
+        const updatedProductData: Product = {
+          ...selectedProduct,
+          ...updatedProduct,
+          location: selectedProduct.location, // Keep the existing location value
+        };
+
+        await updateProduct(selectedProduct.productId, updatedProductData);
+        setProducts((prevProducts) =>
+          prevProducts.map((p) =>
+            p.productId === selectedProduct.productId ? updatedProductData : p
+          )
+        );
+        setFilteredProducts((prevFiltered) =>
+          prevFiltered.map((p) =>
+            p.productId === selectedProduct.productId ? updatedProductData : p
+          )
+        );
+        alert(`${selectedProduct.name} updated successfully`);
+        setShowEditModal(false);
+      } catch (error) {
+        console.error('Error updating product:', error);
+        alert('Failed to update product. Please try again later.');
+      }
+    }
+  };
+
+  const applyFilters = (filters: FiltersState) => {
     console.log('Applying Filters:', filters);
-    setCurrentFilters(filters); // Store the current filters for future use
     const { category, queryType, name, minPrice, maxPrice } = filters;
-    let filtered = productsToFilter;
+    let filtered = products;
 
     const minPriceNum = minPrice ? parseFloat(minPrice) : null;
     const maxPriceNum = maxPrice ? parseFloat(maxPrice) : null;
 
     if (category || name || minPrice || maxPrice) {
       if (queryType === 'and') {
-        filtered = productsToFilter.filter((product) => {
+        filtered = products.filter((product) => {
           const categoryMatch = category
             ? product.category.toLowerCase() === category.toLowerCase()
             : true;
@@ -96,7 +125,7 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
           return categoryMatch && nameMatch && minPriceMatch && maxPriceMatch;
         });
       } else if (queryType === 'or') {
-        filtered = productsToFilter.filter((product) => {
+        filtered = products.filter((product) => {
           const categoryMatch = category
             ? product.category.toLowerCase() === category.toLowerCase()
             : false;
@@ -115,7 +144,7 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
   };
 
   return (
-    <Container>
+    <Container dir='rtl'>
       <h1 className="mt-4">ניהול מוצרים</h1>
       <section>
         כאן תוכלו לנהל את כלל המוצרים באתר מוזמנים לבצע חיפושים שונים כדי למצוא את המוצר שאתם מחפשים ולבצע את הפעולות הרצויות
@@ -129,11 +158,69 @@ const ProductsPageAdmin: React.FC<Props> = ({ allProducts }) => {
 
       <Row>
         {filteredProducts.map((product) => (
-          <Col key={product.productId} sm={12} md={6} lg={4}>
-            <ProductCardAdmin product={product} handleDelete={handleDelete} />
+          <Col key={product.name} sm={12} md={6} lg={4}>
+            <ProductCardAdmin
+              product={product}
+              handleDelete={handleDelete}
+              handleUpdate={() => handleEdit(product)}
+            />
           </Col>
         ))}
       </Row>
+
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>ערוך מוצר</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="productName">
+              <Form.Label>שם המוצר</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={updatedProduct.name || ''}
+                onChange={handleUpdateChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="productDescription">
+              <Form.Label>תיאור המוצר</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="description"
+                value={updatedProduct.description || ''}
+                onChange={handleUpdateChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="productPrice">
+              <Form.Label>מחיר</Form.Label>
+              <Form.Control
+                type="number"
+                name="price"
+                value={updatedProduct.price || ''}
+                onChange={handleUpdateChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="productQuantity">
+              <Form.Label>כמות</Form.Label>
+              <Form.Control
+                type="number"
+                name="quantity"
+                value={updatedProduct.quantity || ''}
+                onChange={handleUpdateChange}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+            ביטול
+          </Button>
+          <Button variant="primary" onClick={handleUpdate}>
+            שמור שינויים
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

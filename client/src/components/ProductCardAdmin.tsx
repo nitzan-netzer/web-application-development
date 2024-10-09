@@ -23,9 +23,10 @@ interface Product {
 interface ProductCardProps {
   product: Product;
   handleDelete: (product: Product) => void;
+  handleUpdate: (product: Product) => void;
 }
 
-const ProductCardAdmin: React.FC<ProductCardProps> = ({ product, handleDelete }) => {
+const ProductCardAdmin: React.FC<ProductCardProps> = ({ product, handleDelete, handleUpdate }) => {
   return (
     <Card className="mb-4" dir="rtl">
       {product.image && <Card.Img variant="top" src={product.image} style={{ width: '295px', height: '200px' }} />}
@@ -40,6 +41,9 @@ const ProductCardAdmin: React.FC<ProductCardProps> = ({ product, handleDelete })
         </Card.Text>
         <Button variant="danger" onClick={() => handleDelete(product)}>
           מחק מוצר מהמאגר
+        </Button>
+        <Button variant="primary" className="mt-2" onClick={() => handleUpdate(product)}>
+          ערוך מוצר
         </Button>
       </Card.Body>
     </Card>
