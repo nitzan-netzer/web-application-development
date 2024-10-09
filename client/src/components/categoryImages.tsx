@@ -27,9 +27,7 @@ export default function ProductsLinks() {
         <br></br>
         {categories.map((category, index) => (
           <Col xs={6} md={4} lg={2} key={index}>
-            <a href={`/products?category=${category.name}`} target="_blank" rel="noopener noreferrer">
-              <Image src={category.image} className="fixed-size-img" roundedCircle />
-            </a>
+              <Image src={category.image} className="fixed-size-img" roundedCircle /> 
             <div className="overlay-text">
               {category.title}
             </div>
