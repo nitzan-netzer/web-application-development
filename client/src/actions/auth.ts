@@ -72,7 +72,7 @@ export async function signUp(prevState:any, formData: FormData) {
     const gender = formData.get('gender');
     const password = formData.get('password');
     const passwordConfirmation = formData.get('passwordConfirmation');
-    const isSeller = formData.get('isSeller') || true;
+    const isSeller = formData.get('isSeller') == 'on'? true: false;
     const birthYear = formData.get('birthYear') || 1990;
 
 
