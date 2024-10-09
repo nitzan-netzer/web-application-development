@@ -59,8 +59,7 @@ export async function createProduct(req, res, next) {
 }
 
 export async function updateProduct(req, res, next) {
-    const { name, image, category, status, description, price } = req.body;
-    const userId = req.user.userId;
+    const { name, image, category, status, description, price, userId } = req.body;
 
     const { productId } = req.params;
 
