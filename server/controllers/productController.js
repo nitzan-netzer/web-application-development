@@ -58,20 +58,24 @@ export async function createProduct(req, res, next) {
 }
 
 export async function updateProduct(req, res, next) {
+    console.log("Updating Product");
     const { name, image, category, status, description, price, userId } = req.body;
-
+    console.log(name, image, category, status, description, price);
     const { productId } = req.params;
-
+    console.log(req.params);
     try {
         // Fetch the user to ensure it exists
         const user = await User.findOne({userId});
+    
         if (!user) {
+            console.log("USER NOT FOUND");
             return res.status(404).json({ msg: 'User not found' });
         }
 
         // Fetch the product to ensure it exists
         const product = await Product.findOne({ productId, userId });
         if (!product) {
+            console.log("USER NOT FOUND");
             return res.status(404).json({ msg: 'Product not found' });
         }
 
