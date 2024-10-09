@@ -32,7 +32,9 @@ const productSchema = new mongoose.Schema({
 });
 
 productSchema.pre('save', function (next) {
-    this.productId = uuid();
+    if (!this.productId) {
+        this.productId = uuid();
+    }
     next();
 });
 
