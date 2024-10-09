@@ -6,7 +6,7 @@ import {createImage} from "../middleware/imageUpload.js";
 import {getAllStatisticsOnProducts} from "../controllers/productController.js";
 
 router.post('/create', [authMiddleware, isUserBlocked, createImage, createProduct]);
-router.post('/update', [authMiddleware, isUserBlocked, createImage, updateProduct]);
+router.post('/update/:productId', [authMiddleware, isUserBlocked, createImage, updateProduct]);
 router.delete('/product/:productId', [authMiddleware, isUserBlocked, deleteProduct]);
 router.get('/products/:productId', [authMiddleware, isUserBlocked, getProduct]);
 router.get('/allProducts', [authMiddleware, isUserBlocked, getAllProducts]);
